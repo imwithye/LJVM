@@ -80,6 +80,17 @@ public class MachineTest extends TestCase {
             e.printStackTrace();
             assertTrue(false);
         }
+
+        vm.reset();
+        try {
+            vm.execute(Instruction.create("DEFINE a \"Hello\""));
+            vm.execute(Instruction.create("DEFINE b a"));
+            vm.execute(Instruction.create("ADD a a b"));
+            assertTrue(vm.getValue("a").stringValue().equals("HelloHello"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            assertTrue(false);
+        }
     }
 
     public void testMachineMul() {
