@@ -40,7 +40,7 @@ public class StringValue extends Value {
 
     @Override
     public Value add(Value value) throws TypeUnmatchedException {
-        if (!(value instanceof StringValue)) {
+        if (!this.isSameType(value)) {
             throw new TypeUnmatchedException();
         }
         return new StringValue(this.value + ((StringValue) value).stringValue());
@@ -48,7 +48,7 @@ public class StringValue extends Value {
 
     @Override
     public Value sub(Value value) throws ValueUnavailableException, TypeUnmatchedException {
-        if (!(value instanceof StringValue)) {
+        if (!this.isSameType(value)) {
             throw new TypeUnmatchedException();
         }
         throw new ValueUnavailableException();
@@ -56,7 +56,7 @@ public class StringValue extends Value {
 
     @Override
     public Value mul(Value value) throws ValueUnavailableException, TypeUnmatchedException {
-        if (!(value instanceof StringValue)) {
+        if (!this.isSameType(value)) {
             throw new TypeUnmatchedException();
         }
         throw new ValueUnavailableException();
@@ -64,7 +64,7 @@ public class StringValue extends Value {
 
     @Override
     public Value div(Value value) throws ValueUnavailableException, TypeUnmatchedException {
-        if (!(value instanceof StringValue)) {
+        if (!this.isSameType(value)) {
             throw new TypeUnmatchedException();
         }
         throw new ValueUnavailableException();
@@ -72,7 +72,7 @@ public class StringValue extends Value {
 
     @Override
     public Value and(Value value) throws ValueUnavailableException, TypeUnmatchedException {
-        if (!(value instanceof StringValue)) {
+        if (!this.isSameType(value)) {
             throw new TypeUnmatchedException();
         }
         throw new ValueUnavailableException();
@@ -80,7 +80,7 @@ public class StringValue extends Value {
 
     @Override
     public Value or(Value value) throws ValueUnavailableException, TypeUnmatchedException {
-        if (!(value instanceof StringValue)) {
+        if (!this.isSameType(value)) {
             throw new TypeUnmatchedException();
         }
         throw new ValueUnavailableException();

@@ -52,7 +52,7 @@ public class BooleanValue extends Value {
 
     @Override
     public Value add(Value value) throws ValueUnavailableException, TypeUnmatchedException {
-        if (!(value instanceof BooleanValue)) {
+        if (!this.isSameType(value)) {
             throw new TypeUnmatchedException();
         }
         throw new ValueUnavailableException();
@@ -60,7 +60,7 @@ public class BooleanValue extends Value {
 
     @Override
     public Value sub(Value value) throws ValueUnavailableException, TypeUnmatchedException {
-        if (!(value instanceof BooleanValue)) {
+        if (!this.isSameType(value)) {
             throw new TypeUnmatchedException();
         }
         throw new ValueUnavailableException();
@@ -68,7 +68,7 @@ public class BooleanValue extends Value {
 
     @Override
     public Value mul(Value value) throws ValueUnavailableException, TypeUnmatchedException {
-        if (!(value instanceof BooleanValue)) {
+        if (!this.isSameType(value)) {
             throw new TypeUnmatchedException();
         }
         throw new ValueUnavailableException();
@@ -76,7 +76,7 @@ public class BooleanValue extends Value {
 
     @Override
     public Value div(Value value) throws ValueUnavailableException, TypeUnmatchedException {
-        if (!(value instanceof BooleanValue)) {
+        if (!this.isSameType(value)) {
             throw new TypeUnmatchedException();
         }
         throw new ValueUnavailableException();
@@ -84,7 +84,7 @@ public class BooleanValue extends Value {
 
     @Override
     public Value and(Value value) throws TypeUnmatchedException {
-        if (!(value instanceof BooleanValue)) {
+        if (!this.isSameType(value)) {
             throw new TypeUnmatchedException();
         }
         return new BooleanValue(this.value && ((BooleanValue) value).booleanValue());
@@ -92,7 +92,7 @@ public class BooleanValue extends Value {
 
     @Override
     public Value or(Value value) throws TypeUnmatchedException {
-        if (!(value instanceof BooleanValue)) {
+        if (!this.isSameType(value)) {
             throw new TypeUnmatchedException();
         }
         return new BooleanValue(this.value || ((BooleanValue) value).booleanValue());

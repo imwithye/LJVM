@@ -45,7 +45,7 @@ public class NumberValue extends Value {
 
     @Override
     public Value add(Value value) throws TypeUnmatchedException {
-        if (!(value instanceof NumberValue)) {
+        if (!this.isSameType(value)) {
             throw new TypeUnmatchedException();
         }
         return new NumberValue(this.value + ((NumberValue) value).floatValue());
@@ -53,7 +53,7 @@ public class NumberValue extends Value {
 
     @Override
     public Value sub(Value value) throws TypeUnmatchedException {
-        if (!(value instanceof NumberValue)) {
+        if (!this.isSameType(value)) {
             throw new TypeUnmatchedException();
         }
         return new NumberValue(this.value - ((NumberValue) value).floatValue());
@@ -61,7 +61,7 @@ public class NumberValue extends Value {
 
     @Override
     public Value mul(Value value) throws TypeUnmatchedException {
-        if (!(value instanceof NumberValue)) {
+        if (!this.isSameType(value)) {
             throw new TypeUnmatchedException();
         }
         return new NumberValue(this.value * ((NumberValue) value).floatValue());
@@ -69,7 +69,7 @@ public class NumberValue extends Value {
 
     @Override
     public Value div(Value value) throws TypeUnmatchedException {
-        if (!(value instanceof NumberValue)) {
+        if (!this.isSameType(value)) {
             throw new TypeUnmatchedException();
         }
         return new NumberValue(this.value / ((NumberValue) value).floatValue());
@@ -77,7 +77,7 @@ public class NumberValue extends Value {
 
     @Override
     public Value and(Value value) throws ValueUnavailableException, TypeUnmatchedException {
-        if (!(value instanceof NumberValue)) {
+        if (!this.isSameType(value)) {
             throw new TypeUnmatchedException();
         }
         throw new ValueUnavailableException();
@@ -85,7 +85,7 @@ public class NumberValue extends Value {
 
     @Override
     public Value or(Value value) throws ValueUnavailableException, TypeUnmatchedException {
-        if (!(value instanceof NumberValue)) {
+        if (!this.isSameType(value)) {
             throw new TypeUnmatchedException();
         }
         throw new ValueUnavailableException();
