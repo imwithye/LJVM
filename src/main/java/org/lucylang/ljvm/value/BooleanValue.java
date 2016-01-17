@@ -1,10 +1,20 @@
 package org.lucylang.ljvm.value;
 
+import org.lucylang.ljvm.type.BooleanType;
+import org.lucylang.ljvm.type.Type;
+
 public class BooleanValue extends Value {
+    private BooleanType type;
     private Boolean value;
 
     public BooleanValue(Boolean value) {
+        this.type = new BooleanType();
         this.value = value;
+    }
+
+    @Override
+    public Type getType() {
+        return this.type;
     }
 
     @Override
