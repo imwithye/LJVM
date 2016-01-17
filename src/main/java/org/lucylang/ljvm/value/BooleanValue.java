@@ -2,6 +2,7 @@ package org.lucylang.ljvm.value;
 
 import org.lucylang.ljvm.type.BooleanType;
 import org.lucylang.ljvm.type.Type;
+import org.lucylang.ljvm.type.TypeUnmatchedException;
 
 public class BooleanValue extends Value {
     private BooleanType type;
@@ -47,5 +48,58 @@ public class BooleanValue extends Value {
     @Override
     public Boolean booleanValue() {
         return this.value;
+    }
+
+    @Override
+    public Value add(Value value) throws ValueUnavailableException, TypeUnmatchedException {
+        if (!(value instanceof BooleanValue)) {
+            throw new TypeUnmatchedException();
+        }
+        throw new ValueUnavailableException();
+    }
+
+    @Override
+    public Value sub(Value value) throws ValueUnavailableException, TypeUnmatchedException {
+        if (!(value instanceof BooleanValue)) {
+            throw new TypeUnmatchedException();
+        }
+        throw new ValueUnavailableException();
+    }
+
+    @Override
+    public Value mul(Value value) throws ValueUnavailableException, TypeUnmatchedException {
+        if (!(value instanceof BooleanValue)) {
+            throw new TypeUnmatchedException();
+        }
+        throw new ValueUnavailableException();
+    }
+
+    @Override
+    public Value div(Value value) throws ValueUnavailableException, TypeUnmatchedException {
+        if (!(value instanceof BooleanValue)) {
+            throw new TypeUnmatchedException();
+        }
+        throw new ValueUnavailableException();
+    }
+
+    @Override
+    public Value and(Value value) throws TypeUnmatchedException {
+        if (!(value instanceof BooleanValue)) {
+            throw new TypeUnmatchedException();
+        }
+        return new BooleanValue(this.value && ((BooleanValue) value).booleanValue());
+    }
+
+    @Override
+    public Value or(Value value) throws TypeUnmatchedException {
+        if (!(value instanceof BooleanValue)) {
+            throw new TypeUnmatchedException();
+        }
+        return new BooleanValue(this.value || ((BooleanValue) value).booleanValue());
+    }
+
+    @Override
+    public Value not() {
+        return new BooleanValue(!this.value);
     }
 }

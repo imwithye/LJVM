@@ -1,5 +1,6 @@
 package org.lucylang.ljvm.machine;
 
+import org.lucylang.ljvm.type.Type;
 import org.lucylang.ljvm.value.Value;
 
 public class Register {
@@ -11,6 +12,10 @@ public class Register {
 
     public Value getValue() {
         return this.value;
+    }
+
+    public Type getType() {
+        return this.value.getType();
     }
 
     public Value assignValue(Value value) {
