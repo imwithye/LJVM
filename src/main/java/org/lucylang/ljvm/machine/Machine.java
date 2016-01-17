@@ -11,6 +11,16 @@ public class Machine {
     private HashMap<String, Register> registers;
     private Stack<Value> memoryStack;
 
+    public Machine() {
+        this.reset();
+    }
+
+    public Machine reset() {
+        registers = new HashMap<String, Register>();
+        memoryStack = new Stack<Value>();
+        return this;
+    }
+
     public Register getRegister(String ref) throws UndefinedException {
         Register r = this.registers.get(ref);
         if (r == null) {

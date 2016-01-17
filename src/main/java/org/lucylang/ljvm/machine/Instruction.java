@@ -42,8 +42,8 @@ public class Instruction {
     }
 
     public Instruction third(String id) {
-        this.isRef[1] = true;
-        this.ids[1] = id;
+        this.isRef[2] = true;
+        this.ids[2] = id;
         return this;
     }
 
