@@ -59,6 +59,19 @@ public class MachineTest extends TestCase {
 
         vm.reset();
         try {
+            vm.execute(Instruction.create("DEFINE a 10"));
+            vm.execute(Instruction.create("DEFINE b a"));
+            assertTrue(vm.getValue("a").intValue() == 10);
+            assertTrue(vm.getValue("b").intValue() == 10);
+            vm.execute(Instruction.create("ADD a a b"));
+            assertTrue(vm.getValue("a").intValue() == 20);
+        } catch (Exception e) {
+            e.printStackTrace();
+            assertTrue(false);
+        }
+
+        vm.reset();
+        try {
             vm.execute(Instruction.create(InstructionType.DEFINE).first("a").second(new StringValue("Hello World")));
             vm.execute(Instruction.create(InstructionType.DEFINE).first("b").second(new StringValue("!")));
             vm.execute(Instruction.create(InstructionType.ADD).first("a").second("a").third("b"));
@@ -77,7 +90,7 @@ public class MachineTest extends TestCase {
             assertTrue(vm.getValue("a").intValue() == 100);
             assertTrue(vm.getValue("b").intValue() == 20);
             vm.execute(Instruction.create(InstructionType.MUL).first("a").second("a").third("b"));
-            assertTrue(vm.getValue("a").intValue() == 100*20);
+            assertTrue(vm.getValue("a").intValue() == 100 * 20);
         } catch (Exception e) {
             e.printStackTrace();
             assertTrue(false);
