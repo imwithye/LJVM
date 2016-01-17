@@ -5,6 +5,7 @@ import org.lucylang.ljvm.value.Value;
 import org.lucylang.ljvm.value.ValueUnavailableException;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Stack;
 
 public class Machine {
@@ -203,12 +204,29 @@ public class Machine {
                 this.assignRegister(instruction.getRef(0), result);
                 break;
             }
-            case GOTO: {
-                break;
+            default: {
+                throw new InvalidInstructionException();
             }
-            default:
-                break;
         }
         return this;
+    }
+
+    public Machine execute(Instruction[] instructions) throws InvalidInstructionException, UndefinedException, OverdefinedException, ValueUnavailableException, TypeUnmatchedException {
+        int ip = 0;
+        while (ip < instructions.length) {
+            Instruction instruction = instructions[ip];
+            switch (instruction.getType()) {
+                case GOTO:
+                    break;
+                default: {
+                    this.execute(instruction);
+                }
+            }
+        }
+        return this;
+    }
+
+    public Machine execute(List<Instruction> instructions) throws InvalidInstructionException, UndefinedException, OverdefinedException, ValueUnavailableException, TypeUnmatchedException {
+        return this.execute(instructions.toArray(new Instruction[0]));
     }
 }
