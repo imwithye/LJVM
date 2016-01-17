@@ -52,4 +52,5 @@ local.properties
 # STS (Spring Tool Suite)
 .springBeans
 
-
+.idea/
+ljvm.iml
