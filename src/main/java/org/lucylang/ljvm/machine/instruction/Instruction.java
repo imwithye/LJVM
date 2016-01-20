@@ -1,5 +1,13 @@
 package org.lucylang.ljvm.machine.instruction;
 
+import org.lucylang.ljvm.machine.Machine;
+import org.lucylang.ljvm.machine.OverdefinedException;
+import org.lucylang.ljvm.machine.Register;
+import org.lucylang.ljvm.machine.UndefinedException;
+import org.lucylang.ljvm.type.TypeUnmatchedException;
+import org.lucylang.ljvm.value.Value;
+import org.lucylang.ljvm.value.ValueUnavailableException;
+
 import java.util.ArrayList;
 
 public abstract class Instruction {
@@ -56,4 +64,40 @@ public abstract class Instruction {
         }
         return true;
     }
+
+    public String getRef(int pos) throws InvalidInstruction {
+        Operand operand = this.getOperand(pos);
+        if (operand.getValue() instanceof String) {
+            return (String) operand.getValue();
+        } else {
+            throw new InvalidInstruction();
+        }
+    }
+
+    public Value getValue(Machine vm, int pos) throws InvalidInstruction, UndefinedException {
+        Operand operand = this.getOperand(pos);
+        if (operand.getValue() instanceof String) {
+            return vm.getValue((String) operand.getValue());
+        } else if (operand.getValue() instanceof Value) {
+            return (Value) operand.getValue();
+        } else {
+            throw new InvalidInstruction();
+        }
+    }
+
+    public Register getRegister(Machine vm, int pos) throws InvalidInstruction, UndefinedException {
+        Operand operand = this.getOperand(pos);
+        if (operand.getValue() instanceof String) {
+            return vm.getRegister((String) operand.getValue());
+        } else {
+            throw new InvalidInstruction();
+        }
+    }
+
+    public void execute(Machine vm) throws InvalidInstruction, TypeUnmatchedException, ValueUnavailableException, UndefinedException, OverdefinedException {
+        this.validate();
+        this.executeValid(vm);
+    }
+
+    public abstract void executeValid(Machine vm) throws InvalidInstruction, TypeUnmatchedException, ValueUnavailableException, UndefinedException, OverdefinedException;
 }
