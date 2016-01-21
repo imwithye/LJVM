@@ -95,4 +95,19 @@ public class NumberValue extends Value {
     public Value not() throws ValueUnavailableException {
         throw new ValueUnavailableException();
     }
+
+    @Override
+    public NumberValue toNumberValue() {
+        return this;
+    }
+
+    @Override
+    public StringValue toStringValue() {
+        return new StringValue(this.stringValue());
+    }
+
+    @Override
+    public BooleanValue toBooleanValue() throws ValueUnavailableException {
+        return new BooleanValue(this.booleanValue());
+    }
 }

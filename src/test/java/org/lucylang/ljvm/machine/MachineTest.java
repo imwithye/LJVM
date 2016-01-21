@@ -2,6 +2,7 @@ package org.lucylang.ljvm.machine;
 
 import org.lucylang.ljvm.LJVMTest;
 import org.lucylang.ljvm.machine.instruction.*;
+import org.lucylang.ljvm.type.StringType;
 import org.lucylang.ljvm.value.NumberValue;
 import org.lucylang.ljvm.value.StringValue;
 
@@ -26,6 +27,10 @@ public class MachineTest extends LJVMTest {
                 new AddInstruction(new RefOperand("a"), new RefOperand("a"), new RefOperand("b")),
         });
         assertEquals(vm.getValue("a").floatValue().doubleValue(), 21.9);
+        vm.execute(new Instruction[]{
+                new StrInstruction(new RefOperand("a"), new RefOperand("a"))
+        });
+        assertEquals(vm.getValue("a").getType(), new StringType());
 
         vm.reset();
         vm.execute(new Instruction[]{

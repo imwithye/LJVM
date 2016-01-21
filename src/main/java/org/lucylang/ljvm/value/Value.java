@@ -31,4 +31,10 @@ public abstract class Value {
     public abstract Value or(Value value) throws ValueUnavailableException, TypeUnmatchedException;
 
     public abstract Value not() throws ValueUnavailableException;
+
+    public abstract NumberValue toNumberValue() throws ValueUnavailableException;
+
+    public abstract StringValue toStringValue() throws ValueUnavailableException;
+
+    public abstract BooleanValue toBooleanValue() throws ValueUnavailableException;
 }

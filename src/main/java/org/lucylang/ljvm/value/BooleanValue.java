@@ -102,4 +102,27 @@ public class BooleanValue extends Value {
     public Value not() {
         return new BooleanValue(!this.value);
     }
+
+    @Override
+    public NumberValue toNumberValue() {
+        if (this.booleanValue()) {
+            return new NumberValue(this.intValue());
+        } else {
+            return new NumberValue(this.intValue());
+        }
+    }
+
+    @Override
+    public StringValue toStringValue() {
+        if (this.booleanValue()) {
+            return new StringValue(this.stringValue());
+        } else {
+            return new StringValue(this.stringValue());
+        }
+    }
+
+    @Override
+    public BooleanValue toBooleanValue() {
+        return this;
+    }
 }

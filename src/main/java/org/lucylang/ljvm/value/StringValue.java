@@ -90,4 +90,19 @@ public class StringValue extends Value {
     public Value not() throws ValueUnavailableException {
         throw new ValueUnavailableException();
     }
+
+    @Override
+    public NumberValue toNumberValue() {
+        return new NumberValue(this.floatValue());
+    }
+
+    @Override
+    public StringValue toStringValue() {
+        return this;
+    }
+
+    @Override
+    public BooleanValue toBooleanValue() throws ValueUnavailableException {
+        return new BooleanValue(this.booleanValue());
+    }
 }
