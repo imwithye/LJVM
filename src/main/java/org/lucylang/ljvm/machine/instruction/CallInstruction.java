@@ -27,5 +27,7 @@ public class CallInstruction extends Instruction {
             throw new InvalidInstruction();
         }
         String mf = v.stringValue();
+        //TODO: currently support only one module
+        vm.call(mf);
     }
 }

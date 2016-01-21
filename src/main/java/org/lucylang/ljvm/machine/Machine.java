@@ -114,6 +114,10 @@ public class Machine {
             }
             this.mainModule = module;
         }
+        //TODO: currently only support one module
+        else {
+            throw new UndefinedException();
+        }
         this.modules.put(name, module);
         this.moduleNames.put(module, name);
         this.execute(module.getVars(), module, name, null, null);
