@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Module {
-    private HashMap<String, Function> functions;
+    private HashMap<String, Routine> functions;
     private ArrayList<DefInstruction> globalVariables;
 
     public Module() {
-        this.functions = new HashMap<String, Function>();
+        this.functions = new HashMap<String, Routine>();
         this.globalVariables = new ArrayList<DefInstruction>();
     }
 
@@ -20,20 +20,20 @@ public class Module {
         return functions.get("main") != null;
     }
 
-    public Module defineFunction(String name, Function function) throws OverdefinedException {
+    public Module defineRoutine(String name, Routine routine) throws OverdefinedException {
         if (this.functions.get(name) != null) {
             throw new OverdefinedException();
         }
-        this.functions.put(name, function);
+        this.functions.put(name, routine);
         return this;
     }
 
-    public Function getFunction(String name) throws UndefinedException {
-        Function function = this.functions.get(name);
-        if (function == null) {
+    public Routine getRoutine(String name) throws UndefinedException {
+        Routine routine = this.functions.get(name);
+        if (routine == null) {
             throw new UndefinedException();
         }
-        return function;
+        return routine;
     }
 
     public Module addVar(DefInstruction instruction) {

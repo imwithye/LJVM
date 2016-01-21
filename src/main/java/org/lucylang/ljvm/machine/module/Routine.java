@@ -5,22 +5,22 @@ import org.lucylang.ljvm.machine.instruction.Instruction;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Function {
+public class Routine {
     private ArrayList<Instruction> instructions;
 
-    public Function(ArrayList<Instruction> instructions) {
+    public Routine(ArrayList<Instruction> instructions) {
         this.instructions = instructions;
     }
 
-    public Function(Instruction[] instructions) {
+    public Routine(Instruction[] instructions) {
         this.instructions = new ArrayList<Instruction>(Arrays.asList(instructions));
     }
 
-    public Function() {
+    public Routine() {
         this.instructions = new ArrayList<Instruction>();
     }
 
-    public Function addInstruction(Instruction instruction) {
+    public Routine addInstruction(Instruction instruction) {
         this.instructions.add(instruction);
         return this;
     }

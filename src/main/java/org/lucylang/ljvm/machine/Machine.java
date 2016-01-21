@@ -2,7 +2,7 @@ package org.lucylang.ljvm.machine;
 
 import org.lucylang.ljvm.machine.instruction.Instruction;
 import org.lucylang.ljvm.machine.instruction.InvalidInstruction;
-import org.lucylang.ljvm.machine.module.Function;
+import org.lucylang.ljvm.machine.module.Routine;
 import org.lucylang.ljvm.machine.module.Module;
 import org.lucylang.ljvm.scope.OverdefinedException;
 import org.lucylang.ljvm.scope.Scope;
@@ -21,9 +21,9 @@ public class Machine {
     private HashMap<Module, String> moduleNames;
     private Module mainModule;
     private Module executingModule;
-    private Function executingFunction;
+    private Routine executingRoutine;
     private String executingModuleName;
-    private String executingFunctionName;
+    private String executingRoutineName;
     private Stack<Value> memoryStack;
 
     public Machine() {
@@ -39,8 +39,8 @@ public class Machine {
         this.memoryStack = new Stack<Value>();
         this.executingModule = null;
         this.executingModuleName = null;
-        this.executingFunction = null;
-        this.executingFunctionName = null;
+        this.executingRoutine = null;
+        this.executingRoutineName = null;
         return this;
     }
 
@@ -62,12 +62,12 @@ public class Machine {
         return this.executingModuleName;
     }
 
-    public Function getExecutingFunction() {
-        return this.getExecutingFunction();
+    public Routine getExecutingRoutine() {
+        return this.getExecutingRoutine();
     }
 
-    public String getExecutingFunctionName() {
-        return this.executingFunctionName;
+    public String getExecutingRoutineName() {
+        return this.executingRoutineName;
     }
 
     public Register getRegister(String ref) throws UndefinedException {
@@ -141,11 +141,11 @@ public class Machine {
         return this.memoryStack.peek();
     }
 
-    public Machine execute(Instruction[] instructions, Module executingModule, String executingModuleName, Function executingFunction, String executingFunctionName) throws InvalidInstruction, TypeUnmatchedException, ValueUnavailableException, UndefinedException, OverdefinedException {
+    public Machine execute(Instruction[] instructions, Module executingModule, String executingModuleName, Routine executingRoutine, String executingRoutineName) throws InvalidInstruction, TypeUnmatchedException, ValueUnavailableException, UndefinedException, OverdefinedException {
         this.executingModule = executingModule;
         this.executingModuleName = executingModuleName;
-        this.executingFunction = executingFunction;
-        this.executingFunctionName = executingFunctionName;
+        this.executingRoutine = executingRoutine;
+        this.executingRoutineName = executingRoutineName;
         this.next = 0;
         while (this.next < instructions.length) {
             Instruction i = instructions[this.next];
@@ -155,18 +155,18 @@ public class Machine {
         return this;
     }
 
-    public Machine execute(Function function, String executingFunctionName, Module executingModule, String executingModuleName) throws InvalidInstruction, TypeUnmatchedException, ValueUnavailableException, UndefinedException, OverdefinedException {
+    public Machine execute(Routine routine, String executingRoutineName, Module executingModule, String executingModuleName) throws InvalidInstruction, TypeUnmatchedException, ValueUnavailableException, UndefinedException, OverdefinedException {
         Scope<String, Register> current = this.registers;
         Scope<String, Register> functionScope = new Scope<String, Register>(current);
         this.registers = functionScope;
-        this.execute(function.getInstructions(), executingModule, executingModuleName, executingFunction, executingFunctionName);
+        this.execute(routine.getInstructions(), executingModule, executingModuleName, executingRoutine, executingRoutineName);
         this.registers = current;
         return this;
     }
 
     public Machine execute(Module module, String executingModuleName) throws InvalidInstruction, TypeUnmatchedException, ValueUnavailableException, UndefinedException, OverdefinedException {
-        Function function = module.getFunction("main");
-        return this.execute(function, "main", module, executingModuleName);
+        Routine routine = module.getRoutine("main");
+        return this.execute(routine, "main", module, executingModuleName);
     }
 
     public Machine execute() throws InvalidInstruction, TypeUnmatchedException, ValueUnavailableException, UndefinedException, OverdefinedException {
@@ -177,13 +177,13 @@ public class Machine {
         return this.execute(this.mainModule, this.executingModuleName);
     }
 
-    public Machine call(String moduleName, String functionName) throws InvalidInstruction, TypeUnmatchedException, ValueUnavailableException, UndefinedException, OverdefinedException {
+    public Machine call(String moduleName, String executingRoutineName) throws InvalidInstruction, TypeUnmatchedException, ValueUnavailableException, UndefinedException, OverdefinedException {
         Module targetModule = this.getModule(moduleName);
-        Function targetFunction = targetModule.getFunction(functionName);
-        return this.execute(targetFunction, functionName, targetModule, moduleName);
+        Routine targetRoutine = targetModule.getRoutine(executingRoutineName);
+        return this.execute(targetRoutine, executingRoutineName, targetModule, moduleName);
     }
 
-    public Machine call(String functionName) throws InvalidInstruction, TypeUnmatchedException, ValueUnavailableException, UndefinedException, OverdefinedException {
-        return this.call(this.executingModuleName, functionName);
+    public Machine call(String executingRoutineName) throws InvalidInstruction, TypeUnmatchedException, ValueUnavailableException, UndefinedException, OverdefinedException {
+        return this.call(this.executingModuleName, executingRoutineName);
     }
 }

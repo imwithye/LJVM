@@ -2,7 +2,7 @@ package org.lucylang.ljvm.machine;
 
 import org.lucylang.ljvm.LJVMTest;
 import org.lucylang.ljvm.machine.instruction.*;
-import org.lucylang.ljvm.machine.module.Function;
+import org.lucylang.ljvm.machine.module.Routine;
 import org.lucylang.ljvm.machine.module.Module;
 import org.lucylang.ljvm.value.NumberValue;
 import org.lucylang.ljvm.value.StringValue;
@@ -15,7 +15,7 @@ public class MachineTest extends LJVMTest {
     public void defineMain(Machine vm, DefInstruction globalVar, Instruction[] instructions) throws Exception {
         Module module = new Module();
         module.addVar(globalVar);
-        module.defineFunction("main", new Function(instructions));
+        module.defineRoutine("main", new Routine(instructions));
         vm.importModule("main", module);
     }
 
