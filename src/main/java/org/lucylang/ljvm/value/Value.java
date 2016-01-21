@@ -14,7 +14,7 @@ public abstract class Value {
 
     public abstract Double floatValue() throws ValueUnavailableException;
 
-    public abstract String stringValue() throws ValueUnavailableException;
+    public abstract String stringValue();
 
     public abstract Boolean booleanValue() throws ValueUnavailableException;
 
