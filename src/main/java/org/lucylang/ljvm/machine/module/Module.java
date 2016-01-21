@@ -1,7 +1,7 @@
 package org.lucylang.ljvm.machine.module;
 
-import org.lucylang.ljvm.machine.OverdefinedException;
-import org.lucylang.ljvm.machine.UndefinedException;
+import org.lucylang.ljvm.scope.OverdefinedException;
+import org.lucylang.ljvm.scope.UndefinedException;
 
 import java.util.HashMap;
 

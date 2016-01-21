@@ -3,18 +3,18 @@ package org.lucylang.ljvm.machine.instruction;
 import org.lucylang.ljvm.machine.Machine;
 import org.lucylang.ljvm.scope.OverdefinedException;
 import org.lucylang.ljvm.scope.UndefinedException;
+import org.lucylang.ljvm.type.StringType;
 import org.lucylang.ljvm.type.TypeUnmatchedException;
-import org.lucylang.ljvm.value.NumberValue;
 import org.lucylang.ljvm.value.Value;
 import org.lucylang.ljvm.value.ValueUnavailableException;
 
 import java.util.ArrayList;
 
-public class GotoInstruction extends Instruction {
-    public GotoInstruction(Operand<Value> ref) {
-        this.type = Type.GOTO;
+public class CallInstruction extends Instruction {
+    public CallInstruction(Operand target) {
+        this.type = Type.CALL;
         this.operands = new ArrayList<Operand>();
-        this.operands.add(ref);
+        this.operands.add(target);
 
         this.validSize = 1;
         this.validRefs = new int[]{};
@@ -23,10 +23,9 @@ public class GotoInstruction extends Instruction {
     @Override
     public void executeValid(Machine vm) throws InvalidInstruction, TypeUnmatchedException, ValueUnavailableException, UndefinedException, OverdefinedException {
         Value v = this.getValue(vm, 0);
-        if (!(v instanceof NumberValue)) {
+        if(!v.getType().equals(new StringType())) {
             throw new InvalidInstruction();
         }
-        int next = v.intValue();
-        vm.setNext(next);
+        String mf = v.stringValue();
     }
 }

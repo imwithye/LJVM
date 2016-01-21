@@ -1,9 +1,8 @@
 package org.lucylang.ljvm.machine.instruction;
 
 import org.lucylang.ljvm.machine.Machine;
-import org.lucylang.ljvm.machine.OverdefinedException;
 import org.lucylang.ljvm.machine.Register;
-import org.lucylang.ljvm.machine.UndefinedException;
+import org.lucylang.ljvm.scope.UndefinedException;
 import org.lucylang.ljvm.type.TypeUnmatchedException;
 import org.lucylang.ljvm.value.Value;
 import org.lucylang.ljvm.value.ValueUnavailableException;

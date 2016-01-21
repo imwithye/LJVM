@@ -1,4 +1,4 @@
-package org.lucylang.ljvm.machine;
+package org.lucylang.ljvm.scope;
 
 import org.lucylang.ljvm.exception.RuntimeException;
 

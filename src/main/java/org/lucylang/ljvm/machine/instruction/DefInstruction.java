@@ -1,8 +1,8 @@
 package org.lucylang.ljvm.machine.instruction;
 
 import org.lucylang.ljvm.machine.Machine;
-import org.lucylang.ljvm.machine.OverdefinedException;
-import org.lucylang.ljvm.machine.UndefinedException;
+import org.lucylang.ljvm.scope.OverdefinedException;
+import org.lucylang.ljvm.scope.UndefinedException;
 import org.lucylang.ljvm.value.Value;
 
 import java.util.ArrayList;

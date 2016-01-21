@@ -4,6 +4,9 @@ import org.lucylang.ljvm.machine.instruction.Instruction;
 import org.lucylang.ljvm.machine.instruction.InvalidInstruction;
 import org.lucylang.ljvm.machine.module.Function;
 import org.lucylang.ljvm.machine.module.Module;
+import org.lucylang.ljvm.scope.OverdefinedException;
+import org.lucylang.ljvm.scope.Scope;
+import org.lucylang.ljvm.scope.UndefinedException;
 import org.lucylang.ljvm.type.TypeUnmatchedException;
 import org.lucylang.ljvm.value.Value;
 import org.lucylang.ljvm.value.ValueUnavailableException;
@@ -13,7 +16,9 @@ import java.util.Stack;
 
 public class Machine {
     private int next;
-    private HashMap<String, Register> registers;
+    private Scope<String, Register> registers;
+    private HashMap<String, Module> modules;
+    private Module mainModule;
     private Stack<Value> memoryStack;
 
     public Machine() {
@@ -22,7 +27,9 @@ public class Machine {
 
     public Machine reset() {
         this.next = 0;
-        this.registers = new HashMap<String, Register>();
+        this.registers = new Scope<String, Register>();
+        this.modules = new HashMap<String, Module>();
+        this.mainModule = null;
         this.memoryStack = new Stack<Value>();
         return this;
     }
@@ -62,6 +69,28 @@ public class Machine {
         return this;
     }
 
+    public Module getModule(String name) throws UndefinedException {
+        Module module = this.modules.get(name);
+        if (module == null) {
+            throw new UndefinedException();
+        }
+        return module;
+    }
+
+    public Machine importModule(String name, Module module) throws InvalidInstruction, TypeUnmatchedException, ValueUnavailableException, UndefinedException, OverdefinedException {
+        if (this.modules.get(name) != null) {
+            throw new OverdefinedException();
+        }
+        if (module.isMain()) {
+            if (this.mainModule != null) {
+                throw new OverdefinedException();
+            }
+            this.mainModule = module;
+        }
+        this.modules.put(name, module);
+        return this;
+    }
+
     public Machine pushValue(Value value) {
         this.memoryStack.push(value);
         return this;
@@ -90,11 +119,27 @@ public class Machine {
     }
 
     public Machine execute(Function function) throws InvalidInstruction, TypeUnmatchedException, ValueUnavailableException, UndefinedException, OverdefinedException {
-        return this.execute(function.getInstructions());
+        Scope<String, Register> current = this.registers;
+        Scope<String, Register> functionScope = new Scope<String, Register>(current);
+        this.registers = functionScope;
+        this.execute(function.getInstructions());
+        this.registers = current;
+        return this;
     }
 
     public Machine execute(Module module) throws InvalidInstruction, TypeUnmatchedException, ValueUnavailableException, UndefinedException, OverdefinedException {
-        // TODO: add non main module method
         return this.execute(module.getFunction("main"));
+    }
+
+    public Machine execute() throws InvalidInstruction, TypeUnmatchedException, ValueUnavailableException, UndefinedException, OverdefinedException {
+        if (this.mainModule == null) {
+            throw new UndefinedException();
+        }
+        return this.execute(this.mainModule);
+    }
+
+    public Machine callFunction(String moduleName, String functionName) throws InvalidInstruction, TypeUnmatchedException, ValueUnavailableException, UndefinedException, OverdefinedException {
+        Function function = this.getModule(moduleName).getFunction(functionName);
+        return this.execute(function);
     }
 }
