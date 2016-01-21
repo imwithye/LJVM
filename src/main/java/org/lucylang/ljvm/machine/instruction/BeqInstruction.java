@@ -1,6 +1,7 @@
 package org.lucylang.ljvm.machine.instruction;
 
 import org.lucylang.ljvm.machine.Machine;
+import org.lucylang.ljvm.machine.module.Module;
 import org.lucylang.ljvm.scope.UndefinedException;
 import org.lucylang.ljvm.value.NumberValue;
 import org.lucylang.ljvm.value.Value;
@@ -20,10 +21,10 @@ public class BeqInstruction extends Instruction {
     }
 
     @Override
-    public void executeValid(Machine vm) throws InvalidInstruction, ValueUnavailableException, UndefinedException {
+    public boolean executeValid(Machine vm, Module module) throws InvalidInstruction, ValueUnavailableException, UndefinedException {
         Value v = this.getValue(vm, 0);
         if (!v.booleanValue()) {
-            return;
+            return false;
         }
         Value target = this.getValue(vm, 1);
         if (!(target instanceof NumberValue)) {
@@ -31,5 +32,6 @@ public class BeqInstruction extends Instruction {
         }
         int next = target.intValue();
         vm.setNext(next);
+        return false;
     }
 }

@@ -2,6 +2,7 @@ package org.lucylang.ljvm.machine.instruction;
 
 import org.lucylang.ljvm.machine.Machine;
 import org.lucylang.ljvm.machine.Register;
+import org.lucylang.ljvm.machine.module.Module;
 import org.lucylang.ljvm.scope.UndefinedException;
 import org.lucylang.ljvm.type.TypeUnmatchedException;
 import org.lucylang.ljvm.value.Value;
@@ -21,9 +22,10 @@ public class NotInstruction extends Instruction {
     }
 
     @Override
-    public void executeValid(Machine vm) throws InvalidInstruction, TypeUnmatchedException, ValueUnavailableException, UndefinedException {
+    public boolean executeValid(Machine vm, Module module) throws InvalidInstruction, TypeUnmatchedException, ValueUnavailableException, UndefinedException {
         Value v = this.getValue(vm, 1);
         Register result = this.getRegister(vm, 0);
         result.assignValue(v.not());
+        return false;
     }
 }

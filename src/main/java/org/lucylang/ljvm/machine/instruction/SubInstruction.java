@@ -2,6 +2,7 @@ package org.lucylang.ljvm.machine.instruction;
 
 import org.lucylang.ljvm.machine.Machine;
 import org.lucylang.ljvm.machine.Register;
+import org.lucylang.ljvm.machine.module.Module;
 import org.lucylang.ljvm.scope.UndefinedException;
 import org.lucylang.ljvm.type.TypeUnmatchedException;
 import org.lucylang.ljvm.value.Value;
@@ -22,10 +23,11 @@ public class SubInstruction extends Instruction {
     }
 
     @Override
-    public void executeValid(Machine vm) throws InvalidInstruction, TypeUnmatchedException, ValueUnavailableException, UndefinedException {
+    public boolean executeValid(Machine vm, Module module) throws InvalidInstruction, TypeUnmatchedException, ValueUnavailableException, UndefinedException {
         Value v1 = this.getValue(vm, 1);
         Value v2 = this.getValue(vm, 2);
         Register result = this.getRegister(vm, 0);
         result.assignValue(v1.sub(v2));
+        return false;
     }
 }

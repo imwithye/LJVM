@@ -1,6 +1,7 @@
 package org.lucylang.ljvm.machine.instruction;
 
 import org.lucylang.ljvm.machine.Machine;
+import org.lucylang.ljvm.machine.module.Module;
 import org.lucylang.ljvm.scope.OverdefinedException;
 import org.lucylang.ljvm.machine.Register;
 import org.lucylang.ljvm.scope.UndefinedException;
@@ -94,10 +95,10 @@ public abstract class Instruction {
         }
     }
 
-    public void execute(Machine vm) throws InvalidInstruction, TypeUnmatchedException, ValueUnavailableException, UndefinedException, OverdefinedException {
+    public boolean execute(Machine vm, Module module) throws InvalidInstruction, TypeUnmatchedException, ValueUnavailableException, UndefinedException, OverdefinedException {
         this.validate();
-        this.executeValid(vm);
+        return this.executeValid(vm, module);
     }
 
-    public abstract void executeValid(Machine vm) throws InvalidInstruction, TypeUnmatchedException, ValueUnavailableException, UndefinedException, OverdefinedException;
+    public abstract boolean executeValid(Machine vm, Module module) throws InvalidInstruction, TypeUnmatchedException, ValueUnavailableException, UndefinedException, OverdefinedException;
 }

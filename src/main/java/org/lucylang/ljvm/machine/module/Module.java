@@ -9,14 +9,14 @@ import java.util.HashMap;
 
 public class Module {
     private HashMap<String, Routine> functions;
-    private ArrayList<DefInstruction> globalVariables;
+    private ArrayList<DefInstruction> vars;
 
     public Module() {
         this.functions = new HashMap<String, Routine>();
-        this.globalVariables = new ArrayList<DefInstruction>();
+        this.vars = new ArrayList<DefInstruction>();
     }
 
-    public boolean isMain() {
+    public boolean hasMain() {
         return functions.get("main") != null;
     }
 
@@ -37,11 +37,18 @@ public class Module {
     }
 
     public Module addVar(DefInstruction instruction) {
-        this.globalVariables.add(instruction);
+        this.vars.add(instruction);
+        return this;
+    }
+
+    public Module addVars(DefInstruction[] instructions) {
+        for (DefInstruction instruction : instructions) {
+            this.addVar(instruction);
+        }
         return this;
     }
 
     public DefInstruction[] getVars() {
-        return this.globalVariables.toArray(new DefInstruction[0]);
+        return this.vars.toArray(new DefInstruction[0]);
     }
 }
