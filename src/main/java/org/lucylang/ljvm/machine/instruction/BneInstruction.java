@@ -30,7 +30,7 @@ public class BneInstruction extends Instruction {
         if (!(target instanceof NumberValue)) {
             throw new InvalidInstruction();
         }
-        int next = target.intValue();
+        int next = target.intValue() - 1;
         vm.setNext(next);
         return false;
     }

@@ -27,7 +27,7 @@ public class GotoInstruction extends Instruction {
         if (!(v instanceof NumberValue)) {
             throw new InvalidInstruction();
         }
-        int next = v.intValue();
+        int next = v.intValue() - 1;
         vm.setNext(next);
         return false;
     }

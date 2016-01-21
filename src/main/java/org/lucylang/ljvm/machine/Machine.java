@@ -110,7 +110,7 @@ public class Machine {
         this.registers = routineScope;
         this.execute(routine.getInstructions(), 0, module);
         this.next = next;
-        this.registers = routineScope;
+        this.registers = currentScope;
         return this;
     }
 
