@@ -32,6 +32,16 @@ public abstract class Value {
 
     public abstract Value not() throws ValueUnavailableException;
 
+    public abstract Value equ(Value value) throws ValueUnavailableException, TypeUnmatchedException;
+
+    public abstract Value les(Value value) throws ValueUnavailableException, TypeUnmatchedException;
+
+    public abstract Value gre(Value value) throws ValueUnavailableException, TypeUnmatchedException;
+
+    public abstract Value leq(Value value) throws ValueUnavailableException, TypeUnmatchedException;
+
+    public abstract Value geq(Value value) throws ValueUnavailableException, TypeUnmatchedException;
+
     public abstract NumberValue toNumberValue() throws ValueUnavailableException;
 
     public abstract StringValue toStringValue() throws ValueUnavailableException;

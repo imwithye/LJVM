@@ -104,6 +104,35 @@ public class BooleanValue extends Value {
     }
 
     @Override
+    public Value equ(Value value) throws TypeUnmatchedException {
+        if (!(value instanceof BooleanValue)) {
+            throw new TypeUnmatchedException();
+        }
+        BooleanValue booleanValue = (BooleanValue) value;
+        return new BooleanValue(this.booleanValue() == booleanValue.booleanValue());
+    }
+
+    @Override
+    public Value les(Value value) throws ValueUnavailableException {
+        throw new ValueUnavailableException();
+    }
+
+    @Override
+    public Value gre(Value value) throws ValueUnavailableException {
+        throw new ValueUnavailableException();
+    }
+
+    @Override
+    public Value leq(Value value) throws ValueUnavailableException {
+        throw new ValueUnavailableException();
+    }
+
+    @Override
+    public Value geq(Value value) throws ValueUnavailableException {
+        throw new ValueUnavailableException();
+    }
+
+    @Override
     public NumberValue toNumberValue() {
         if (this.booleanValue()) {
             return new NumberValue(this.intValue());

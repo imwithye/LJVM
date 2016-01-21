@@ -97,6 +97,51 @@ public class NumberValue extends Value {
     }
 
     @Override
+    public Value equ(Value value) throws TypeUnmatchedException {
+        if (!(value instanceof NumberValue)) {
+            throw new TypeUnmatchedException();
+        }
+        NumberValue numberValue = (NumberValue) value;
+        return new BooleanValue(this.intValue().equals(numberValue.intValue()) || this.floatValue().equals(numberValue.floatValue()));
+    }
+
+    @Override
+    public Value les(Value value) throws TypeUnmatchedException {
+        if (!(value instanceof NumberValue)) {
+            throw new TypeUnmatchedException();
+        }
+        NumberValue numberValue = (NumberValue) value;
+        return new BooleanValue(this.intValue().compareTo(numberValue.intValue()) < 0 || this.floatValue().compareTo(numberValue.floatValue()) < 0);
+    }
+
+    @Override
+    public Value gre(Value value) throws TypeUnmatchedException {
+        if (!(value instanceof NumberValue)) {
+            throw new TypeUnmatchedException();
+        }
+        NumberValue numberValue = (NumberValue) value;
+        return new BooleanValue(this.intValue().compareTo(numberValue.intValue()) > 0 || this.floatValue().compareTo(numberValue.floatValue()) > 0);
+    }
+
+    @Override
+    public Value leq(Value value) throws TypeUnmatchedException {
+        if (!(value instanceof NumberValue)) {
+            throw new TypeUnmatchedException();
+        }
+        NumberValue numberValue = (NumberValue) value;
+        return new BooleanValue(this.intValue().compareTo(numberValue.intValue()) <= 0 || this.floatValue().compareTo(numberValue.floatValue()) <= 0);
+    }
+
+    @Override
+    public Value geq(Value value) throws TypeUnmatchedException {
+        if (!(value instanceof NumberValue)) {
+            throw new TypeUnmatchedException();
+        }
+        NumberValue numberValue = (NumberValue) value;
+        return new BooleanValue(this.intValue().compareTo(numberValue.intValue()) >= 0 || this.floatValue().compareTo(numberValue.floatValue()) >= 0);
+    }
+
+    @Override
     public NumberValue toNumberValue() {
         return this;
     }

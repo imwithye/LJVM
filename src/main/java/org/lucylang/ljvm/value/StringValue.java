@@ -92,6 +92,46 @@ public class StringValue extends Value {
     }
 
     @Override
+    public Value equ(Value value) throws TypeUnmatchedException {
+        if (!(value instanceof StringValue)) {
+            throw new TypeUnmatchedException();
+        }
+        return new BooleanValue(this.stringValue().compareTo(value.stringValue()) == 0);
+    }
+
+    @Override
+    public Value les(Value value) throws TypeUnmatchedException {
+        if (!(value instanceof StringValue)) {
+            throw new TypeUnmatchedException();
+        }
+        return new BooleanValue(this.stringValue().compareTo(value.stringValue()) < 0);
+    }
+
+    @Override
+    public Value gre(Value value) throws TypeUnmatchedException {
+        if (!(value instanceof StringValue)) {
+            throw new TypeUnmatchedException();
+        }
+        return new BooleanValue(this.stringValue().compareTo(value.stringValue()) > 0);
+    }
+
+    @Override
+    public Value leq(Value value) throws TypeUnmatchedException {
+        if (!(value instanceof StringValue)) {
+            throw new TypeUnmatchedException();
+        }
+        return new BooleanValue(this.stringValue().compareTo(value.stringValue()) <= 0);
+    }
+
+    @Override
+    public Value geq(Value value) throws TypeUnmatchedException {
+        if (!(value instanceof StringValue)) {
+            throw new TypeUnmatchedException();
+        }
+        return new BooleanValue(this.stringValue().compareTo(value.stringValue()) >= 0);
+    }
+
+    @Override
     public NumberValue toNumberValue() {
         return new NumberValue(this.floatValue());
     }
