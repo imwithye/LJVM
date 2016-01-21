@@ -18,7 +18,12 @@ public class Machine {
     private int next;
     private Scope<String, Register> registers;
     private HashMap<String, Module> modules;
+    private HashMap<Module, String> moduleNames;
     private Module mainModule;
+    private Module executingModule;
+    private Function executingFunction;
+    private String executingModuleName;
+    private String executingFunctionName;
     private Stack<Value> memoryStack;
 
     public Machine() {
@@ -29,8 +34,13 @@ public class Machine {
         this.next = 0;
         this.registers = new Scope<String, Register>();
         this.modules = new HashMap<String, Module>();
+        this.moduleNames = new HashMap<Module, String>();
         this.mainModule = null;
         this.memoryStack = new Stack<Value>();
+        this.executingModule = null;
+        this.executingModuleName = null;
+        this.executingFunction = null;
+        this.executingFunctionName = null;
         return this;
     }
 
@@ -41,6 +51,23 @@ public class Machine {
 
     public int getNext() {
         return this.next;
+    }
+
+
+    public Module getExecutingModule() {
+        return this.executingModule;
+    }
+
+    public String getExecutingModuleName() {
+        return this.executingModuleName;
+    }
+
+    public Function getExecutingFunction() {
+        return this.getExecutingFunction();
+    }
+
+    public String getExecutingFunctionName() {
+        return this.executingFunctionName;
     }
 
     public Register getRegister(String ref) throws UndefinedException {
@@ -61,7 +88,7 @@ public class Machine {
     }
 
     public Machine defineRegister(String ref, Value value) throws OverdefinedException {
-        if (this.registers.get(ref) == null) {
+        if (!this.registers.isDefined(ref)) {
             this.registers.put(ref, new Register(value));
         } else {
             throw new OverdefinedException();
@@ -88,6 +115,8 @@ public class Machine {
             this.mainModule = module;
         }
         this.modules.put(name, module);
+        this.moduleNames.put(module, name);
+        this.execute(module.getVars(), module, name, null, null);
         return this;
     }
 
@@ -108,7 +137,11 @@ public class Machine {
         return this.memoryStack.peek();
     }
 
-    public Machine execute(Instruction[] instructions) throws InvalidInstruction, TypeUnmatchedException, ValueUnavailableException, UndefinedException, OverdefinedException {
+    public Machine execute(Instruction[] instructions, Module executingModule, String executingModuleName, Function executingFunction, String executingFunctionName) throws InvalidInstruction, TypeUnmatchedException, ValueUnavailableException, UndefinedException, OverdefinedException {
+        this.executingModule = executingModule;
+        this.executingModuleName = executingModuleName;
+        this.executingFunction = executingFunction;
+        this.executingFunctionName = executingFunctionName;
         this.next = 0;
         while (this.next < instructions.length) {
             Instruction i = instructions[this.next];
@@ -118,28 +151,35 @@ public class Machine {
         return this;
     }
 
-    public Machine execute(Function function) throws InvalidInstruction, TypeUnmatchedException, ValueUnavailableException, UndefinedException, OverdefinedException {
+    public Machine execute(Function function, String executingFunctionName, Module executingModule, String executingModuleName) throws InvalidInstruction, TypeUnmatchedException, ValueUnavailableException, UndefinedException, OverdefinedException {
         Scope<String, Register> current = this.registers;
         Scope<String, Register> functionScope = new Scope<String, Register>(current);
         this.registers = functionScope;
-        this.execute(function.getInstructions());
+        this.execute(function.getInstructions(), executingModule, executingModuleName, executingFunction, executingFunctionName);
         this.registers = current;
         return this;
     }
 
-    public Machine execute(Module module) throws InvalidInstruction, TypeUnmatchedException, ValueUnavailableException, UndefinedException, OverdefinedException {
-        return this.execute(module.getFunction("main"));
+    public Machine execute(Module module, String executingModuleName) throws InvalidInstruction, TypeUnmatchedException, ValueUnavailableException, UndefinedException, OverdefinedException {
+        Function function = module.getFunction("main");
+        return this.execute(function, "main", module, executingModuleName);
     }
 
     public Machine execute() throws InvalidInstruction, TypeUnmatchedException, ValueUnavailableException, UndefinedException, OverdefinedException {
         if (this.mainModule == null) {
             throw new UndefinedException();
         }
-        return this.execute(this.mainModule);
+        this.executingModuleName = this.moduleNames.get(this.mainModule);
+        return this.execute(this.mainModule, this.executingModuleName);
     }
 
-    public Machine callFunction(String moduleName, String functionName) throws InvalidInstruction, TypeUnmatchedException, ValueUnavailableException, UndefinedException, OverdefinedException {
-        Function function = this.getModule(moduleName).getFunction(functionName);
-        return this.execute(function);
+    public Machine call(String moduleName, String functionName) throws InvalidInstruction, TypeUnmatchedException, ValueUnavailableException, UndefinedException, OverdefinedException {
+        Module targetModule = this.getModule(moduleName);
+        Function targetFunction = targetModule.getFunction(functionName);
+        return this.execute(targetFunction, functionName, targetModule, moduleName);
+    }
+
+    public Machine call(String functionName) throws InvalidInstruction, TypeUnmatchedException, ValueUnavailableException, UndefinedException, OverdefinedException {
+        return this.call(this.executingModuleName, functionName);
     }
 }
