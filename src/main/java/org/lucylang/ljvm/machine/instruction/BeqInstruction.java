@@ -9,14 +9,14 @@ import org.lucylang.ljvm.value.ValueUnavailableException;
 import java.util.ArrayList;
 
 public class BeqInstruction extends Instruction {
-    public BeqInstruction(Operand value, Operand target) {
+    public BeqInstruction(Operand value, Operand<Value> target) {
         this.type = Type.BEQ;
         this.operands = new ArrayList<Operand>();
         this.operands.add(value);
         this.operands.add(target);
 
         this.validSize = 2;
-        this.validRefs = new int[]{0};
+        this.validRefs = new int[]{};
     }
 
     @Override

@@ -9,14 +9,14 @@ import org.lucylang.ljvm.value.ValueUnavailableException;
 import java.util.ArrayList;
 
 public class BneInstruction extends Instruction {
-    public BneInstruction(Operand value, Operand target) {
+    public BneInstruction(Operand value, Operand<Value> target) {
         this.type = Type.BNE;
         this.operands = new ArrayList<Operand>();
         this.operands.add(value);
         this.operands.add(target);
 
         this.validSize = 2;
-        this.validRefs = new int[]{0};
+        this.validRefs = new int[]{};
     }
 
     @Override
