@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class PutInstruction extends Instruction {
     public PutInstruction(Operand value) {
-        this.type = Type.DIV;
+        this.type = Type.PUT;
         this.operands = new ArrayList<Operand>();
         this.operands.add(value);
 

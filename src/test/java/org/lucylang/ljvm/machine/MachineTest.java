@@ -39,5 +39,13 @@ public class MachineTest extends LJVMTest {
                 new AddInstruction(new RefOperand("a"), new RefOperand("a"), new RefOperand("b")),
         });
         assertEquals(vm.getValue("a").stringValue(), "HelloWorld");
+
+        vm.reset();
+        vm.execute(new Instruction[]{
+                new DefInstruction(new RefOperand("a"), new ValueOperand(new StringValue("Hello"))),
+                new DefInstruction(new RefOperand("b"), new ValueOperand(new StringValue("World"))),
+                new AddInstruction(new RefOperand("a"), new RefOperand("a"), new RefOperand("b")),
+                new PutInstruction(new RefOperand("a"))
+        });
     }
 }

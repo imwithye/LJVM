@@ -2,6 +2,8 @@ package org.lucylang.ljvm.machine;
 
 import org.lucylang.ljvm.machine.instruction.Instruction;
 import org.lucylang.ljvm.machine.instruction.InvalidInstruction;
+import org.lucylang.ljvm.machine.module.Function;
+import org.lucylang.ljvm.machine.module.Module;
 import org.lucylang.ljvm.type.TypeUnmatchedException;
 import org.lucylang.ljvm.value.Value;
 import org.lucylang.ljvm.value.ValueUnavailableException;
@@ -68,5 +70,14 @@ public class Machine {
             this.next++;
         }
         return this;
+    }
+
+    public Machine execute(Function function) throws InvalidInstruction, TypeUnmatchedException, ValueUnavailableException, UndefinedException, OverdefinedException {
+        return this.execute(function.getInstructions());
+    }
+
+    public Machine execute(Module module) throws InvalidInstruction, TypeUnmatchedException, ValueUnavailableException, UndefinedException, OverdefinedException {
+        // TODO: add non main module method
+        return this.execute(module.getFunction("main"));
     }
 }
