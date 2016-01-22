@@ -6,6 +6,7 @@ import org.lucylang.ljvm.scope.OverdefinedException;
 import org.lucylang.ljvm.machine.Register;
 import org.lucylang.ljvm.scope.UndefinedException;
 import org.lucylang.ljvm.type.TypeUnmatchedException;
+import org.lucylang.ljvm.value.StringValue;
 import org.lucylang.ljvm.value.Value;
 import org.lucylang.ljvm.value.ValueUnavailableException;
 
@@ -93,6 +94,32 @@ public abstract class Instruction implements Serializable {
             return vm.getRegister((String) operand.getValue());
         } else {
             throw new InvalidInstruction();
+        }
+    }
+
+    public String toString() {
+        try {
+            String string = new String();
+            string += this.type;
+            for (int i = 0; i < this.size(); i++) {
+                Operand op = this.getOperand(i);
+                if (op.getValue() instanceof String) {
+                    string += " " + op.getValue();
+                } else if (op.getValue() instanceof StringValue) {
+                    String value = ((ValueOperand) op).getValue().stringValue();
+                    if (value.equals("\t")) {
+                        value = "\\t";
+                    } else if (value.equals("\n")) {
+                        value = "\\n";
+                    }
+                    string += " " + "\"" + value + "\"";
+                } else {
+                    string += " " + ((ValueOperand) op).getValue().stringValue();
+                }
+            }
+            return string;
+        } catch (Exception e) {
+            return new String();
         }
     }
 

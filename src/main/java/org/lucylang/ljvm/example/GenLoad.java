@@ -15,7 +15,7 @@ import java.io.FileOutputStream;
 public class GenLoad {
     public static void main(String[] args) {
         try {
-            String path = "D:/fibonacci.lyo";
+            String path = "/Users/Ciel/Desktop/fibonacci.lyo";
             System.out.println("Bootstrap fibonacci module and write it to " + path);
             Module module = new Module();
             module.addVars(new DefInstruction[]{
@@ -63,10 +63,13 @@ public class GenLoad {
             }));
             Driver driver = new Driver();
             driver.generateModule(module, new FileOutputStream(path));
+            System.out.println(">>>>");
+            System.out.println(module);
+            System.out.println("<<<<");
             System.out.println("Done.");
             System.out.println();
 
-            System.out.println("Load fibonacci module from " + path + "and execute:");
+            System.out.println("Load fibonacci module from " + path + " and execute:");
             System.out.println();
 
             Module fibonacci = driver.loadModule(new FileInputStream(path));
