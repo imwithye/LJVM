@@ -50,7 +50,7 @@ public class NumberValue extends Value {
     @Override
     public Value add(Value value) throws TypeUnmatchedException {
         if (!this.isSameType(value)) {
-            throw new TypeUnmatchedException();
+            throw new TypeUnmatchedException(this.getType(), value.getType());
         }
         return new NumberValue(this.value + ((NumberValue) value).floatValue());
     }
@@ -58,7 +58,7 @@ public class NumberValue extends Value {
     @Override
     public Value sub(Value value) throws TypeUnmatchedException {
         if (!this.isSameType(value)) {
-            throw new TypeUnmatchedException();
+            throw new TypeUnmatchedException(this.getType(), value.getType());
         }
         return new NumberValue(this.value - ((NumberValue) value).floatValue());
     }
@@ -66,7 +66,7 @@ public class NumberValue extends Value {
     @Override
     public Value mul(Value value) throws TypeUnmatchedException {
         if (!this.isSameType(value)) {
-            throw new TypeUnmatchedException();
+            throw new TypeUnmatchedException(this.getType(), value.getType());
         }
         return new NumberValue(this.value * ((NumberValue) value).floatValue());
     }
@@ -74,7 +74,7 @@ public class NumberValue extends Value {
     @Override
     public Value div(Value value) throws TypeUnmatchedException {
         if (!this.isSameType(value)) {
-            throw new TypeUnmatchedException();
+            throw new TypeUnmatchedException(this.getType(), value.getType());
         }
         return new NumberValue(this.value / ((NumberValue) value).floatValue());
     }
@@ -82,7 +82,7 @@ public class NumberValue extends Value {
     @Override
     public Value and(Value value) throws ValueUnavailableException, TypeUnmatchedException {
         if (!this.isSameType(value)) {
-            throw new TypeUnmatchedException();
+            throw new TypeUnmatchedException(this.getType(), value.getType());
         }
         throw new ValueUnavailableException();
     }
@@ -90,7 +90,7 @@ public class NumberValue extends Value {
     @Override
     public Value or(Value value) throws ValueUnavailableException, TypeUnmatchedException {
         if (!this.isSameType(value)) {
-            throw new TypeUnmatchedException();
+            throw new TypeUnmatchedException(this.getType(), value.getType());
         }
         throw new ValueUnavailableException();
     }
@@ -103,7 +103,7 @@ public class NumberValue extends Value {
     @Override
     public Value equ(Value value) throws TypeUnmatchedException {
         if (!(value instanceof NumberValue)) {
-            throw new TypeUnmatchedException();
+            throw new TypeUnmatchedException(this.getType(), value.getType());
         }
         NumberValue numberValue = (NumberValue) value;
         return new BooleanValue(this.intValue().equals(numberValue.intValue()) || this.floatValue().equals(numberValue.floatValue()));
@@ -112,7 +112,7 @@ public class NumberValue extends Value {
     @Override
     public Value les(Value value) throws TypeUnmatchedException {
         if (!(value instanceof NumberValue)) {
-            throw new TypeUnmatchedException();
+            throw new TypeUnmatchedException(this.getType(), value.getType());
         }
         NumberValue numberValue = (NumberValue) value;
         return new BooleanValue(this.intValue().compareTo(numberValue.intValue()) < 0 || this.floatValue().compareTo(numberValue.floatValue()) < 0);
@@ -121,7 +121,7 @@ public class NumberValue extends Value {
     @Override
     public Value gre(Value value) throws TypeUnmatchedException {
         if (!(value instanceof NumberValue)) {
-            throw new TypeUnmatchedException();
+            throw new TypeUnmatchedException(this.getType(), value.getType());
         }
         NumberValue numberValue = (NumberValue) value;
         return new BooleanValue(this.intValue().compareTo(numberValue.intValue()) > 0 || this.floatValue().compareTo(numberValue.floatValue()) > 0);
@@ -130,7 +130,7 @@ public class NumberValue extends Value {
     @Override
     public Value leq(Value value) throws TypeUnmatchedException {
         if (!(value instanceof NumberValue)) {
-            throw new TypeUnmatchedException();
+            throw new TypeUnmatchedException(this.getType(), value.getType());
         }
         NumberValue numberValue = (NumberValue) value;
         return new BooleanValue(this.intValue().compareTo(numberValue.intValue()) <= 0 || this.floatValue().compareTo(numberValue.floatValue()) <= 0);
@@ -139,7 +139,7 @@ public class NumberValue extends Value {
     @Override
     public Value geq(Value value) throws TypeUnmatchedException {
         if (!(value instanceof NumberValue)) {
-            throw new TypeUnmatchedException();
+            throw new TypeUnmatchedException(this.getType(), value.getType());
         }
         NumberValue numberValue = (NumberValue) value;
         return new BooleanValue(this.intValue().compareTo(numberValue.intValue()) >= 0 || this.floatValue().compareTo(numberValue.floatValue()) >= 0);
