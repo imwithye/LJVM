@@ -4,10 +4,11 @@ import org.lucylang.ljvm.machine.instruction.DefInstruction;
 import org.lucylang.ljvm.scope.OverdefinedException;
 import org.lucylang.ljvm.scope.UndefinedException;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Module {
+public class Module implements Serializable {
     private HashMap<String, Routine> functions;
     private ArrayList<DefInstruction> vars;
 

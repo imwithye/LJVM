@@ -5,14 +5,14 @@ import org.lucylang.ljvm.machine.module.Module;
 import org.lucylang.ljvm.scope.OverdefinedException;
 import org.lucylang.ljvm.machine.Register;
 import org.lucylang.ljvm.scope.UndefinedException;
-import org.lucylang.ljvm.type.StringType;
 import org.lucylang.ljvm.type.TypeUnmatchedException;
 import org.lucylang.ljvm.value.Value;
 import org.lucylang.ljvm.value.ValueUnavailableException;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public abstract class Instruction {
+public abstract class Instruction implements Serializable {
     protected Type type = Type.NULL;
     protected ArrayList<Operand> operands;
     protected int validSize;

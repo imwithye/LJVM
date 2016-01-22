@@ -3,7 +3,9 @@ package org.lucylang.ljvm.value;
 import org.lucylang.ljvm.type.Type;
 import org.lucylang.ljvm.type.TypeUnmatchedException;
 
-public abstract class Value {
+import java.io.Serializable;
+
+public abstract class Value implements Serializable {
     public abstract Type getType();
 
     public boolean isSameType(Value value) {

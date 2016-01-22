@@ -35,7 +35,11 @@ public class NumberValue extends Value {
 
     @Override
     public String stringValue() {
-        return this.value.toString();
+        if (this.value.equals(new Double(this.value.intValue()))) {
+            return new Integer(this.value.intValue()).toString();
+        } else {
+            return this.value.toString();
+        }
     }
 
     @Override

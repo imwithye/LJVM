@@ -2,10 +2,11 @@ package org.lucylang.ljvm.machine.module;
 
 import org.lucylang.ljvm.machine.instruction.Instruction;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Routine {
+public class Routine implements Serializable {
     private ArrayList<Instruction> instructions;
 
     public Routine(ArrayList<Instruction> instructions) {

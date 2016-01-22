@@ -1,4 +1,6 @@
 package org.lucylang.ljvm.type;
 
-public class Type {
+import java.io.Serializable;
+
+public class Type implements Serializable {
 }
