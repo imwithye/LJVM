@@ -54,3 +54,6 @@ local.properties
 
 .idea/
 ljvm.iml
+
+# JFlex
+src/main/java/org/lucylang/ljvm/parser/Lexer.java
