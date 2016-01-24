@@ -4,7 +4,7 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-public abstract class LJVMTest extends TestCase {
+public class LJVMTest extends TestCase {
     public LJVMTest(String testName) {
         super(testName);
     }
@@ -12,4 +12,6 @@ public abstract class LJVMTest extends TestCase {
     public static Test suite() {
         return new TestSuite(LJVMTest.class);
     }
+
+    public void test() {}
 }
