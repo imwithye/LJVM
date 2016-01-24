@@ -8,6 +8,10 @@ public class NumberValue extends Value {
     private NumberType type;
     private Double value;
 
+    public NumberValue() {
+        this(0);
+    }
+
     public NumberValue(Integer value) {
         this.type = new NumberType();
         this.value = value.doubleValue();
@@ -44,7 +48,7 @@ public class NumberValue extends Value {
 
     @Override
     public Boolean booleanValue() throws ValueUnavailableException {
-        throw new ValueUnavailableException();
+        throw new ValueUnavailableException(new BooleanValue());
     }
 
     @Override
@@ -84,7 +88,7 @@ public class NumberValue extends Value {
         if (!this.isSameType(value)) {
             throw new TypeUnmatchedException(this.getType(), value.getType());
         }
-        throw new ValueUnavailableException();
+        throw new ValueUnavailableException(new BooleanValue());
     }
 
     @Override
@@ -92,12 +96,12 @@ public class NumberValue extends Value {
         if (!this.isSameType(value)) {
             throw new TypeUnmatchedException(this.getType(), value.getType());
         }
-        throw new ValueUnavailableException();
+        throw new ValueUnavailableException(new BooleanValue());
     }
 
     @Override
     public Value not() throws ValueUnavailableException {
-        throw new ValueUnavailableException();
+        throw new ValueUnavailableException(new BooleanValue());
     }
 
     @Override

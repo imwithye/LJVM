@@ -8,9 +8,4 @@ public class NumberType extends Type {
         }
         return false;
     }
-
-    @Override
-    public String toString() {
-        return "NumberType";
-    }
 }

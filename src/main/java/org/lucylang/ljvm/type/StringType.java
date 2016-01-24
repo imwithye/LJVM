@@ -8,9 +8,4 @@ public class StringType extends Type {
         }
         return false;
     }
-
-    @Override
-    public String toString() {
-        return "StringType";
-    }
 }

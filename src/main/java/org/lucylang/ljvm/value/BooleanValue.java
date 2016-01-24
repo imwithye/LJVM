@@ -8,6 +8,10 @@ public class BooleanValue extends Value {
     private BooleanType type;
     private Boolean value;
 
+    public BooleanValue() {
+        this(false);
+    }
+
     public BooleanValue(Boolean value) {
         this.type = new BooleanType();
         this.value = value;
@@ -55,7 +59,7 @@ public class BooleanValue extends Value {
         if (!this.isSameType(value)) {
             throw new TypeUnmatchedException(this.getType(), value.getType());
         }
-        throw new ValueUnavailableException();
+        throw new ValueUnavailableException(new BooleanValue());
     }
 
     @Override
@@ -63,7 +67,7 @@ public class BooleanValue extends Value {
         if (!this.isSameType(value)) {
             throw new TypeUnmatchedException(this.getType(), value.getType());
         }
-        throw new ValueUnavailableException();
+        throw new ValueUnavailableException(new BooleanValue());
     }
 
     @Override
@@ -71,7 +75,7 @@ public class BooleanValue extends Value {
         if (!this.isSameType(value)) {
             throw new TypeUnmatchedException(this.getType(), value.getType());
         }
-        throw new ValueUnavailableException();
+        throw new ValueUnavailableException(new BooleanValue());
     }
 
     @Override
@@ -79,7 +83,7 @@ public class BooleanValue extends Value {
         if (!this.isSameType(value)) {
             throw new TypeUnmatchedException(this.getType(), value.getType());
         }
-        throw new ValueUnavailableException();
+        throw new ValueUnavailableException(new BooleanValue());
     }
 
     @Override
@@ -114,22 +118,22 @@ public class BooleanValue extends Value {
 
     @Override
     public Value les(Value value) throws ValueUnavailableException {
-        throw new ValueUnavailableException();
+        throw new ValueUnavailableException(new BooleanValue());
     }
 
     @Override
     public Value gre(Value value) throws ValueUnavailableException {
-        throw new ValueUnavailableException();
+        throw new ValueUnavailableException(new BooleanValue());
     }
 
     @Override
     public Value leq(Value value) throws ValueUnavailableException {
-        throw new ValueUnavailableException();
+        throw new ValueUnavailableException(new BooleanValue());
     }
 
     @Override
     public Value geq(Value value) throws ValueUnavailableException {
-        throw new ValueUnavailableException();
+        throw new ValueUnavailableException(new BooleanValue());
     }
 
     @Override

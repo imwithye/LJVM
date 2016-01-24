@@ -8,6 +8,10 @@ public class StringValue extends Value {
     private StringType type;
     private String value;
 
+    public StringValue() {
+        this("");
+    }
+
     public StringValue(String value) {
         this.type = new StringType();
         this.value = value;
@@ -35,7 +39,7 @@ public class StringValue extends Value {
 
     @Override
     public Boolean booleanValue() throws ValueUnavailableException {
-        throw new ValueUnavailableException();
+        throw new ValueUnavailableException(new BooleanValue());
     }
 
     @Override
@@ -51,7 +55,7 @@ public class StringValue extends Value {
         if (!this.isSameType(value)) {
             throw new TypeUnmatchedException(this.getType(), value.getType());
         }
-        throw new ValueUnavailableException();
+        throw new ValueUnavailableException(new StringValue());
     }
 
     @Override
@@ -59,7 +63,7 @@ public class StringValue extends Value {
         if (!this.isSameType(value)) {
             throw new TypeUnmatchedException(this.getType(), value.getType());
         }
-        throw new ValueUnavailableException();
+        throw new ValueUnavailableException(new StringValue());
     }
 
     @Override
@@ -67,7 +71,7 @@ public class StringValue extends Value {
         if (!this.isSameType(value)) {
             throw new TypeUnmatchedException(this.getType(), value.getType());
         }
-        throw new ValueUnavailableException();
+        throw new ValueUnavailableException(new StringValue());
     }
 
     @Override
@@ -75,7 +79,7 @@ public class StringValue extends Value {
         if (!this.isSameType(value)) {
             throw new TypeUnmatchedException(this.getType(), value.getType());
         }
-        throw new ValueUnavailableException();
+        throw new ValueUnavailableException(new StringValue());
     }
 
     @Override
@@ -83,12 +87,12 @@ public class StringValue extends Value {
         if (!this.isSameType(value)) {
             throw new TypeUnmatchedException(this.getType(), value.getType());
         }
-        throw new ValueUnavailableException();
+        throw new ValueUnavailableException(new BooleanValue());
     }
 
     @Override
     public Value not() throws ValueUnavailableException {
-        throw new ValueUnavailableException();
+        throw new ValueUnavailableException(new BooleanValue());
     }
 
     @Override

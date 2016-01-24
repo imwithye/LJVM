@@ -49,4 +49,9 @@ public abstract class Value implements Serializable {
     public abstract StringValue toStringValue() throws ValueUnavailableException;
 
     public abstract BooleanValue toBooleanValue() throws ValueUnavailableException;
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
 }
