@@ -53,13 +53,13 @@ public abstract class Instruction implements Serializable {
         }
         ArrayList<Integer> errorRefs = new ArrayList<Integer>();
         for (int i = 0; i < refs.length; i++) {
-            try {
-                Operand<String> operand = (Operand<String>) this.getOperand(i);
-                if (!(operand != null && operand.getValue() instanceof String && operand.getValue() != null)) {
+            if(!(this.getOperand(i).getValue() instanceof String)) {
+                errorRefs.add(i);
+            } else {
+                String ref = (String) this.getOperand(i).getValue();
+                if(ref == null) {
                     errorRefs.add(i);
                 }
-            } catch (Exception e) {
-                errorRefs.add(i);
             }
         }
         if (errorRefs.size() > 0) {

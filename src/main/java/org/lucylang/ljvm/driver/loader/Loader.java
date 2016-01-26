@@ -1,4 +1,4 @@
-package org.lucylang.ljvm.machine.loader;
+package org.lucylang.ljvm.driver.loader;
 
 import org.lucylang.ljvm.machine.module.Module;
 

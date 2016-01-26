@@ -1,7 +1,7 @@
 package org.lucylang.ljvm.example;
 
 import org.lucylang.ljvm.machine.Machine;
-import org.lucylang.ljvm.machine.driver.Driver;
+import org.lucylang.ljvm.driver.Driver;
 import org.lucylang.ljvm.machine.instruction.*;
 import org.lucylang.ljvm.machine.module.Module;
 import org.lucylang.ljvm.machine.module.Routine;
@@ -15,7 +15,7 @@ import java.io.FileOutputStream;
 public class GenLoad {
     public static void main(String[] args) {
         try {
-            String path = "/Users/Ciel/Desktop/fibonacci.lyo";
+            String path = "D:/fibonacci.lyo";
             System.out.println("Bootstrap fibonacci module and write it to " + path);
             Module module = new Module();
             module.addVars(new DefInstruction[]{

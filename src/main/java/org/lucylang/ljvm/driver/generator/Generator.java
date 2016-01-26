@@ -1,4 +1,4 @@
-package org.lucylang.ljvm.machine.generator;
+package org.lucylang.ljvm.driver.generator;
 
 import org.lucylang.ljvm.machine.module.Module;
 
