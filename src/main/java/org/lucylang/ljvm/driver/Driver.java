@@ -7,6 +7,7 @@ import org.lucylang.ljvm.machine.Machine;
 import org.lucylang.ljvm.driver.generator.Generator;
 import org.lucylang.ljvm.driver.loader.Loader;
 import org.lucylang.ljvm.machine.module.Module;
+import sun.misc.resources.Messages_pt_BR;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -32,6 +33,7 @@ public class Driver {
 
     private void initOptions() {
         this.addOption(new Option("h", "help", false, "print the help message and exit"));
+        this.addOption(new Option("d", "dump", false, "dump module object to human readable form"));
         this.addOption(new Option("v", "version", false, "print the version information and exit"));
     }
 
@@ -54,7 +56,14 @@ public class Driver {
                 System.exit(1);
             }
             String file = remainingArguments[0];
-            this.initVM().execute(this.loadModule(new FileInputStream(file)));
+            Module module = this.loadModule(new FileInputStream(file));
+
+            if (com.hasOption("dump")) {
+                System.out.print(module);
+                System.exit(0);
+            } else {
+                this.initVM().execute(module);
+            }
         } catch (ParseException e) {
             this.printHelp();
             System.exit(1);
