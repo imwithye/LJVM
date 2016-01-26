@@ -53,7 +53,8 @@ public class Driver {
                 this.printHelp();
                 System.exit(1);
             }
-            this.initVM().execute(this.loadModule(new FileInputStream(remainingArguments[0])));
+            String file = remainingArguments[0];
+            this.initVM().execute(this.loadModule(new FileInputStream(file)));
         } catch (ParseException e) {
             this.printHelp();
             System.exit(1);
