@@ -4,9 +4,7 @@ import org.lucylang.ljvm.machine.Machine;
 import org.lucylang.ljvm.machine.module.Module;
 import org.lucylang.ljvm.scope.OverdefinedException;
 import org.lucylang.ljvm.scope.UndefinedException;
-import org.lucylang.ljvm.type.StringType;
 import org.lucylang.ljvm.type.TypeUnmatchedException;
-import org.lucylang.ljvm.value.Value;
 import org.lucylang.ljvm.value.ValueUnavailableException;
 
 import java.util.ArrayList;
@@ -23,11 +21,7 @@ public class CallInstruction extends Instruction {
 
     @Override
     public boolean executeValid(Machine vm, Module module) throws InvalidInstruction, TypeUnmatchedException, ValueUnavailableException, UndefinedException, OverdefinedException {
-        Value v = this.getValue(vm, 0);
-        if (!v.getType().equals(new StringType())) {
-            throw new InvalidInstruction();
-        }
-        String routineName = v.stringValue();
+        String routineName = this.getRef(0);
         vm.call(module, routineName);
         return false;
     }

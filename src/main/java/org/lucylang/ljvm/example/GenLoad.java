@@ -31,14 +31,14 @@ public class GenLoad {
                     new DefInstruction(new RefOperand("result"), new RefOperand("n")),
                     new SubInstruction(new RefOperand("result"), new RefOperand("result"), new ValueOperand(new NumberValue(1))),
                     new PushInstruction(new RefOperand("result")),
-                    new CallInstruction(new ValueOperand(new StringValue("fibonacci"))),
+                    new CallInstruction(new RefOperand("fibonacci")),
                     new PopInstruction(new RefOperand("result")),
                     new DefInstruction(new RefOperand("sum"), new RefOperand("result")),
 
                     new MovInstruction(new RefOperand("result"), new RefOperand("n")),
                     new SubInstruction(new RefOperand("result"), new RefOperand("result"), new ValueOperand(new NumberValue(2))),
                     new PushInstruction(new RefOperand("result")),
-                    new CallInstruction(new ValueOperand(new StringValue("fibonacci"))),
+                    new CallInstruction(new RefOperand("fibonacci")),
                     new PopInstruction(new RefOperand("result")),
                     new AddInstruction(new RefOperand("sum"), new RefOperand("sum"), new RefOperand("result")),
 
@@ -52,7 +52,7 @@ public class GenLoad {
             }));
             module.defineRoutine("main", new Routine(new Instruction[]{
                     new PushInstruction(new ValueOperand(new NumberValue(10))),
-                    new CallInstruction(new ValueOperand(new StringValue("fibonacci"))),
+                    new CallInstruction(new RefOperand("fibonacci")),
                     new PopInstruction(new RefOperand("result")),
                     new DefInstruction(new RefOperand("text"), new ValueOperand(new StringValue("The value of fibonacci 10 is "))),
                     new StrInstruction(new RefOperand("result"), new RefOperand("result")),
