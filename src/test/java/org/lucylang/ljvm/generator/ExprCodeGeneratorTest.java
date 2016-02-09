@@ -3,6 +3,7 @@ package org.lucylang.ljvm.generator;
 import org.lucylang.ljvm.LJVMTest;
 import org.lucylang.ljvm.machine.instruction.Instruction;
 import org.lucylang.ljvm.node.AddExpr;
+import org.lucylang.ljvm.node.Assignment;
 import org.lucylang.ljvm.node.NumberLiteral;
 import org.lucylang.ljvm.node.VarName;
 
@@ -19,9 +20,10 @@ public class ExprCodeGeneratorTest extends LJVMTest {
         NumberLiteral n3 = new NumberLiteral(30);
         AddExpr expr = new AddExpr(new AddExpr(n1, n2), new AddExpr(n1, n3));
         ExprCodeGenerator gen = new ExprCodeGenerator();
+        Assignment assignment = new Assignment(new VarName("test"), expr);
         ArrayList<Instruction> instructions = new ArrayList<Instruction>();
-        gen.visitBinaryExpr(expr, instructions);
-        for(int i=0; i<instructions.size(); i++) {
+        gen.visitAssignment(assignment, instructions);
+        for (int i = 0; i < instructions.size(); i++) {
             System.out.println(instructions.get(i));
         }
     }

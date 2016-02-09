@@ -17,4 +17,6 @@ public abstract class Visitor {
     public abstract RefOperand visitVarName(VarName node);
 
     public abstract void visitBinaryExpr(BinaryExpr expr, ArrayList<Instruction> instructions);
+
+    public abstract void visitAssignment(Assignment assignment, ArrayList<Instruction> instructions);
 }

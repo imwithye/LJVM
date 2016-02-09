@@ -102,4 +102,12 @@ public class ExprCodeGenerator extends Visitor {
     public void visitBinaryExpr(BinaryExpr expr, ArrayList<Instruction> instructions) {
         this.acceptBinaryExpr(expr, instructions, this.getNewRegister());
     }
+
+    @Override
+    public void visitAssignment(Assignment assignment, ArrayList<Instruction> instructions) {
+        RefOperand ref = this.getNewRegister();
+        this.acceptBinaryExpr(assignment.getExpr(), instructions, ref);
+        RefOperand target = this.visitVarName(assignment.getVarName());
+        instructions.add(new MovInstruction(target, ref));
+    }
 }
