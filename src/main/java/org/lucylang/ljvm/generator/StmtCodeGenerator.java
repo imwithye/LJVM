@@ -2,12 +2,11 @@ package org.lucylang.ljvm.generator;
 
 import org.lucylang.ljvm.machine.instruction.*;
 import org.lucylang.ljvm.node.*;
-import org.lucylang.ljvm.value.NumberValue;
 import org.lucylang.ljvm.visitor.Visitor;
 
 import java.util.ArrayList;
 
-public class ExprCodeGenerator extends Visitor {
+public class StmtCodeGenerator extends Visitor {
     private int registerCounter = 0;
 
     private RefOperand getNewRegister() {
@@ -79,36 +78,36 @@ public class ExprCodeGenerator extends Visitor {
     }
 
     @Override
-    public ValueOperand visitBooleanLiteral(BooleanLiteral node) {
+    protected ValueOperand visitBooleanLiteral(BooleanLiteral node) {
         assert node != null;
         return new ValueOperand(node.getValue());
     }
 
     @Override
-    public ValueOperand visitNumberLiteral(NumberLiteral node) {
+    protected ValueOperand visitNumberLiteral(NumberLiteral node) {
         assert node != null;
         return new ValueOperand(node.getValue());
     }
 
     @Override
-    public ValueOperand visitStringLiteral(StringLiteral node) {
+    protected ValueOperand visitStringLiteral(StringLiteral node) {
         assert node != null;
         return new ValueOperand(node.getValue());
     }
 
     @Override
-    public RefOperand visitVarName(VarName node) {
+    protected RefOperand visitVarName(VarName node) {
         assert node != null;
         return new RefOperand(node.getVarName());
     }
 
     @Override
-    public int visitBinaryExpr(BinaryExpr expr, ArrayList<Instruction> instructions) {
+    protected int visitBinaryExpr(BinaryExpr expr, ArrayList<Instruction> instructions) {
         return this.acceptBinaryExpr(expr, instructions, this.getNewRegister());
     }
 
     @Override
-    public int visitAssignment(Assignment assignment, ArrayList<Instruction> instructions) {
+    protected int visitAssignment(Assignment assignment, ArrayList<Instruction> instructions) {
         RefOperand ref = this.getNewRegister();
         int count = this.acceptBinaryExpr(assignment.getExpr(), instructions, ref);
         RefOperand target = this.visitVarName(assignment.getVarName());
@@ -117,7 +116,7 @@ public class ExprCodeGenerator extends Visitor {
     }
 
     @Override
-    public int visitIfElse(IfElse ifElse, ArrayList<Instruction> instructions) {
+    protected int visitIfElse(IfElse ifElse, ArrayList<Instruction> instructions) {
         assert ifElse != null;
         assert instructions != null;
         BinaryExpr expr = ifElse.getExpr();
@@ -143,7 +142,7 @@ public class ExprCodeGenerator extends Visitor {
     }
 
     @Override
-    public int visitWhile(While whileStmt, ArrayList<Instruction> instructions) {
+    protected int visitWhile(While whileStmt, ArrayList<Instruction> instructions) {
         assert whileStmt != null;
         assert instructions != null;
         BinaryExpr expr = whileStmt.getExpr();

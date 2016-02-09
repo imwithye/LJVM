@@ -8,21 +8,21 @@ import org.lucylang.ljvm.node.*;
 import java.util.ArrayList;
 
 public abstract class Visitor {
-    public abstract ValueOperand visitBooleanLiteral(BooleanLiteral node);
+    protected abstract ValueOperand visitBooleanLiteral(BooleanLiteral node);
 
-    public abstract ValueOperand visitNumberLiteral(NumberLiteral node);
+    protected abstract ValueOperand visitNumberLiteral(NumberLiteral node);
 
-    public abstract ValueOperand visitStringLiteral(StringLiteral node);
+    protected abstract ValueOperand visitStringLiteral(StringLiteral node);
 
-    public abstract RefOperand visitVarName(VarName node);
+    protected abstract RefOperand visitVarName(VarName node);
 
-    public abstract int visitBinaryExpr(BinaryExpr expr, ArrayList<Instruction> instructions);
+    protected abstract int visitBinaryExpr(BinaryExpr expr, ArrayList<Instruction> instructions);
 
-    public abstract int visitAssignment(Assignment assignment, ArrayList<Instruction> instructions);
+    protected abstract int visitAssignment(Assignment assignment, ArrayList<Instruction> instructions);
 
-    public abstract int visitIfElse(IfElse ifElse, ArrayList<Instruction> instructions);
+    protected abstract int visitIfElse(IfElse ifElse, ArrayList<Instruction> instructions);
 
-    public abstract int visitWhile(While whileStmt, ArrayList<Instruction> instructions);
+    protected abstract int visitWhile(While whileStmt, ArrayList<Instruction> instructions);
 
     public int visitStmt(IStmt stmt, ArrayList<Instruction> instructions) {
         if (stmt instanceof Assignment) {

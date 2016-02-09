@@ -6,8 +6,8 @@ import org.lucylang.ljvm.node.*;
 
 import java.util.ArrayList;
 
-public class ExprCodeGeneratorTest extends LJVMTest {
-    public ExprCodeGeneratorTest(String testName) {
+public class StmtCodeGeneratorTest extends LJVMTest {
+    public StmtCodeGeneratorTest(String testName) {
         super(testName);
     }
 
@@ -16,7 +16,7 @@ public class ExprCodeGeneratorTest extends LJVMTest {
         NumberLiteral n2 = new NumberLiteral(20);
         NumberLiteral n3 = new NumberLiteral(30);
         AddExpr expr = new AddExpr(new AddExpr(n1, n2), new AddExpr(n1, n3));
-        ExprCodeGenerator gen = new ExprCodeGenerator();
+        StmtCodeGenerator gen = new StmtCodeGenerator();
         Assignment assignment = new Assignment(new VarName("test"), expr);
         ArrayList<Instruction> instructions = new ArrayList<Instruction>();
         gen.visitAssignment(assignment, instructions);
@@ -41,7 +41,7 @@ public class ExprCodeGeneratorTest extends LJVMTest {
         innerIf.addStmtIf(assignment);
         ifElse.addStmtIf(innerIf);
 
-        ExprCodeGenerator gen = new ExprCodeGenerator();
+        StmtCodeGenerator gen = new StmtCodeGenerator();
         ArrayList<Instruction> instructions = new ArrayList<Instruction>();
         gen.visitIfElse(ifElse, instructions);
         for (int i = 0; i < instructions.size(); i++) {
@@ -60,7 +60,7 @@ public class ExprCodeGeneratorTest extends LJVMTest {
         Assignment assignment = new Assignment(new VarName("test_a"), expr);
         whileStmt.addStmt(assignment);
 
-        ExprCodeGenerator gen = new ExprCodeGenerator();
+        StmtCodeGenerator gen = new StmtCodeGenerator();
         ArrayList<Instruction> instructions = new ArrayList<Instruction>();
         gen.visitWhile(whileStmt, instructions);
         for (int i = 0; i < instructions.size(); i++) {
