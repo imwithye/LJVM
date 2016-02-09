@@ -7,7 +7,6 @@ import org.lucylang.ljvm.machine.Machine;
 import org.lucylang.ljvm.driver.generator.Generator;
 import org.lucylang.ljvm.driver.loader.Loader;
 import org.lucylang.ljvm.machine.module.Module;
-import sun.misc.resources.Messages_pt_BR;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -18,7 +17,7 @@ public class Driver {
     private Loader loader;
     private Generator generator;
     Options options;
-    private static final String version = "0.0.0";
+    private static final String version = "0.1.0";
 
     public Driver() {
         this.loader = new Loader();

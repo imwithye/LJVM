@@ -1,9 +1,19 @@
 package org.lucylang.ljvm.machine.module;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.lucylang.ljvm.machine.instruction.DefInstruction;
 import org.lucylang.ljvm.machine.instruction.Instruction;
+import org.lucylang.ljvm.machine.instruction.RefOperand;
+import org.lucylang.ljvm.machine.instruction.ValueOperand;
 import org.lucylang.ljvm.scope.OverdefinedException;
 import org.lucylang.ljvm.scope.UndefinedException;
+
+import org.json.JSONObject;
+import org.lucylang.ljvm.value.BooleanValue;
+import org.lucylang.ljvm.value.NumberValue;
+import org.lucylang.ljvm.value.StringValue;
+import org.lucylang.ljvm.value.Value;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -16,6 +26,62 @@ public class Module implements Serializable {
     public Module() {
         this.routines = new HashMap<String, Routine>();
         this.vars = new ArrayList<DefInstruction>();
+    }
+    
+    public static Module loadFromJSON(JSONObject object) throws OverdefinedException {
+        try {
+            String name = object.getString("name");
+            JSONArray vars = object.getJSONArray("vars");
+            JSONArray routines = object.getJSONArray("routines");
+            Module module = new Module();
+
+            String varName;
+            String varRef;
+            Value varValue;
+            for (int i = 0; i < vars.length(); i++) {
+                JSONObject var = vars.getJSONObject(i);
+                varName = var.getString("name");
+                if (var.has("ref")) {
+                    varRef = var.getString("ref");
+                    module.addVar(new DefInstruction(new RefOperand(varName), new RefOperand(varRef)));
+                } else if (var.has("value")) {
+                    try {
+                        varValue = new NumberValue(var.getDouble("value"));
+                        module.addVar(new DefInstruction(new RefOperand(varName), new ValueOperand(varValue)));
+                        continue;
+                    } catch (JSONException e) {
+                        // Ignore
+                    }
+                    try {
+                        varValue = new StringValue(var.getString("value"));
+                        module.addVar(new DefInstruction(new RefOperand(varName), new ValueOperand(varValue)));
+                        continue;
+                    } catch (JSONException e) {
+                        // Ignore
+                    }
+                    try {
+                        varValue = new BooleanValue(var.getBoolean("value"));
+                        module.addVar(new DefInstruction(new RefOperand(varName), new ValueOperand(varValue)));
+                        continue;
+                    } catch (JSONException e) {
+                        // Ignore
+                    }
+                }
+            }
+
+            String routineName;
+            for (int i = 0; i < routines.length(); i++) {
+                JSONObject routineJSON = routines.getJSONObject(i);
+                routineName = routineJSON.getString("name");
+                Routine routine = Routine.loadFromJSON(routineJSON);
+                if (routine != null) {
+                    module.defineRoutine(routineName, routine);
+                }
+            }
+            return module;
+        } catch (JSONException e) {
+            return null;
+        }
     }
 
     public boolean hasMain() {
