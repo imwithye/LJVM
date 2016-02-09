@@ -49,4 +49,23 @@ public class ExprCodeGeneratorTest extends LJVMTest {
             System.out.println(instructions.get(i));
         }
     }
+
+    public void testWhile() {
+        BooleanLiteral booleanLiteral = new BooleanLiteral(true);
+        While whileStmt = new While(booleanLiteral);
+        NumberLiteral n1 = new NumberLiteral(10);
+        NumberLiteral n2 = new NumberLiteral(20);
+        NumberLiteral n3 = new NumberLiteral(30);
+        AddExpr expr = new AddExpr(new AddExpr(n1, n2), new AddExpr(n1, n3));
+        Assignment assignment = new Assignment(new VarName("test_a"), expr);
+        whileStmt.addStmt(assignment);
+
+        ExprCodeGenerator gen = new ExprCodeGenerator();
+        ArrayList<Instruction> instructions = new ArrayList<Instruction>();
+        gen.visitWhile(whileStmt, instructions);
+        for (int i = 0; i < instructions.size(); i++) {
+            System.out.printf("%4d ", i);
+            System.out.println(instructions.get(i));
+        }
+    }
 }

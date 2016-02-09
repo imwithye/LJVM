@@ -141,4 +141,24 @@ public class ExprCodeGenerator extends Visitor {
         gotoInstruction.setTarget(new ValueOperand(index + numberOfInstruction));
         return numberOfInstruction;
     }
+
+    @Override
+    public int visitWhile(While whileStmt, ArrayList<Instruction> instructions) {
+        assert whileStmt != null;
+        assert instructions != null;
+        BinaryExpr expr = whileStmt.getExpr();
+        RefOperand conditionRef = this.getNewRegister();
+        int index = instructions.size();
+        int numberOfInstruction = this.acceptBinaryExpr(expr, instructions, conditionRef);
+        BneInstruction bneInstruction = new BneInstruction(conditionRef, new ValueOperand(0));
+        instructions.add(bneInstruction);
+        ArrayList<IStmt> whileStmts = whileStmt.getStmts();
+        for (int i = 0; i < whileStmts.size(); i++) {
+            numberOfInstruction += this.visitStmt(whileStmts.get(i), instructions);
+        }
+        numberOfInstruction += 2; // GOTO;
+        bneInstruction.setTarget(new ValueOperand(index + numberOfInstruction));
+        instructions.add(new GotoInstruction(new ValueOperand(index)));
+        return numberOfInstruction;
+    }
 }

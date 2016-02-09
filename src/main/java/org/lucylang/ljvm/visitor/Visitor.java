@@ -22,11 +22,15 @@ public abstract class Visitor {
 
     public abstract int visitIfElse(IfElse ifElse, ArrayList<Instruction> instructions);
 
+    public abstract int visitWhile(While whileStmt, ArrayList<Instruction> instructions);
+
     public int visitStmt(IStmt stmt, ArrayList<Instruction> instructions) {
         if (stmt instanceof Assignment) {
             return this.visitAssignment((Assignment) stmt, instructions);
         } else if (stmt instanceof IfElse) {
             return this.visitIfElse((IfElse) stmt, instructions);
+        } else if (stmt instanceof While) {
+            return this.visitWhile((While) stmt, instructions);
         } else {
             return 0;
         }
