@@ -2,10 +2,7 @@ package org.lucylang.ljvm.generator;
 
 import org.lucylang.ljvm.LJVMTest;
 import org.lucylang.ljvm.machine.instruction.Instruction;
-import org.lucylang.ljvm.node.AddExpr;
-import org.lucylang.ljvm.node.Assignment;
-import org.lucylang.ljvm.node.NumberLiteral;
-import org.lucylang.ljvm.node.VarName;
+import org.lucylang.ljvm.node.*;
 
 import java.util.ArrayList;
 
@@ -24,6 +21,31 @@ public class ExprCodeGeneratorTest extends LJVMTest {
         ArrayList<Instruction> instructions = new ArrayList<Instruction>();
         gen.visitAssignment(assignment, instructions);
         for (int i = 0; i < instructions.size(); i++) {
+            System.out.println(instructions.get(i));
+        }
+    }
+
+    public void testIfElse() {
+        BooleanLiteral booleanLiteral = new BooleanLiteral(true);
+        IfElse ifElse = new IfElse(booleanLiteral);
+        NumberLiteral n1 = new NumberLiteral(10);
+        NumberLiteral n2 = new NumberLiteral(20);
+        NumberLiteral n3 = new NumberLiteral(30);
+        AddExpr expr = new AddExpr(new AddExpr(n1, n2), new AddExpr(n1, n3));
+        Assignment assignment = new Assignment(new VarName("test_a"), expr);
+        ifElse.addStmtIf(assignment);
+        expr = new AddExpr(new AddExpr(n1, n2), n3);
+        assignment = new Assignment(new VarName("test_b"), expr);
+        ifElse.addStmtElse(assignment);
+        IfElse innerIf = new IfElse(new BooleanLiteral(false));
+        innerIf.addStmtIf(assignment);
+        ifElse.addStmtIf(innerIf);
+
+        ExprCodeGenerator gen = new ExprCodeGenerator();
+        ArrayList<Instruction> instructions = new ArrayList<Instruction>();
+        gen.visitIfElse(ifElse, instructions);
+        for (int i = 0; i < instructions.size(); i++) {
+            System.out.printf("%4d ", i);
             System.out.println(instructions.get(i));
         }
     }

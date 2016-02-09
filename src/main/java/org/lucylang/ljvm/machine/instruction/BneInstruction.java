@@ -20,6 +20,11 @@ public class BneInstruction extends Instruction {
         this.validRefs = new int[]{};
     }
 
+    public void setTarget(Operand<Value> target) {
+        this.operands.remove(1);
+        this.operands.add(target);
+    }
+
     @Override
     public boolean executeValid(Machine vm, Module module) throws InvalidInstruction, ValueUnavailableException, UndefinedException {
         Value v = this.getValue(vm, 0);

@@ -16,7 +16,19 @@ public abstract class Visitor {
 
     public abstract RefOperand visitVarName(VarName node);
 
-    public abstract void visitBinaryExpr(BinaryExpr expr, ArrayList<Instruction> instructions);
+    public abstract int visitBinaryExpr(BinaryExpr expr, ArrayList<Instruction> instructions);
 
-    public abstract void visitAssignment(Assignment assignment, ArrayList<Instruction> instructions);
+    public abstract int visitAssignment(Assignment assignment, ArrayList<Instruction> instructions);
+
+    public abstract int visitIfElse(IfElse ifElse, ArrayList<Instruction> instructions);
+
+    public int visitStmt(IStmt stmt, ArrayList<Instruction> instructions) {
+        if (stmt instanceof Assignment) {
+            return this.visitAssignment((Assignment) stmt, instructions);
+        } else if (stmt instanceof IfElse) {
+            return this.visitIfElse((IfElse) stmt, instructions);
+        } else {
+            return 0;
+        }
+    }
 }

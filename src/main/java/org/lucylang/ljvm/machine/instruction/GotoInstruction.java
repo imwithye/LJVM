@@ -12,13 +12,19 @@ import org.lucylang.ljvm.value.ValueUnavailableException;
 import java.util.ArrayList;
 
 public class GotoInstruction extends Instruction {
-    public GotoInstruction(Operand<Value> ref) {
+    public GotoInstruction(Operand<Value> target) {
         this.type = Type.GOTO;
         this.operands = new ArrayList<Operand>();
-        this.operands.add(ref);
+        this.operands.add(target);
 
         this.validSize = 1;
         this.validRefs = new int[]{};
+    }
+
+    public void setTarget(Operand<Value> target) {
+        assert target != null;
+        this.operands.remove(0);
+        this.operands.add(target);
     }
 
     @Override
