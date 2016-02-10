@@ -66,10 +66,34 @@ public class StmtCodeGenerator {
         return 1 + count;
     }
 
+    private int acceptParameter(IValue parameter, ArrayList<Instruction> instructions) {
+        assert parameter != null;
+        assert instructions != null;
+        RefOperand parameterRef = this.getNewRegister();
+        int count = this.acceptValue(parameter, instructions, parameterRef);
+        instructions.add(new PushInstruction(parameterRef));
+        return count + 1;
+    }
+
+    protected int acceptCall(IValue node, ArrayList<Instruction> instructions, RefOperand target) {
+        assert node != null;
+        assert instructions != null;
+        assert target != null;
+        if (!(node instanceof Call)) return 0;
+        Call call = (Call) node;
+        int count = 0;
+        for (int i = 0; i < call.getParameters().size(); i++) {
+            count += this.acceptParameter(call.getParameters().get(i), instructions);
+        }
+        instructions.add(new CallInstruction(new RefOperand(call.getFuncName().getVarName())));
+        instructions.add(new PopInstruction(target));
+        return count + 2;
+    }
+
     protected int acceptValue(IValue node, ArrayList<Instruction> instructions, RefOperand target) {
         if (node == null) return 0;
         return this.acceptLiteral(node, instructions, target) + this.acceptRef(node, instructions, target) +
-                this.acceptBinaryExpr(node, instructions, target);
+                this.acceptBinaryExpr(node, instructions, target) + this.acceptCall(node, instructions, target);
     }
 
     protected ValueOperand visitBooleanLiteral(BooleanLiteral node) {
@@ -155,7 +179,16 @@ public class StmtCodeGenerator {
         return numberOfInstruction + 2;
     }
 
+    protected int visitCall(Call call, ArrayList<Instruction> instructions) {
+        assert call != null;
+        assert instructions != null;
+        RefOperand result = this.getNewRegister();
+        return this.acceptCall(call, instructions, result);
+    }
+
     public int visitStmt(IStmt stmt, ArrayList<Instruction> instructions) {
+        assert stmt != null;
+        assert instructions != null;
         if (stmt instanceof Assignment) {
             return this.visitAssignment((Assignment) stmt, instructions);
         } else if (stmt instanceof IfElse) {
@@ -164,6 +197,8 @@ public class StmtCodeGenerator {
             return this.visitWhile((While) stmt, instructions);
         } else if (stmt instanceof Return) {
             return this.visitReturn((Return) stmt, instructions);
+        } else if (stmt instanceof Call) {
+            return this.visitCall((Call) stmt, instructions);
         } else {
             return 0;
         }
