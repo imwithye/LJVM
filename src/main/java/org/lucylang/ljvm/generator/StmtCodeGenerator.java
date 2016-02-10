@@ -2,11 +2,10 @@ package org.lucylang.ljvm.generator;
 
 import org.lucylang.ljvm.machine.instruction.*;
 import org.lucylang.ljvm.node.*;
-import org.lucylang.ljvm.visitor.Visitor;
 
 import java.util.ArrayList;
 
-public class StmtCodeGenerator extends Visitor {
+public class StmtCodeGenerator {
     private int registerCounter = 0;
 
     private RefOperand getNewRegister() {
@@ -60,13 +59,9 @@ public class StmtCodeGenerator extends Visitor {
         IValue lhs = expr.getLhs(), rhs = expr.getRhs();
         int count = 0;
         RefOperand lhsRef = this.getNewRegister();
-        count += this.acceptLiteral(lhs, instructions, lhsRef);
-        count += this.acceptRef(lhs, instructions, lhsRef);
-        count += this.acceptBinaryExpr(lhs, instructions, lhsRef);
+        count += this.acceptValue(lhs, instructions, lhsRef);
         RefOperand rhsRef = this.getNewRegister();
-        count += this.acceptLiteral(rhs, instructions, rhsRef);
-        count += this.acceptRef(rhs, instructions, rhsRef);
-        count += this.acceptBinaryExpr(rhs, instructions, rhsRef);
+        count += this.acceptValue(rhs, instructions, rhsRef);
         if (expr instanceof AddExpr) {
             instructions.add(new AddInstruction(target, lhsRef, rhsRef));
             return 1 + count;
@@ -77,36 +72,32 @@ public class StmtCodeGenerator extends Visitor {
         return 0;
     }
 
-    @Override
+    protected int acceptValue(IValue node, ArrayList<Instruction> instructions, RefOperand target) {
+        if (node == null) return 0;
+        return this.acceptLiteral(node, instructions, target) + this.acceptRef(node, instructions, target) +
+                this.acceptBinaryExpr(node, instructions, target);
+    }
+
     protected ValueOperand visitBooleanLiteral(BooleanLiteral node) {
         assert node != null;
         return new ValueOperand(node.getValue());
     }
 
-    @Override
     protected ValueOperand visitNumberLiteral(NumberLiteral node) {
         assert node != null;
         return new ValueOperand(node.getValue());
     }
 
-    @Override
     protected ValueOperand visitStringLiteral(StringLiteral node) {
         assert node != null;
         return new ValueOperand(node.getValue());
     }
 
-    @Override
     protected RefOperand visitVarName(VarName node) {
         assert node != null;
         return new RefOperand(node.getVarName());
     }
 
-    @Override
-    protected int visitBinaryExpr(BinaryExpr expr, ArrayList<Instruction> instructions) {
-        return this.acceptBinaryExpr(expr, instructions, this.getNewRegister());
-    }
-
-    @Override
     protected int visitAssignment(Assignment assignment, ArrayList<Instruction> instructions) {
         RefOperand ref = this.getNewRegister();
         int count = this.acceptBinaryExpr(assignment.getExpr(), instructions, ref);
@@ -115,14 +106,13 @@ public class StmtCodeGenerator extends Visitor {
         return count + 1;
     }
 
-    @Override
     protected int visitIfElse(IfElse ifElse, ArrayList<Instruction> instructions) {
         assert ifElse != null;
         assert instructions != null;
-        BinaryExpr expr = ifElse.getExpr();
+        IValue value = ifElse.getValue();
         RefOperand conditionRef = this.getNewRegister();
         int index = instructions.size();
-        int numberOfInstruction = this.acceptBinaryExpr(expr, instructions, conditionRef);
+        int numberOfInstruction = this.acceptValue(value, instructions, conditionRef);
         BneInstruction bneInstruction = new BneInstruction(conditionRef, new ValueOperand(0));
         instructions.add(bneInstruction);
         ArrayList<IStmt> ifStmts = ifElse.getIfStmts();
@@ -141,14 +131,13 @@ public class StmtCodeGenerator extends Visitor {
         return numberOfInstruction;
     }
 
-    @Override
     protected int visitWhile(While whileStmt, ArrayList<Instruction> instructions) {
         assert whileStmt != null;
         assert instructions != null;
-        BinaryExpr expr = whileStmt.getExpr();
+        IValue value = whileStmt.getValue();
         RefOperand conditionRef = this.getNewRegister();
         int index = instructions.size();
-        int numberOfInstruction = this.acceptBinaryExpr(expr, instructions, conditionRef);
+        int numberOfInstruction = this.acceptValue(value, instructions, conditionRef);
         BneInstruction bneInstruction = new BneInstruction(conditionRef, new ValueOperand(0));
         instructions.add(bneInstruction);
         ArrayList<IStmt> whileStmts = whileStmt.getStmts();
@@ -159,5 +148,30 @@ public class StmtCodeGenerator extends Visitor {
         bneInstruction.setTarget(new ValueOperand(index + numberOfInstruction));
         instructions.add(new GotoInstruction(new ValueOperand(index)));
         return numberOfInstruction;
+    }
+
+    protected int visitReturn(Return returnStmt, ArrayList<Instruction> instructions) {
+        assert returnStmt != null;
+        assert instructions != null;
+        IValue value = returnStmt.getValue();
+        RefOperand returnRef = this.getNewRegister();
+        int numberOfInstruction = this.acceptValue(value, instructions, returnRef);
+        instructions.add(new PushInstruction(returnRef));
+        instructions.add(new RetInstruction());
+        return numberOfInstruction + 2;
+    }
+
+    public int visitStmt(IStmt stmt, ArrayList<Instruction> instructions) {
+        if (stmt instanceof Assignment) {
+            return this.visitAssignment((Assignment) stmt, instructions);
+        } else if (stmt instanceof IfElse) {
+            return this.visitIfElse((IfElse) stmt, instructions);
+        } else if (stmt instanceof While) {
+            return this.visitWhile((While) stmt, instructions);
+        } else if (stmt instanceof Return) {
+            return this.visitReturn((Return) stmt, instructions);
+        } else {
+            return 0;
+        }
     }
 }

@@ -3,18 +3,12 @@ package org.lucylang.ljvm.node;
 import java.util.ArrayList;
 
 public class While extends Node implements IStmt {
-    private BinaryExpr expr;
+    private IValue value;
     private ArrayList<IStmt> stmts;
 
-    public While(BinaryExpr expr) {
-        assert expr != null;
-        this.expr = expr;
-        this.stmts = new ArrayList<IStmt>();
-    }
-
-    public While(BooleanLiteral booleanLiteral) {
-        assert booleanLiteral != null;
-        this.expr = new AndExpr(booleanLiteral, new BooleanLiteral(true));
+    public While(IValue value) {
+        assert value != null;
+        this.value = value;
         this.stmts = new ArrayList<IStmt>();
     }
 
@@ -23,8 +17,8 @@ public class While extends Node implements IStmt {
         return this;
     }
 
-    public BinaryExpr getExpr() {
-        return this.expr;
+    public IValue getValue() {
+        return this.value;
     }
 
     public ArrayList<IStmt> getStmts() {

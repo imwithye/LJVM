@@ -3,27 +3,20 @@ package org.lucylang.ljvm.node;
 import java.util.ArrayList;
 
 public class IfElse extends Node implements IStmt {
-    private BinaryExpr expr;
+    private IValue value;
     private ArrayList<IStmt> ifNodes;
     private ArrayList<IStmt> elseNodes;
 
-    public IfElse(BinaryExpr expr) {
-        assert expr != null;
-        this.expr = expr;
+    public IfElse(IValue value) {
+        assert value != null;
+        this.value = value;
         this.ifNodes = new ArrayList<IStmt>();
         this.elseNodes = new ArrayList<IStmt>();
     }
 
-    public IfElse(BooleanLiteral booleanLiteral) {
-        assert booleanLiteral != null;
-        this.expr = new AndExpr(booleanLiteral, new BooleanLiteral(true));
-        this.ifNodes = new ArrayList<IStmt>();
-        this.elseNodes = new ArrayList<IStmt>();
-    }
-
-    public IfElse setExpr(BinaryExpr expr) {
-        assert expr != null;
-        this.expr = expr;
+    public IfElse setValue(BinaryExpr value) {
+        assert value != null;
+        this.value = value;
         return this;
     }
 
@@ -39,8 +32,8 @@ public class IfElse extends Node implements IStmt {
         return this;
     }
 
-    public BinaryExpr getExpr() {
-        return this.expr;
+    public IValue getValue() {
+        return this.value;
     }
 
     public ArrayList<IStmt> getIfStmts() {
