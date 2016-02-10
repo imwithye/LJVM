@@ -62,14 +62,8 @@ public class StmtCodeGenerator {
         count += this.acceptValue(lhs, instructions, lhsRef);
         RefOperand rhsRef = this.getNewRegister();
         count += this.acceptValue(rhs, instructions, rhsRef);
-        if (expr instanceof AddExpr) {
-            instructions.add(new AddInstruction(target, lhsRef, rhsRef));
-            return 1 + count;
-        } else if (expr instanceof AndExpr) {
-            instructions.add(new AndInstruction(target, lhsRef, rhsRef));
-            return 1 + count;
-        }
-        return 0;
+        instructions.add(expr.getInstruction(target, lhsRef, rhsRef));
+        return 1 + count;
     }
 
     protected int acceptValue(IValue node, ArrayList<Instruction> instructions, RefOperand target) {

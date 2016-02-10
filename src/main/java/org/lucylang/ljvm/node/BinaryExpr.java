@@ -1,6 +1,9 @@
 package org.lucylang.ljvm.node;
 
-public class BinaryExpr implements IValue {
+import org.lucylang.ljvm.machine.instruction.Instruction;
+import org.lucylang.ljvm.machine.instruction.RefOperand;
+
+public abstract class BinaryExpr implements IValue {
     private IValue lhs;
     private IValue rhs;
 
@@ -16,4 +19,6 @@ public class BinaryExpr implements IValue {
     public IValue getRhs() {
         return this.rhs;
     }
+
+    public abstract Instruction getInstruction(RefOperand target, RefOperand lhsRef, RefOperand rhsRef);
 }
