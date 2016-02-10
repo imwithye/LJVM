@@ -9,7 +9,7 @@ public class StmtCodeGenerator {
     private int registerCounter = 0;
 
     private RefOperand getNewRegister() {
-        String ref = "tmp" + registerCounter;
+        String ref = "$" + registerCounter;
         registerCounter++;
         return new RefOperand(ref);
     }
