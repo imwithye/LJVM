@@ -125,7 +125,7 @@ public class StmtCodeGenerator extends Visitor {
         int numberOfInstruction = this.acceptBinaryExpr(expr, instructions, conditionRef);
         BneInstruction bneInstruction = new BneInstruction(conditionRef, new ValueOperand(0));
         instructions.add(bneInstruction);
-        ArrayList<IStmt> ifStmts = ifElse.getIfNodes();
+        ArrayList<IStmt> ifStmts = ifElse.getIfStmts();
         for (int i = 0; i < ifStmts.size(); i++) {
             numberOfInstruction += this.visitStmt(ifStmts.get(i), instructions);
         }
@@ -133,7 +133,7 @@ public class StmtCodeGenerator extends Visitor {
         bneInstruction.setTarget(new ValueOperand(index + numberOfInstruction));
         GotoInstruction gotoInstruction = new GotoInstruction(new ValueOperand(0));
         instructions.add(gotoInstruction);
-        ArrayList<IStmt> elseStmts = ifElse.getElseNodes();
+        ArrayList<IStmt> elseStmts = ifElse.getElseStmts();
         for (int i = 0; i < elseStmts.size(); i++) {
             numberOfInstruction += this.visitStmt(elseStmts.get(i), instructions);
         }

@@ -43,11 +43,11 @@ public class IfElse extends Node implements IStmt {
         return this.expr;
     }
 
-    public ArrayList<IStmt> getIfNodes() {
+    public ArrayList<IStmt> getIfStmts() {
         return this.ifNodes;
     }
 
-    public ArrayList<IStmt> getElseNodes() {
+    public ArrayList<IStmt> getElseStmts() {
         return this.elseNodes;
     }
 
