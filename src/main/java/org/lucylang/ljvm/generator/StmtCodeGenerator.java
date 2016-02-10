@@ -94,7 +94,7 @@ public class StmtCodeGenerator {
 
     protected int visitAssignment(Assignment assignment, ArrayList<Instruction> instructions) {
         RefOperand ref = this.getNewRegister();
-        int count = this.acceptBinaryExpr(assignment.getExpr(), instructions, ref);
+        int count = this.acceptValue(assignment.getExpr(), instructions, ref);
         RefOperand target = this.visitVarName(assignment.getVarName());
         instructions.add(new MovInstruction(target, ref));
         return count + 1;

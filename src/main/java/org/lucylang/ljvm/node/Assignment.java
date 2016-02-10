@@ -2,9 +2,9 @@ package org.lucylang.ljvm.node;
 
 public class Assignment implements IStmt {
     private VarName varName;
-    private BinaryExpr expr;
+    private IValue expr;
 
-    public Assignment(VarName varName, BinaryExpr expr) {
+    public Assignment(VarName varName, IValue expr) {
         assert varName != null;
         assert expr != null;
         this.varName = varName;
@@ -15,7 +15,7 @@ public class Assignment implements IStmt {
         return this.varName;
     }
 
-    public BinaryExpr getExpr() {
+    public IValue getExpr() {
         return this.expr;
     }
 }
