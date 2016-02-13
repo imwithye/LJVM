@@ -135,6 +135,6 @@ public class ScopeTest extends TestCase {
         scope.set("3", "test3");
         scope.set("4", "test4");
         scope.set("1", "test5");
-        assertEquals(4, scope.keySet().size());
+        assertEquals(4, scope.allKeySet().size());
     }
 }
