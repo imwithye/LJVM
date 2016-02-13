@@ -96,7 +96,7 @@ public class BooleanValue extends Value {
     }
 
     @Override
-    public Value equ(Value value) {
+    public BooleanValue equ(Value value) {
         if (!(value instanceof BooleanValue)) {
             return new BooleanValue(false);
         }
@@ -105,22 +105,22 @@ public class BooleanValue extends Value {
     }
 
     @Override
-    public Value les(Value value) throws ValueUnavailableException {
+    public BooleanValue les(Value value) throws ValueUnavailableException {
         throw new ValueUnavailableException("unable to perform < over " + this + " value");
     }
 
     @Override
-    public Value gre(Value value) throws ValueUnavailableException {
+    public BooleanValue gre(Value value) throws ValueUnavailableException {
         throw new ValueUnavailableException("unable to perform > over " + this + " value");
     }
 
     @Override
-    public Value leq(Value value) throws ValueUnavailableException {
+    public BooleanValue leq(Value value) throws ValueUnavailableException {
         throw new ValueUnavailableException("unable to perform <= over " + this + " value");
     }
 
     @Override
-    public Value geq(Value value) throws ValueUnavailableException {
+    public BooleanValue geq(Value value) throws ValueUnavailableException {
         throw new ValueUnavailableException("unable to perform >= over " + this + " value");
     }
 }

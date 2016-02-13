@@ -34,15 +34,15 @@ public abstract class Value implements Serializable {
 
     public abstract Value not() throws ValueUnavailableException;
 
-    public abstract Value equ(Value value);
+    public abstract BooleanValue equ(Value value);
 
-    public abstract Value les(Value value) throws ValueUnavailableException, TypeUnmatchedException;
+    public abstract BooleanValue les(Value value) throws ValueUnavailableException, TypeUnmatchedException;
 
-    public abstract Value gre(Value value) throws ValueUnavailableException, TypeUnmatchedException;
+    public abstract BooleanValue gre(Value value) throws ValueUnavailableException, TypeUnmatchedException;
 
-    public abstract Value leq(Value value) throws ValueUnavailableException, TypeUnmatchedException;
+    public abstract BooleanValue leq(Value value) throws ValueUnavailableException, TypeUnmatchedException;
 
-    public abstract Value geq(Value value) throws ValueUnavailableException, TypeUnmatchedException;
+    public abstract BooleanValue geq(Value value) throws ValueUnavailableException, TypeUnmatchedException;
 
     public NumberValue toNumberValue() throws ValueUnavailableException {
         return new NumberValue(this.floatValue());

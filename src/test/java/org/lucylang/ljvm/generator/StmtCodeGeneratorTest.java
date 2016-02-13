@@ -17,7 +17,7 @@ public class StmtCodeGeneratorTest extends LJVMTest {
         NumberLiteral n3 = new NumberLiteral(30);
         AddExpr expr = new AddExpr(new AddExpr(n1, n2), new AddExpr(n1, n3));
         StmtCodeGenerator gen = new StmtCodeGenerator();
-        Assignment assignment = new Assignment(new VarName("test"), expr);
+        Assignment assignment = new Assignment(new VarName("testThrow"), expr);
         ArrayList<Instruction> instructions = new ArrayList<Instruction>();
         gen.visitAssignment(assignment, instructions);
         for (int i = 0; i < instructions.size(); i++) {

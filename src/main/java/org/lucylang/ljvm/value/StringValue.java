@@ -81,7 +81,7 @@ public class StringValue extends Value {
     }
 
     @Override
-    public Value equ(Value value) {
+    public BooleanValue equ(Value value) {
         if (!(value instanceof StringValue)) {
             return new BooleanValue(false);
         }
@@ -90,7 +90,7 @@ public class StringValue extends Value {
     }
 
     @Override
-    public Value les(Value value) throws TypeUnmatchedException {
+    public BooleanValue les(Value value) throws TypeUnmatchedException {
         if (!(value instanceof StringValue)) {
             throw new TypeUnmatchedException(this.getType(), value.getType());
         }
@@ -99,7 +99,7 @@ public class StringValue extends Value {
     }
 
     @Override
-    public Value gre(Value value) throws TypeUnmatchedException {
+    public BooleanValue gre(Value value) throws TypeUnmatchedException {
         if (!(value instanceof StringValue)) {
             throw new TypeUnmatchedException(this.getType(), value.getType());
         }
@@ -108,7 +108,7 @@ public class StringValue extends Value {
     }
 
     @Override
-    public Value leq(Value value) throws TypeUnmatchedException {
+    public BooleanValue leq(Value value) throws TypeUnmatchedException {
         if (!(value instanceof StringValue)) {
             throw new TypeUnmatchedException(this.getType(), value.getType());
         }
@@ -117,7 +117,7 @@ public class StringValue extends Value {
     }
 
     @Override
-    public Value geq(Value value) throws TypeUnmatchedException {
+    public BooleanValue geq(Value value) throws TypeUnmatchedException {
         if (!(value instanceof StringValue)) {
             throw new TypeUnmatchedException(this.getType(), value.getType());
         }

@@ -15,7 +15,7 @@ public class MovInstructionTest extends LJVMTest {
         assertTrue(mov.isValid());
         mov = new MovInstruction(new RefOperand("value"), new ValueOperand(new NumberValue(10)));
         assertTrue(mov.isValid());
-        mov = new MovInstruction(new RefOperand("value"), new ValueOperand(new StringValue("test")));
+        mov = new MovInstruction(new RefOperand("value"), new ValueOperand(new StringValue("testThrow")));
         assertTrue(mov.isValid());
     }
 }

@@ -12,6 +12,4 @@ public class LJVMTest extends TestCase {
     public static Test suite() {
         return new TestSuite(LJVMTest.class);
     }
-
-    public void test() {}
 }

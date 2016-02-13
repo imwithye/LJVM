@@ -14,4 +14,12 @@ public class ValueUnavailableException extends RuntimeException {
     public ValueUnavailableException(String expectValue, Value realValue) {
         super(expectValue + " value is unavailable for " + realValue);
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other instanceof ValueUnavailableException) {
+            return ((ValueUnavailableException) other).getMessage().equals(this.getMessage());
+        }
+        return false;
+    }
 }

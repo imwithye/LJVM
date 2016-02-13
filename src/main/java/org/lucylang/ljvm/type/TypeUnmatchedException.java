@@ -3,8 +3,8 @@ package org.lucylang.ljvm.type;
 import org.lucylang.ljvm.exception.RuntimeException;
 
 public class TypeUnmatchedException extends RuntimeException {
-    private Type leftTy;
-    private Type rightTy;
+    protected Type leftTy;
+    protected Type rightTy;
 
     public TypeUnmatchedException(Type leftTy, Type rightTy) {
         super("Type Unmatched Exception: <" + leftTy + "> and <" + rightTy + ">");
@@ -18,5 +18,14 @@ public class TypeUnmatchedException extends RuntimeException {
 
     public Type getRightType() {
         return this.rightTy;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other instanceof TypeUnmatchedException) {
+            return this.getLeftType().equals(((TypeUnmatchedException) other).getLeftType()) &&
+                    this.getRightType().equals(((TypeUnmatchedException) other).getRightType());
+        }
+        return false;
     }
 }

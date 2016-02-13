@@ -2,10 +2,13 @@ package org.lucylang.ljvm.value;
 
 import org.lucylang.ljvm.type.NoneType;
 import org.lucylang.ljvm.type.Type;
-import org.lucylang.ljvm.type.TypeUnmatchedException;
 
 public class NoneValue extends Value {
     private NoneType noneType;
+
+    public NoneValue() {
+        this.noneType = new NoneType();
+    }
 
     @Override
     public Type getType() {
@@ -68,7 +71,7 @@ public class NoneValue extends Value {
     }
 
     @Override
-    public Value equ(Value value) {
+    public BooleanValue equ(Value value) {
         if (!this.isSameType(value)) {
             return new BooleanValue(false);
         }
@@ -76,22 +79,22 @@ public class NoneValue extends Value {
     }
 
     @Override
-    public Value les(Value value) throws ValueUnavailableException {
+    public BooleanValue les(Value value) throws ValueUnavailableException {
         throw new ValueUnavailableException("unable to perform < over " + this + " value");
     }
 
     @Override
-    public Value gre(Value value) throws ValueUnavailableException {
+    public BooleanValue gre(Value value) throws ValueUnavailableException {
         throw new ValueUnavailableException("unable to perform > over " + this + " value");
     }
 
     @Override
-    public Value leq(Value value) throws ValueUnavailableException {
+    public BooleanValue leq(Value value) throws ValueUnavailableException {
         throw new ValueUnavailableException("unable to perform <= over " + this + " value");
     }
 
     @Override
-    public Value geq(Value value) throws ValueUnavailableException {
+    public BooleanValue geq(Value value) throws ValueUnavailableException {
         throw new ValueUnavailableException("unable to perform >= over " + this + " value");
     }
 }

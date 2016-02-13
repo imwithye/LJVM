@@ -4,6 +4,7 @@ import org.lucylang.ljvm.machine.Machine;
 import org.lucylang.ljvm.machine.module.Module;
 import org.lucylang.ljvm.scope.UndefinedException;
 import org.lucylang.ljvm.value.Value;
+import org.lucylang.ljvm.value.ValueUnavailableException;
 
 import java.util.ArrayList;
 
@@ -19,7 +20,7 @@ public class PutInstruction extends Instruction {
 
 
     @Override
-    public boolean executeValid(Machine vm, Module module) throws InvalidInstruction, UndefinedException {
+    public boolean executeValid(Machine vm, Module module) throws InvalidInstruction, UndefinedException, ValueUnavailableException {
         Value v = this.getValue(vm, 0);
         System.out.print(v.stringValue());
         return false;
