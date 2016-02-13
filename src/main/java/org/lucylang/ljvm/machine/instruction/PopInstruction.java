@@ -20,7 +20,7 @@ public class PopInstruction extends Instruction {
     @Override
     public boolean executeValid(Machine vm, Module module) throws InvalidInstruction, UndefinedException {
         Register r = this.getRegister(vm, 0);
-        r.assignValue(vm.peek());
+        r.assignValue(vm.peekValue());
         vm.popValue();
         return false;
     }

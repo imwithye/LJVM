@@ -8,7 +8,7 @@ import org.lucylang.ljvm.scope.OverdefinedException;
 import org.lucylang.ljvm.scope.Scope;
 import org.lucylang.ljvm.scope.UndefinedException;
 import org.lucylang.ljvm.type.TypeUnmatchedException;
-import org.lucylang.ljvm.value.NumberValue;
+import org.lucylang.ljvm.value.NoneValue;
 import org.lucylang.ljvm.value.Value;
 import org.lucylang.ljvm.value.ValueUnavailableException;
 
@@ -17,8 +17,6 @@ import java.util.Stack;
 public class Machine {
     private int next;
     private Scope<String, Register> registers;
-    private Stack<Instruction[]> instructionStack;
-    private Stack<Integer> nextStack;
     private Stack<Value> memoryStack;
 
     public Machine() {
@@ -27,9 +25,7 @@ public class Machine {
 
     public Machine reset() {
         this.next = 0;
-        this.registers = new Scope<String, Register>();
-        this.instructionStack = new Stack<Instruction[]>();
-        this.nextStack = new Stack<Integer>();
+        this.registers = new Scope<String, Register>("global");
         this.memoryStack = new Stack<Value>();
         return this;
     }
@@ -44,13 +40,14 @@ public class Machine {
     }
 
     public Register getRegister(String ref) {
-        Register r = this.registers.get(ref);
-        if (r == null) {
-            r = new Register(new NumberValue(0));
+        try {
+            Register r = this.registers.safeGet(ref);
+            return r;
+        } catch (UndefinedException udf) {
+            Register r = new Register(new NoneValue());
             this.registers.set(ref, r);
             return r;
         }
-        return r;
     }
 
     public Value getValue(String ref) throws UndefinedException {
@@ -67,10 +64,7 @@ public class Machine {
         return this;
     }
 
-    public Value peek() throws UndefinedException {
-        if (this.memoryStack.size() == 0) {
-            throw new UndefinedException();
-        }
+    public Value peekValue() {
         return this.memoryStack.peek();
     }
 
@@ -92,10 +86,9 @@ public class Machine {
 
     public Machine call(Module module, String routineName) throws InvalidInstruction, TypeUnmatchedException, ValueUnavailableException, UndefinedException, OverdefinedException {
         Routine routine = module.getRoutine(routineName);
-        Scope<String, Register> routineScope = new Scope<String, Register>(this.registers);
         Scope<String, Register> currentScope = this.registers;
         int next = this.next;
-        this.registers = routineScope;
+        this.registers = new Scope<String, Register>(routineName);
         this.execute(routine.getInstructions(), 0, module);
         this.next = next;
         this.registers = currentScope;

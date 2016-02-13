@@ -20,7 +20,7 @@ public class PeekInstruction extends Instruction {
     @Override
     public boolean executeValid(Machine vm, Module module) throws InvalidInstruction, UndefinedException {
         Register r = this.getRegister(vm, 0);
-        r.assignValue(vm.peek());
+        r.assignValue(vm.peekValue());
         return false;
     }
 }
