@@ -5,8 +5,11 @@ import junit.framework.TestSuite;
 import org.lucylang.ljvm.type.*;
 
 public class BooleanValueTest extends ValueTest {
+    protected BooleanValue left;
+
     public BooleanValueTest(String testName) {
         super(testName);
+        left = new BooleanValue();
     }
 
     public static Test suite() {
@@ -69,7 +72,6 @@ public class BooleanValueTest extends ValueTest {
     }
 
     public void testAdd() {
-        BooleanValue left = new BooleanValue();
         ValueUnavailableException ve = new ValueUnavailableException("unable to perform add over " + left + " value");
         add.testThrow(left, new BooleanValue(), ve);
         add.testThrow(left, new NumberValue(), ve);
@@ -78,7 +80,6 @@ public class BooleanValueTest extends ValueTest {
     }
 
     public void testSub() {
-        BooleanValue left = new BooleanValue();
         ValueUnavailableException ve = new ValueUnavailableException("unable to perform sub over " + left + " value");
         sub.testThrow(left, new BooleanValue(), ve);
         sub.testThrow(left, new NumberValue(), ve);
@@ -87,7 +88,6 @@ public class BooleanValueTest extends ValueTest {
     }
 
     public void testMul() {
-        BooleanValue left = new BooleanValue();
         ValueUnavailableException ve = new ValueUnavailableException("unable to perform mul over " + left + " value");
         mul.testThrow(left, new BooleanValue(), ve);
         mul.testThrow(left, new NumberValue(), ve);
@@ -96,7 +96,6 @@ public class BooleanValueTest extends ValueTest {
     }
 
     public void testDiv() {
-        BooleanValue left = new BooleanValue();
         ValueUnavailableException ve = new ValueUnavailableException("unable to perform div over " + left + " value");
         div.testThrow(left, new BooleanValue(), ve);
         div.testThrow(left, new NumberValue(), ve);
@@ -105,7 +104,6 @@ public class BooleanValueTest extends ValueTest {
     }
 
     public void testAnd() {
-        BooleanValue left = new BooleanValue();
         and.testThrow(left, new NumberValue(), new TypeUnmatchedException(left.getType(), new NumberType()));
         and.testThrow(left, new StringValue(), new TypeUnmatchedException(left.getType(), new StringType()));
         and.testThrow(left, new NoneValue(), new TypeUnmatchedException(left.getType(), new NoneType()));
@@ -117,7 +115,6 @@ public class BooleanValueTest extends ValueTest {
     }
 
     public void testOr() {
-        BooleanValue left = new BooleanValue();
         or.testThrow(left, new NumberValue(), new TypeUnmatchedException(left.getType(), new NumberType()));
         or.testThrow(left, new StringValue(), new TypeUnmatchedException(left.getType(), new StringType()));
         or.testThrow(left, new NoneValue(), new TypeUnmatchedException(left.getType(), new NoneType()));
@@ -129,14 +126,12 @@ public class BooleanValueTest extends ValueTest {
     }
 
     public void testNot() {
-        BooleanValue left = new BooleanValue();
         not.testThrow(left, null, null);
         not.testEqual(new BooleanValue(true), null, new BooleanValue(false));
         not.testEqual(new BooleanValue(false), null, new BooleanValue(true));
     }
 
     public void testEqu() {
-        BooleanValue left = new BooleanValue();
         equ.testEqual(left, new BooleanValue(false), new BooleanValue(true));
         equ.testEqual(left, new BooleanValue(true), new BooleanValue(false));
         equ.testEqual(left, new NumberValue(), new BooleanValue(false));
@@ -145,7 +140,6 @@ public class BooleanValueTest extends ValueTest {
     }
 
     public void testLes() {
-        BooleanValue left = new BooleanValue();
         ValueUnavailableException ve = new ValueUnavailableException("unable to perform < over " + left + " value");
         les.testThrow(left, new BooleanValue(), ve);
         les.testThrow(left, new NumberValue(), ve);
@@ -154,7 +148,6 @@ public class BooleanValueTest extends ValueTest {
     }
 
     public void testGre() {
-        BooleanValue left = new BooleanValue();
         ValueUnavailableException ve = new ValueUnavailableException("unable to perform > over " + left + " value");
         gre.testThrow(left, new BooleanValue(), ve);
         gre.testThrow(left, new NumberValue(), ve);
@@ -163,7 +156,6 @@ public class BooleanValueTest extends ValueTest {
     }
 
     public void testLeq() {
-        BooleanValue left = new BooleanValue();
         ValueUnavailableException ve = new ValueUnavailableException("unable to perform <= over " + left + " value");
         leq.testThrow(left, new BooleanValue(), ve);
         leq.testThrow(left, new NumberValue(), ve);
@@ -172,7 +164,6 @@ public class BooleanValueTest extends ValueTest {
     }
 
     public void testGeq() {
-        BooleanValue left = new BooleanValue();
         ValueUnavailableException ve = new ValueUnavailableException("unable to perform >= over " + left + " value");
         geq.testThrow(left, new BooleanValue(), ve);
         geq.testThrow(left, new NumberValue(), ve);
