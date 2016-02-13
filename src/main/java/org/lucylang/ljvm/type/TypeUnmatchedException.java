@@ -8,6 +8,8 @@ public class TypeUnmatchedException extends RuntimeException {
 
     public TypeUnmatchedException(Type leftTy, Type rightTy) {
         super("Type Unmatched Exception: <" + leftTy + "> and <" + rightTy + ">");
+        assert leftTy != null;
+        assert rightTy != null;
         this.leftTy = leftTy;
         this.rightTy = rightTy;
     }
