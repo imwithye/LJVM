@@ -3,7 +3,7 @@ package org.lucylang.ljvm.value;
 import junit.framework.TestCase;
 import org.lucylang.ljvm.type.TypeUnmatchedException;
 
-public class ValueTest extends TestCase {
+public abstract class ValueTest extends TestCase {
     protected MethodRunner add;
     protected MethodRunner sub;
     protected MethodRunner mul;

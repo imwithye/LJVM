@@ -13,7 +13,7 @@ public class NumberValueTest extends ValueTest {
     }
 
     public static Test suite() {
-        return new TestSuite(BooleanValueTest.class);
+        return new TestSuite(NumberValueTest.class);
     }
 
     public void testGetType() {
@@ -145,7 +145,7 @@ public class NumberValueTest extends ValueTest {
     public void testEqu() {
         equ.testEqual(left, new BooleanValue(), new BooleanValue(false));
         equ.testEqual(left, new StringValue(), new BooleanValue(false));
-        equ.testEqual(left, new NoneValue(), new BooleanValue(true));
+        equ.testEqual(left, new NoneValue(), new BooleanValue(false));
 
         equ.testEqual(left, new NumberValue(), new BooleanValue(true));
         equ.testEqual(left, new NumberValue(10), new BooleanValue(false));

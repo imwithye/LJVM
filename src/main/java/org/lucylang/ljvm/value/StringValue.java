@@ -23,13 +23,21 @@ public class StringValue extends Value {
     }
 
     @Override
-    public Integer intValue() {
-        return Integer.parseInt(this.value);
+    public Integer intValue() throws ValueUnavailableException {
+        try {
+            return Integer.parseInt(this.value);
+        } catch (NumberFormatException e) {
+            throw new ValueUnavailableException("string " + this.stringValue() + " is not an integer");
+        }
     }
 
     @Override
-    public Double floatValue() {
-        return Double.parseDouble(this.value);
+    public Double floatValue() throws ValueUnavailableException {
+        try {
+            return Double.parseDouble(this.value);
+        } catch (NumberFormatException e) {
+            throw new ValueUnavailableException("string " + this.stringValue() + " is not a float");
+        }
     }
 
     @Override

@@ -2,6 +2,7 @@ package org.lucylang.ljvm.value;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.lucylang.ljvm.type.NoneType;
 
 public class NoneValueTest extends ValueTest {
     protected NoneValue left;
@@ -12,12 +13,12 @@ public class NoneValueTest extends ValueTest {
     }
 
     public static Test suite() {
-        return new TestSuite(BooleanValueTest.class);
+        return new TestSuite(NoneValueTest.class);
     }
 
     public void testGetType() {
         NoneValue value = new NoneValue();
-        assertEquals(new NoneValue(), value.getType());
+        assertEquals(new NoneType(), value.getType());
     }
 
     public void testIntValue() {
@@ -122,7 +123,7 @@ public class NoneValueTest extends ValueTest {
     }
 
     public void testLes() {
-        ValueUnavailableException ve = new ValueUnavailableException("unable to perform les over " + left + " value");
+        ValueUnavailableException ve = new ValueUnavailableException("unable to perform < over " + left + " value");
         les.testThrow(left, new BooleanValue(), ve);
         les.testThrow(left, new NumberValue(), ve);
         les.testThrow(left, new StringValue(), ve);
@@ -130,7 +131,7 @@ public class NoneValueTest extends ValueTest {
     }
 
     public void testGre() {
-        ValueUnavailableException ve = new ValueUnavailableException("unable to perform gre over " + left + " value");
+        ValueUnavailableException ve = new ValueUnavailableException("unable to perform > over " + left + " value");
         gre.testThrow(left, new BooleanValue(), ve);
         gre.testThrow(left, new NumberValue(), ve);
         gre.testThrow(left, new StringValue(), ve);
@@ -138,7 +139,7 @@ public class NoneValueTest extends ValueTest {
     }
 
     public void testLeq() {
-        ValueUnavailableException ve = new ValueUnavailableException("unable to perform leq over " + left + " value");
+        ValueUnavailableException ve = new ValueUnavailableException("unable to perform <= over " + left + " value");
         leq.testThrow(left, new BooleanValue(), ve);
         leq.testThrow(left, new NumberValue(), ve);
         leq.testThrow(left, new StringValue(), ve);
@@ -146,7 +147,7 @@ public class NoneValueTest extends ValueTest {
     }
 
     public void testGeq() {
-        ValueUnavailableException ve = new ValueUnavailableException("unable to perform geq over " + left + " value");
+        ValueUnavailableException ve = new ValueUnavailableException("unable to perform >= over " + left + " value");
         geq.testThrow(left, new BooleanValue(), ve);
         geq.testThrow(left, new NumberValue(), ve);
         geq.testThrow(left, new StringValue(), ve);
