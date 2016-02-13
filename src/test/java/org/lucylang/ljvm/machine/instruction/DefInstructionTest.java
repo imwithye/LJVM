@@ -10,12 +10,5 @@ public class DefInstructionTest extends LJVMTest {
     }
 
     public void testValid() {
-        DefInstruction def;
-        def = new DefInstruction(new RefOperand("value"), new RefOperand("value"));
-        assertTrue(def.isValid());
-        def = new DefInstruction(new RefOperand("value"), new ValueOperand(new StringValue("test")));
-        assertTrue(def.isValid());
-        def = new DefInstruction(new RefOperand("value"), new ValueOperand(new NumberValue(10)));
-        assertTrue(def.isValid());
     }
 }

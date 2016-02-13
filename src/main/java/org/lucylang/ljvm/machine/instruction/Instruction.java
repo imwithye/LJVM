@@ -6,6 +6,7 @@ import org.lucylang.ljvm.scope.OverdefinedException;
 import org.lucylang.ljvm.machine.Register;
 import org.lucylang.ljvm.scope.UndefinedException;
 import org.lucylang.ljvm.type.TypeUnmatchedException;
+import org.lucylang.ljvm.value.NumberValue;
 import org.lucylang.ljvm.value.StringValue;
 import org.lucylang.ljvm.value.Value;
 import org.lucylang.ljvm.value.ValueUnavailableException;
@@ -53,11 +54,11 @@ public abstract class Instruction implements Serializable {
         }
         ArrayList<Integer> errorRefs = new ArrayList<Integer>();
         for (int i = 0; i < refs.length; i++) {
-            if(!(this.getOperand(i).getValue() instanceof String)) {
+            if (!(this.getOperand(i).getValue() instanceof String)) {
                 errorRefs.add(i);
             } else {
                 String ref = (String) this.getOperand(i).getValue();
-                if(ref == null) {
+                if (ref == null) {
                     errorRefs.add(i);
                 }
             }

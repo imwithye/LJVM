@@ -23,12 +23,16 @@ public class Scope<K, V> {
         return this.parent;
     }
 
+    public Scope set(K key, V value) {
+        this.scope.put(key, value);
+        return this;
+    }
+
     public Scope put(K key, V value) throws OverdefinedException {
         if (this.isDefined(key)) {
             throw new OverdefinedException();
         }
-        this.scope.put(key, value);
-        return this;
+        return this.set(key, value);
     }
 
     public boolean isDefined(K key) {

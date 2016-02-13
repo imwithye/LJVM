@@ -1,6 +1,5 @@
 package org.lucylang.ljvm.machine;
 
-import org.lucylang.ljvm.machine.instruction.DefInstruction;
 import org.lucylang.ljvm.machine.instruction.Instruction;
 import org.lucylang.ljvm.machine.instruction.InvalidInstruction;
 import org.lucylang.ljvm.machine.module.Module;
@@ -9,6 +8,7 @@ import org.lucylang.ljvm.scope.OverdefinedException;
 import org.lucylang.ljvm.scope.Scope;
 import org.lucylang.ljvm.scope.UndefinedException;
 import org.lucylang.ljvm.type.TypeUnmatchedException;
+import org.lucylang.ljvm.value.NumberValue;
 import org.lucylang.ljvm.value.Value;
 import org.lucylang.ljvm.value.ValueUnavailableException;
 
@@ -43,30 +43,18 @@ public class Machine {
         return this.next;
     }
 
-    public Register getRegister(String ref) throws UndefinedException {
+    public Register getRegister(String ref) {
         Register r = this.registers.get(ref);
         if (r == null) {
-            throw new UndefinedException();
+            r = new Register(new NumberValue(0));
+            this.registers.set(ref, r);
+            return r;
         }
         return r;
     }
 
     public Value getValue(String ref) throws UndefinedException {
         return this.getRegister(ref).getValue();
-    }
-
-    public Machine assignRegister(String ref, Value value) throws UndefinedException {
-        this.getRegister(ref).assignValue(value);
-        return this;
-    }
-
-    public Machine defineRegister(String ref, Value value) throws OverdefinedException {
-        if (!this.registers.isDefined(ref)) {
-            this.registers.put(ref, new Register(value));
-        } else {
-            throw new OverdefinedException();
-        }
-        return this;
     }
 
     public Machine pushValue(Value value) {
@@ -93,7 +81,7 @@ public class Machine {
         this.next = pos;
         while (this.next < instructions.length) {
             Instruction i = instructions[this.next];
-            if(!i.execute(this, module)) {
+            if (!i.execute(this, module)) {
                 this.next++;
             } else {
                 break;
@@ -115,8 +103,6 @@ public class Machine {
     }
 
     public Machine execute(Module module) throws InvalidInstruction, TypeUnmatchedException, ValueUnavailableException, UndefinedException, OverdefinedException {
-        DefInstruction[] vars = module.getVars();
-        this.execute(vars, 0, module);
         this.call(module, "main");
         return this;
     }

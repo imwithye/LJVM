@@ -18,22 +18,17 @@ public class GenLoad {
             String path = "D:/fibonacci.lyo";
             System.out.println("Bootstrap fibonacci module and write it to " + path);
             Module module = new Module();
-            module.addVars(new DefInstruction[]{
-                    new DefInstruction(new RefOperand("result"), new ValueOperand(new NumberValue(0))),
-            });
             module.defineRoutine("fibonacci", new Routine(new Instruction[]{
-                    new DefInstruction(new RefOperand("n"), new ValueOperand(new NumberValue(0))),
                     new PopInstruction(new RefOperand("n")),
-                    new DefInstruction(new RefOperand("cmp"), new ValueOperand(new BooleanValue(false))),
                     new LesInstruction(new RefOperand("cmp"), new RefOperand("n"), new ValueOperand(new NumberValue(3))),
                     new BeqInstruction(new RefOperand("cmp"), new ValueOperand(new NumberValue(19))),
                     // IF n >= 3
-                    new DefInstruction(new RefOperand("result"), new RefOperand("n")),
+                    new MovInstruction(new RefOperand("result"), new RefOperand("n")),
                     new SubInstruction(new RefOperand("result"), new RefOperand("result"), new ValueOperand(new NumberValue(1))),
                     new PushInstruction(new RefOperand("result")),
                     new CallInstruction(new RefOperand("fibonacci")),
                     new PopInstruction(new RefOperand("result")),
-                    new DefInstruction(new RefOperand("sum"), new RefOperand("result")),
+                    new MovInstruction(new RefOperand("sum"), new RefOperand("result")),
 
                     new MovInstruction(new RefOperand("result"), new RefOperand("n")),
                     new SubInstruction(new RefOperand("result"), new RefOperand("result"), new ValueOperand(new NumberValue(2))),
@@ -54,7 +49,7 @@ public class GenLoad {
                     new PushInstruction(new ValueOperand(new NumberValue(10))),
                     new CallInstruction(new RefOperand("fibonacci")),
                     new PopInstruction(new RefOperand("result")),
-                    new DefInstruction(new RefOperand("text"), new ValueOperand(new StringValue("The value of fibonacci 10 is "))),
+                    new MovInstruction(new RefOperand("text"), new ValueOperand(new StringValue("The value of fibonacci 10 is "))),
                     new StrInstruction(new RefOperand("result"), new RefOperand("result")),
                     new AddInstruction(new RefOperand("text"), new RefOperand("text"), new RefOperand("result")),
                     new AddInstruction(new RefOperand("text"), new RefOperand("text"), new ValueOperand(new StringValue("\n"))),

@@ -11,7 +11,6 @@ public class FuncCodeGenerator {
     private void acceptParameter(VarName parameter, ArrayList<Instruction> instructions) {
         assert parameter != null;
         assert instructions != null;
-        instructions.add(new DefInstruction(new RefOperand(parameter.getVarName()), new ValueOperand(0)));
         instructions.add(new PopInstruction(new RefOperand(parameter.getVarName())));
     }
 
