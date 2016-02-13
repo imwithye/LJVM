@@ -3,7 +3,15 @@ package org.lucylang.ljvm.value;
 import org.lucylang.ljvm.exception.RuntimeException;
 
 public class ValueUnavailableException extends RuntimeException {
-    public ValueUnavailableException(Value value) {
-        super("Value " + value + " unavailable");
+    public ValueUnavailableException(String message) {
+        super(message);
+    }
+
+    public ValueUnavailableException(Value expectValue, Value realValue) {
+        super(expectValue + " value is unavailable for " + realValue);
+    }
+
+    public ValueUnavailableException(String expectValue, Value realValue) {
+        super(expectValue + " value is unavailable for " + realValue);
     }
 }

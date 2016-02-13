@@ -48,7 +48,7 @@ public class NumberValue extends Value {
 
     @Override
     public Boolean booleanValue() throws ValueUnavailableException {
-        throw new ValueUnavailableException(new BooleanValue());
+        throw new ValueUnavailableException("boolean", this);
     }
 
     @Override
@@ -84,30 +84,24 @@ public class NumberValue extends Value {
     }
 
     @Override
-    public Value and(Value value) throws ValueUnavailableException, TypeUnmatchedException {
-        if (!this.isSameType(value)) {
-            throw new TypeUnmatchedException(this.getType(), value.getType());
-        }
-        throw new ValueUnavailableException(new BooleanValue());
+    public Value and(Value value) throws ValueUnavailableException {
+        throw new ValueUnavailableException("unable to perform and over " + this + " value");
     }
 
     @Override
-    public Value or(Value value) throws ValueUnavailableException, TypeUnmatchedException {
-        if (!this.isSameType(value)) {
-            throw new TypeUnmatchedException(this.getType(), value.getType());
-        }
-        throw new ValueUnavailableException(new BooleanValue());
+    public Value or(Value value) throws ValueUnavailableException {
+        throw new ValueUnavailableException("unable to perform or over " + this + " value");
     }
 
     @Override
     public Value not() throws ValueUnavailableException {
-        throw new ValueUnavailableException(new BooleanValue());
+        throw new ValueUnavailableException("unable to perform not over " + this + " value");
     }
 
     @Override
-    public Value equ(Value value) throws TypeUnmatchedException {
+    public Value equ(Value value) {
         if (!(value instanceof NumberValue)) {
-            throw new TypeUnmatchedException(this.getType(), value.getType());
+            return new BooleanValue(false);
         }
         NumberValue numberValue = (NumberValue) value;
         return new BooleanValue(this.intValue().equals(numberValue.intValue()) || this.floatValue().equals(numberValue.floatValue()));
@@ -147,20 +141,5 @@ public class NumberValue extends Value {
         }
         NumberValue numberValue = (NumberValue) value;
         return new BooleanValue(this.intValue().compareTo(numberValue.intValue()) >= 0 || this.floatValue().compareTo(numberValue.floatValue()) >= 0);
-    }
-
-    @Override
-    public NumberValue toNumberValue() {
-        return this;
-    }
-
-    @Override
-    public StringValue toStringValue() {
-        return new StringValue(this.stringValue());
-    }
-
-    @Override
-    public BooleanValue toBooleanValue() throws ValueUnavailableException {
-        return new BooleanValue(this.booleanValue());
     }
 }

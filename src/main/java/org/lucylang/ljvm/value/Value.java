@@ -16,7 +16,7 @@ public abstract class Value implements Serializable {
 
     public abstract Double floatValue() throws ValueUnavailableException;
 
-    public abstract String stringValue();
+    public abstract String stringValue() throws ValueUnavailableException;
 
     public abstract Boolean booleanValue() throws ValueUnavailableException;
 
@@ -34,7 +34,7 @@ public abstract class Value implements Serializable {
 
     public abstract Value not() throws ValueUnavailableException;
 
-    public abstract Value equ(Value value) throws ValueUnavailableException, TypeUnmatchedException;
+    public abstract Value equ(Value value);
 
     public abstract Value les(Value value) throws ValueUnavailableException, TypeUnmatchedException;
 
@@ -44,11 +44,17 @@ public abstract class Value implements Serializable {
 
     public abstract Value geq(Value value) throws ValueUnavailableException, TypeUnmatchedException;
 
-    public abstract NumberValue toNumberValue() throws ValueUnavailableException;
+    public NumberValue toNumberValue() throws ValueUnavailableException {
+        return new NumberValue(this.floatValue());
+    }
 
-    public abstract StringValue toStringValue() throws ValueUnavailableException;
+    public StringValue toStringValue() throws ValueUnavailableException {
+        return new StringValue(this.stringValue());
+    }
 
-    public abstract BooleanValue toBooleanValue() throws ValueUnavailableException;
+    public BooleanValue toBooleanValue() throws ValueUnavailableException {
+        return new BooleanValue(this.booleanValue());
+    }
 
     @Override
     public String toString() {

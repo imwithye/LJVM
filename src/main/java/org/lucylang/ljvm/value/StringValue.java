@@ -39,7 +39,7 @@ public class StringValue extends Value {
 
     @Override
     public Boolean booleanValue() throws ValueUnavailableException {
-        throw new ValueUnavailableException(new BooleanValue());
+        throw new ValueUnavailableException("boolean", this);
     }
 
     @Override
@@ -51,56 +51,42 @@ public class StringValue extends Value {
     }
 
     @Override
-    public Value sub(Value value) throws ValueUnavailableException, TypeUnmatchedException {
-        if (!this.isSameType(value)) {
-            throw new TypeUnmatchedException(this.getType(), value.getType());
-        }
-        throw new ValueUnavailableException(new StringValue());
+    public Value sub(Value value) throws ValueUnavailableException {
+        throw new ValueUnavailableException("unable to perform sub over " + this + " value");
     }
 
     @Override
-    public Value mul(Value value) throws ValueUnavailableException, TypeUnmatchedException {
-        if (!this.isSameType(value)) {
-            throw new TypeUnmatchedException(this.getType(), value.getType());
-        }
-        throw new ValueUnavailableException(new StringValue());
+    public Value mul(Value value) throws ValueUnavailableException {
+        throw new ValueUnavailableException("unable to perform mul over " + this + " value");
     }
 
     @Override
-    public Value div(Value value) throws ValueUnavailableException, TypeUnmatchedException {
-        if (!this.isSameType(value)) {
-            throw new TypeUnmatchedException(this.getType(), value.getType());
-        }
-        throw new ValueUnavailableException(new StringValue());
+    public Value div(Value value) throws ValueUnavailableException {
+        throw new ValueUnavailableException("unable to perform div over " + this + " value");
     }
 
     @Override
-    public Value and(Value value) throws ValueUnavailableException, TypeUnmatchedException {
-        if (!this.isSameType(value)) {
-            throw new TypeUnmatchedException(this.getType(), value.getType());
-        }
-        throw new ValueUnavailableException(new StringValue());
+    public Value and(Value value) throws ValueUnavailableException {
+        throw new ValueUnavailableException("unable to perform and over " + this + " value");
     }
 
     @Override
-    public Value or(Value value) throws ValueUnavailableException, TypeUnmatchedException {
-        if (!this.isSameType(value)) {
-            throw new TypeUnmatchedException(this.getType(), value.getType());
-        }
-        throw new ValueUnavailableException(new BooleanValue());
+    public Value or(Value value) throws ValueUnavailableException {
+        throw new ValueUnavailableException("unable to perform or over " + this + " value");
     }
 
     @Override
     public Value not() throws ValueUnavailableException {
-        throw new ValueUnavailableException(new BooleanValue());
+        throw new ValueUnavailableException("unable to perform not over " + this + " value");
     }
 
     @Override
-    public Value equ(Value value) throws TypeUnmatchedException {
+    public Value equ(Value value) {
         if (!(value instanceof StringValue)) {
-            throw new TypeUnmatchedException(this.getType(), value.getType());
+            return new BooleanValue(false);
         }
-        return new BooleanValue(this.stringValue().compareTo(value.stringValue()) == 0);
+        StringValue stringValue = (StringValue) value;
+        return new BooleanValue(this.stringValue().compareTo(stringValue.stringValue()) == 0);
     }
 
     @Override
@@ -108,7 +94,8 @@ public class StringValue extends Value {
         if (!(value instanceof StringValue)) {
             throw new TypeUnmatchedException(this.getType(), value.getType());
         }
-        return new BooleanValue(this.stringValue().compareTo(value.stringValue()) < 0);
+        StringValue stringValue = (StringValue) value;
+        return new BooleanValue(this.stringValue().compareTo(stringValue.stringValue()) < 0);
     }
 
     @Override
@@ -116,7 +103,8 @@ public class StringValue extends Value {
         if (!(value instanceof StringValue)) {
             throw new TypeUnmatchedException(this.getType(), value.getType());
         }
-        return new BooleanValue(this.stringValue().compareTo(value.stringValue()) > 0);
+        StringValue stringValue = (StringValue) value;
+        return new BooleanValue(this.stringValue().compareTo(stringValue.stringValue()) > 0);
     }
 
     @Override
@@ -124,7 +112,8 @@ public class StringValue extends Value {
         if (!(value instanceof StringValue)) {
             throw new TypeUnmatchedException(this.getType(), value.getType());
         }
-        return new BooleanValue(this.stringValue().compareTo(value.stringValue()) <= 0);
+        StringValue stringValue = (StringValue) value;
+        return new BooleanValue(this.stringValue().compareTo(stringValue.stringValue()) <= 0);
     }
 
     @Override
@@ -132,21 +121,7 @@ public class StringValue extends Value {
         if (!(value instanceof StringValue)) {
             throw new TypeUnmatchedException(this.getType(), value.getType());
         }
-        return new BooleanValue(this.stringValue().compareTo(value.stringValue()) >= 0);
-    }
-
-    @Override
-    public NumberValue toNumberValue() {
-        return new NumberValue(this.floatValue());
-    }
-
-    @Override
-    public StringValue toStringValue() {
-        return this;
-    }
-
-    @Override
-    public BooleanValue toBooleanValue() throws ValueUnavailableException {
-        return new BooleanValue(this.booleanValue());
+        StringValue stringValue = (StringValue) value;
+        return new BooleanValue(this.stringValue().compareTo(stringValue.stringValue()) >= 0);
     }
 }

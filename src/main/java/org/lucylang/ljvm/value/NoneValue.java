@@ -1,57 +1,35 @@
 package org.lucylang.ljvm.value;
 
-import org.lucylang.ljvm.type.BooleanType;
+import org.lucylang.ljvm.type.NoneType;
 import org.lucylang.ljvm.type.Type;
 import org.lucylang.ljvm.type.TypeUnmatchedException;
 
-public class BooleanValue extends Value {
-    private BooleanType type;
-    private Boolean value;
-
-    public BooleanValue() {
-        this(false);
-    }
-
-    public BooleanValue(Boolean value) {
-        this.type = new BooleanType();
-        this.value = value;
-    }
+public class NoneValue extends Value {
+    private NoneType noneType;
 
     @Override
     public Type getType() {
-        return this.type;
+        return this.noneType;
     }
 
     @Override
-    public Integer intValue() {
-        if (this.value.booleanValue()) {
-            return 1;
-        } else {
-            return 0;
-        }
+    public Integer intValue() throws ValueUnavailableException {
+        throw new ValueUnavailableException("int", this);
     }
 
     @Override
-    public Double floatValue() {
-        if (this.value.booleanValue()) {
-            return new Double(1);
-        } else {
-            return new Double(0);
-        }
+    public Double floatValue() throws ValueUnavailableException {
+        throw new ValueUnavailableException("float", this);
     }
 
     @Override
-    public String stringValue() {
-        if (this.value.booleanValue()) {
-            return "true";
-        } else {
-            return "false";
-        }
+    public String stringValue() throws ValueUnavailableException {
+        throw new ValueUnavailableException("string", this);
     }
 
     @Override
-    public Boolean booleanValue() {
-        return this.value;
+    public Boolean booleanValue() throws ValueUnavailableException {
+        throw new ValueUnavailableException("boolean", this);
     }
 
     @Override
@@ -75,33 +53,26 @@ public class BooleanValue extends Value {
     }
 
     @Override
-    public Value and(Value value) throws TypeUnmatchedException {
-        if (!this.isSameType(value)) {
-            throw new TypeUnmatchedException(this.getType(), value.getType());
-        }
-        return new BooleanValue(this.value && ((BooleanValue) value).booleanValue());
+    public Value and(Value value) throws ValueUnavailableException {
+        throw new ValueUnavailableException("unable to perform and over " + this + " value");
     }
 
     @Override
-    public Value or(Value value) throws TypeUnmatchedException {
-        if (!this.isSameType(value)) {
-            throw new TypeUnmatchedException(this.getType(), value.getType());
-        }
-        return new BooleanValue(this.value || ((BooleanValue) value).booleanValue());
+    public Value or(Value value) throws ValueUnavailableException {
+        throw new ValueUnavailableException("unable to perform or over " + this + " value");
     }
 
     @Override
-    public Value not() {
-        return new BooleanValue(!this.value);
+    public Value not() throws ValueUnavailableException {
+        throw new ValueUnavailableException("unable to perform not over " + this + " value");
     }
 
     @Override
     public Value equ(Value value) {
-        if (!(value instanceof BooleanValue)) {
+        if (!this.isSameType(value)) {
             return new BooleanValue(false);
         }
-        BooleanValue booleanValue = (BooleanValue) value;
-        return new BooleanValue(this.booleanValue() == booleanValue.booleanValue());
+        return new BooleanValue(true);
     }
 
     @Override
