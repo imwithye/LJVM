@@ -1,14 +1,20 @@
 package org.lucylang.ljvm.generator;
 
-import org.lucylang.ljvm.LJVMTest;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 import org.lucylang.ljvm.machine.instruction.Instruction;
 import org.lucylang.ljvm.node.*;
 
 import java.util.ArrayList;
 
-public class StmtCodeGeneratorTest extends LJVMTest {
+public class StmtCodeGeneratorTest extends TestCase {
     public StmtCodeGeneratorTest(String testName) {
         super(testName);
+    }
+
+    public static Test suite() {
+        return new TestSuite(StmtCodeGeneratorTest.class);
     }
 
     public void testExpr() {

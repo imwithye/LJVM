@@ -1,12 +1,18 @@
 package org.lucylang.ljvm.generator;
 
-import org.lucylang.ljvm.LJVMTest;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 import org.lucylang.ljvm.machine.module.Routine;
 import org.lucylang.ljvm.node.*;
 
-public class FuncCodeGeneratorTest extends LJVMTest {
+public class FuncCodeGeneratorTest extends TestCase {
     public FuncCodeGeneratorTest(String testName) {
         super(testName);
+    }
+
+    public static Test suite() {
+        return new TestSuite(FuncCodeGeneratorTest.class);
     }
 
     public void testFunc() {
