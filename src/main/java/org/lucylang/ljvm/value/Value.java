@@ -57,6 +57,18 @@ public abstract class Value implements Serializable {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (o instanceof Value) {
+            Value v = (Value) o;
+            if (v.isSameType(this)) {
+                return v.equ(this).booleanValue();
+            }
+            return false;
+        }
+        return false;
+    }
+
+    @Override
     public String toString() {
         return this.getClass().getSimpleName();
     }

@@ -4,10 +4,10 @@ import org.lucylang.ljvm.type.Type;
 import org.lucylang.ljvm.value.Value;
 
 public class Register {
-    private Value value;
+    protected Value value;
 
     public Register(Value value) {
-        this.value = value;
+        this.assignValue(value);
     }
 
     public Value getValue() {
@@ -18,8 +18,9 @@ public class Register {
         return this.value.getType();
     }
 
-    public Value assignValue(Value value) {
+    public Register assignValue(Value value) {
+        assert value != null;
         this.value = value;
-        return this.value;
+        return this;
     }
 }
