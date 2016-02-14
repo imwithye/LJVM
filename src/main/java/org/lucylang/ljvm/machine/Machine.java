@@ -15,88 +15,96 @@ import org.lucylang.ljvm.value.ValueUnavailableException;
 import java.util.Stack;
 
 public class Machine {
-    private int next;
-    private Scope<String, Register> registers;
-    private Stack<Value> memoryStack;
+    protected int pc;
+    protected Scope<String, Register> currentScope;
+    protected Stack<Value> memoryStack;
 
     public Machine() {
         this.reset();
     }
 
     public Machine reset() {
-        this.next = 0;
-        this.registers = new Scope<String, Register>("global");
+        this.pc = 0;
+        this.currentScope = null;
         this.memoryStack = new Stack<Value>();
         return this;
     }
 
-    public Machine setNext(int next) {
-        this.next = next;
+    public Machine setProgramCounter(int pc) {
+        this.pc = pc;
         return this;
     }
 
-    public int getNext() {
-        return this.next;
-    }
-
     public Register getRegister(String ref) {
+        assert ref != null;
         try {
-            Register r = this.registers.safeGet(ref);
+            Register r = this.currentScope.safeGet(ref);
             return r;
         } catch (UndefinedException udf) {
             Register r = new Register(new NoneValue());
-            this.registers.set(ref, r);
+            this.currentScope.set(ref, r);
             return r;
         }
     }
 
-    public Value getValue(String ref) throws UndefinedException {
+    public Value getValue(String ref) {
+        assert ref != null;
         return this.getRegister(ref).getValue();
     }
 
     public Machine pushValue(Value value) {
+        assert value != null;
         this.memoryStack.push(value);
         return this;
     }
 
-    public Machine popValue() {
-        this.memoryStack.pop();
-        return this;
+    public Value popValue() {
+        return this.memoryStack.pop();
     }
 
     public Value peekValue() {
         return this.memoryStack.peek();
     }
 
-    public Machine execute(Instruction[] instructions, int pos, Module module) throws InvalidInstruction, TypeUnmatchedException, ValueUnavailableException, UndefinedException, OverdefinedException {
+    private Machine execute(Instruction[] instructions, int pos, Module module) throws InvalidInstruction, TypeUnmatchedException, ValueUnavailableException, UndefinedException, OverdefinedException {
+        assert instructions != null;
+        assert module != null;
         if (instructions == null) {
             return this;
         }
-        this.next = pos;
-        while (this.next < instructions.length) {
-            Instruction i = instructions[this.next];
+        boolean hasReturn = false;
+        this.pc = pos;
+        while (this.pc < instructions.length) {
+            Instruction i = instructions[this.pc];
             if (!i.execute(this, module)) {
-                this.next++;
+                this.pc++;
             } else {
+                hasReturn = true;
                 break;
             }
+        }
+        if (!hasReturn) {
+            this.pushValue(new NoneValue());
         }
         return this;
     }
 
     public Machine call(Module module, String routineName) throws InvalidInstruction, TypeUnmatchedException, ValueUnavailableException, UndefinedException, OverdefinedException {
+        assert module != null;
+        assert routineName != null;
         Routine routine = module.getRoutine(routineName);
-        Scope<String, Register> currentScope = this.registers;
-        int next = this.next;
-        this.registers = new Scope<String, Register>(routineName);
+        Scope<String, Register> currentScope = this.currentScope;
+        int next = this.pc;
+        this.currentScope = new Scope<String, Register>(routineName);
         this.execute(routine.getInstructions(), 0, module);
-        this.next = next;
-        this.registers = currentScope;
+        this.pc = next;
+        this.currentScope = currentScope;
         return this;
     }
 
-    public Machine execute(Module module) throws InvalidInstruction, TypeUnmatchedException, ValueUnavailableException, UndefinedException, OverdefinedException {
+    public Value execute(Module module) throws InvalidInstruction, TypeUnmatchedException, ValueUnavailableException, UndefinedException, OverdefinedException {
+        assert module != null;
         this.call(module, "main");
-        return this;
+        return this.popValue();
     }
 }

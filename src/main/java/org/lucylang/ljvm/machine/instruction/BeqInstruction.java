@@ -31,7 +31,7 @@ public class BeqInstruction extends Instruction {
             throw new InvalidInstruction();
         }
         int next = target.intValue() - 1;
-        vm.setNext(next);
+        vm.setProgramCounter(next);
         return false;
     }
 }

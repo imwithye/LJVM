@@ -34,7 +34,7 @@ public class GotoInstruction extends Instruction {
             throw new InvalidInstruction();
         }
         int next = v.intValue() - 1;
-        vm.setNext(next);
+        vm.setProgramCounter(next);
         return false;
     }
 }
