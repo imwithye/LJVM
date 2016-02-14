@@ -7,14 +7,22 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Routine implements Serializable {
-    private ArrayList<Instruction> instructions;
+    protected ArrayList<Instruction> instructions;
 
     public Routine(ArrayList<Instruction> instructions) {
-        this.instructions = instructions;
+        if (instructions == null) {
+            this.instructions = new ArrayList<Instruction>();
+        } else {
+            this.instructions = instructions;
+        }
     }
 
     public Routine(Instruction[] instructions) {
-        this.instructions = new ArrayList<Instruction>(Arrays.asList(instructions));
+        if (instructions == null) {
+            this.instructions = new ArrayList<Instruction>();
+        } else {
+            this.instructions = new ArrayList<Instruction>(Arrays.asList(instructions));
+        }
     }
 
     public Routine() {
