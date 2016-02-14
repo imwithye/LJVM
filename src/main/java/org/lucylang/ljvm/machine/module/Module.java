@@ -9,20 +9,12 @@ import java.io.Serializable;
 
 public class Module implements Serializable {
     protected Scope<String, Routine> routines;
-    protected String name;
-    protected static int counter = 0;
 
     public Module() {
-        this("anonymous" + counter);
-        counter++;
+        this.routines = new Scope<String, Routine>("module");
     }
 
-    public Module(String name) {
-        this.name = "module$" + name;
-        this.routines = new Scope<String, Routine>(this.name);
-    }
-
-    public boolean hasMain() {
+    public boolean isMain() {
         return this.routines.get("main") != null;
     }
 

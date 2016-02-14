@@ -7,28 +7,30 @@ import java.util.Set;
 public class Scope<K, V> {
     private HashMap<K, V> scope;
     protected Scope<K, V> parent;
+    protected NameGenerator nameGenerator = new NameGenerator(Scope.class);
     protected String name;
-    protected static int counter = 0;
 
     public Scope() {
-        this(null, "anonymous" + counter);
-        counter++;
+        this.init(null, nameGenerator.getAnonymousName());
     }
 
     public Scope(String name) {
-        this(null, name);
+        this.init(null, nameGenerator.getName(name));
     }
 
     public Scope(Scope<K, V> parent) {
-        this(parent, "anonymous" + counter);
-        counter++;
+        this.init(parent, nameGenerator.getAnonymousName());
     }
 
     public Scope(Scope<K, V> parent, String name) {
+        this.init(parent, nameGenerator.getName(name));
+    }
+
+    protected void init(Scope<K, V> parent, String name) {
         assert name != null;
         this.scope = new HashMap<K, V>();
         this.parent = parent;
-        this.name = "scope$" + name;
+        this.name = name;
     }
 
     public void setParent(Scope<K, V> parent) {
