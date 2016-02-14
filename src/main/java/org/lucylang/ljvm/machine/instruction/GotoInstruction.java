@@ -31,7 +31,7 @@ public class GotoInstruction extends Instruction {
     public boolean executeValid(Machine vm, Module module) throws InvalidInstruction, TypeUnmatchedException, ValueUnavailableException, UndefinedException, OverdefinedException {
         Value v = this.getValue(vm, 0);
         if (!(v instanceof NumberValue)) {
-            throw new InvalidInstruction();
+            throw new InvalidInstruction(v, this);
         }
         int next = v.intValue() - 1;
         vm.setProgramCounter(next);

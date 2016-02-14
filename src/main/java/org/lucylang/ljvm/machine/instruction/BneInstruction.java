@@ -33,7 +33,7 @@ public class BneInstruction extends Instruction {
         }
         Value target = this.getValue(vm, 1);
         if (!(target instanceof NumberValue)) {
-            throw new InvalidInstruction();
+            throw new InvalidInstruction(target, this);
         }
         int next = target.intValue() - 1;
         vm.setProgramCounter(next);

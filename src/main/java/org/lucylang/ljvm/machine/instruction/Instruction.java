@@ -6,7 +6,6 @@ import org.lucylang.ljvm.scope.OverdefinedException;
 import org.lucylang.ljvm.machine.Register;
 import org.lucylang.ljvm.scope.UndefinedException;
 import org.lucylang.ljvm.type.TypeUnmatchedException;
-import org.lucylang.ljvm.value.NumberValue;
 import org.lucylang.ljvm.value.StringValue;
 import org.lucylang.ljvm.value.Value;
 import org.lucylang.ljvm.value.ValueUnavailableException;
@@ -50,21 +49,17 @@ public abstract class Instruction implements Serializable {
 
     protected boolean checkValid(int size, int[] refs) throws InvalidInstruction {
         if (this.size() != size) {
-            throw new InvalidInstruction();
+            throw new InvalidInstruction(size, this.size(), this);
         }
-        ArrayList<Integer> errorRefs = new ArrayList<Integer>();
         for (int i = 0; i < refs.length; i++) {
             if (!(this.getOperand(i).getValue() instanceof String)) {
-                errorRefs.add(i);
+                throw new InvalidInstruction(this.getOperand(i).getValue(), this);
             } else {
                 String ref = (String) this.getOperand(i).getValue();
                 if (ref == null) {
-                    errorRefs.add(i);
+                    throw new InvalidInstruction(this);
                 }
             }
-        }
-        if (errorRefs.size() > 0) {
-            throw new InvalidInstruction();
         }
         return true;
     }
@@ -74,27 +69,27 @@ public abstract class Instruction implements Serializable {
         if (operand.getValue() instanceof String) {
             return (String) operand.getValue();
         } else {
-            throw new InvalidInstruction();
+            throw new InvalidInstruction(operand.getValue(), this);
         }
     }
 
-    public Value getValue(Machine vm, int pos) throws InvalidInstruction, UndefinedException {
+    public Value getValue(Machine vm, int pos) throws InvalidInstruction {
         Operand operand = this.getOperand(pos);
         if (operand.getValue() instanceof String) {
             return vm.getValue((String) operand.getValue());
         } else if (operand.getValue() instanceof Value) {
             return (Value) operand.getValue();
         } else {
-            throw new InvalidInstruction();
+            throw new InvalidInstruction(operand.getValue(), this);
         }
     }
 
-    public Register getRegister(Machine vm, int pos) throws InvalidInstruction, UndefinedException {
+    public Register getRegister(Machine vm, int pos) throws InvalidInstruction {
         Operand operand = this.getOperand(pos);
         if (operand.getValue() instanceof String) {
             return vm.getRegister((String) operand.getValue());
         } else {
-            throw new InvalidInstruction();
+            throw new InvalidInstruction(operand.getValue(), this);
         }
     }
 
