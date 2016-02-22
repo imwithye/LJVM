@@ -40,4 +40,23 @@ import static org.lucylang.ljvm.parser.Token.Type.*;
     "if"        { return token(IF); }
     "else"      { return token(ELSE); }
     "while"     { return token(WHILE); }
+
+    "{"         { return token(LCURLY); }
+    "}"         { return token(RCURLY); }
+    "("         { return token(LPAREN); }
+    ")"         { return token(RPAREN); }
+    ";"         { return token(SEMICOLON); }
+
+    "="         { return token(ASSIGN); }
+    "+"         { return token(PLUS); }
+    "-"         { return token(MINUS); }
+    "*"         { return token(TIMES); }
+    "/"         { return token(DIV); }
+    ">"         { return token(GT); }
+    "<"         { return token(LT); }
+    ">="        { return token(GEQ); }
+    "<="        { return token(LEQ); }
+    "=="        { return token(EQUAL); }
+    "!="        { return token(NEQ); }
+    "!"         { return token(NOT); }
 }
