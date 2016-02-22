@@ -25,6 +25,10 @@ public class Token {
         this.lexeme = lexeme;
     }
 
+    public Type getType() {
+        return this.type;
+    }
+
     public boolean isEOF() {
         return type == Type.EOF;
     }
