@@ -1,0 +1,17 @@
+%package "org.lucylang.ljvm.parser";
+
+%class "Parser";
+
+%terminals FUNC, ID, NUMBER;
+
+%goal module;
+
+module = functions
+    ;
+
+functions = function functions
+    |
+    ;
+
+function = FUNC ID
+    ;
