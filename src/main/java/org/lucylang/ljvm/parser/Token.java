@@ -29,6 +29,10 @@ public class Token {
         return this.type;
     }
 
+    public String getLexeme() {
+        return this.lexeme;
+    }
+
     public boolean isEOF() {
         return type == Type.EOF;
     }
