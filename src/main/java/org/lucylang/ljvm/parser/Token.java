@@ -5,6 +5,7 @@ public class Token {
         VAR, FUNC, RETURN, IF, ELSE, NONE, TRUE, FALSE, WHILE,
         LCURLY, RCURLY, LPAREN, RPAREN, SEMICOLON,
         ASSIGN, PLUS, MINUS, TIMES, DIV, GT, LT, GEQ, LEQ, EQUAL, NEQ, NOT,
+        NEWLINE, NUMBER, ID,
         EOF,
     }
 

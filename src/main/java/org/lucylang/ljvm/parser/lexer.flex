@@ -59,4 +59,10 @@ import static org.lucylang.ljvm.parser.Token.Type.*;
     "=="        { return token(EQUAL); }
     "!="        { return token(NEQ); }
     "!"         { return token(NOT); }
+
+    [ \t\r]     { /* return */ }
+    \n          { return token(NEWLINE); }
+    [-+]?[0-9]*\.?[0-9]+    { return token(NUMBER, yytext()); }
+    [a-zA-Z][a-zA-Z0-9_]*   { return token(ID, yytext()); }
+    "\""        { }
 }
