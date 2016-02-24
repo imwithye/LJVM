@@ -1,10 +1,23 @@
 %package "org.lucylang.ljvm.parser";
 
 %import "org.lucylang.ljvm.node.*";
+%import "java.io.IOException";
+%import "org.apache.logging.log4j.LogManager";
+%import "org.apache.logging.log4j.Logger";
 
 %class "Parser";
 
 %embed {:
+    private final Logger logger = LogManager.getLogger(Parser.class.getName());
+
+    public Module parseModule(beaver.Scanner source) throws IOException, Parser.Exception {
+        return (Module) super.parse(source);
+    }
+
+    public Object parse(Scanner source, short alt_goal_marker_id) throws IOException, Parser.Exception {
+        return (Module) super.parse(source, alt_goal_marker_id);
+    }
+
     @Override
     protected void recoverFromError(Symbol token, TokenStream in) throws java.io.IOException, Exception {
         super.recoverFromError(new Symbol(0), in);
@@ -72,7 +85,9 @@ functions = functions.fs maybe_tail function.f
 
 function = FUNC ID.name LPAREN parameters.list RPAREN block_statements.stmts
             {: Function function = new Function((String) name.value);
+               logger.trace("Function " + name.value + " parameters size: " + list.size());
                for(int i=0; i<list.size(); i++) {
+                   logger.trace(list.get(i));
                    function.addParameter((VarName) list.get(i));
                }
                for(int i=0; i<stmts.size(); i++) {
@@ -82,6 +97,7 @@ function = FUNC ID.name LPAREN parameters.list RPAREN block_statements.stmts
             :}
     |   FUNC ID.name LPAREN RPAREN block_statements.stmts
             {: Function function = new Function((String) name.value);
+               logger.trace("Function " + name.value + " parameters size: 0");
                for(int i=0; i<stmts.size(); i++) {
                    function.addStmt((IStmt)stmts.get(i));
                }
@@ -89,7 +105,7 @@ function = FUNC ID.name LPAREN parameters.list RPAREN block_statements.stmts
             :}
     ;
 
-parameters = parameters.list COMMA ID.varName COMMA
+parameters = parameters.list COMMA ID.varName
             {: list.add(new VarName((String) varName.value));
                return list;
             :}

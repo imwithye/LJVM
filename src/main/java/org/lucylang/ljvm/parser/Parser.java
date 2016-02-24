@@ -1,7 +1,10 @@
 package org.lucylang.ljvm.parser;
 
 import org.lucylang.ljvm.node.*;
+import org.apache.logging.log4j.Logger;
+import java.io.IOException;
 import beaver.*;
+import org.apache.logging.log4j.LogManager;
 import java.util.ArrayList;
 
 /**
@@ -47,28 +50,38 @@ public class Parser extends beaver.Parser {
 	}
 
 	static final ParsingTables PARSING_TABLES = new ParsingTables(
-		"U9pTbSbtL4KKXtylOoSW4A3fe4mX2O6CJGOCKvXK38E4GSQS0oY7QSMmOWT$WajtxDYvS#V" +
-		"E7SgCCYeW8A2CCYhWvQkNukLrwERGMrwThtvrxws#LLt3UrAmNpMQfCcgLwEQbLQhsZLDdP" +
-		"gXGgtI$9pHGRaZTYbdB5$$A9NfInLhfRgfKqhgGtsaCMRwWDXWPbYauQfGINyioZL28pLMY" +
-		"xHKFM$apzUUhRdgqW9zea$rcLtEjDzxgzl#YrQaL2kKo5YVU7kzDjZ$6g9XMXYjVO4#jpjs" +
-		"omxZgzOirS8uJT1QrT6Q0Yx3U3NuLXDQgHRggT067V0nJ8UPC0VcmMBu0fQ3s#r1AcVqeVR" +
-		"0xjbThD7sXzssl#qlLL4cKfPecLtXlAos#rgZTHAzobHEFPWJDKH3cNa59yfbgsKkgPpHv5" +
-		"iYYPonVFqrpA2IapvP0NK3Qzp4AhSmmbHYRePrnAOGxO#zpjLt6yQorkFVo9#l7R2BXTorO" +
-		"cvQAQDdsk#$fMX52lZthHdh4sy7xCUeS5zgehLFSpSIb7PyxXGwsl2b8ijbg8nQJYT4iNV5" +
-		"xNQI#vM8IjmAAACfrQ7FdPS48rRp7atotthtAtncIi5mjClRcx691xMqEz4Uv##B1SDW8sp" +
-		"oVLTu$#POdw$WQwY7DR0Lji5ss06xeG7s#FuRgBw59ZZeynxo#Xrnvg3lqTde3y3u#X6x73" +
-		"sCLg0dq1Hw5XX3bu1nz2ViWpjme7#EUWJJuRcPFNtjpmPvUw60HectowX6eBlGRw3A#$T2D" +
-		"p1UiCNxTcR99yQyuTOsqwyRFhx0s#v$kpKiYlN9#4sMt8ko#4gzLiHyIQyfhsEyZlDQxRNE" +
-		"QxtNHg$DNjDUMxssUvqsO0wTNcUyRVwn$hDWfMztmIhVdZkWNyy0UtschLxvn$vLzDXJlXT" +
-		"zhOVm4bxOSsLzxAPnXkmQN8GBS1xE0MVDpi2ly0kSXbDm4axOx$ORUZpCSSoEsX7xsNwow#" +
-		"7EEz$Ls1Z$W8Mjn$347japZ0xUA87SBPp4#yVTNaSxf7bBfSEtJWaKysOgWe1RNWo5V2KSG" +
-		"VZzo4OZ#TheqqQxtbE3tG1Dq0mj#5heLuNsKPWd1Q5EvBTnEbu1uoKiXm==");
+		"U9pTbSbtL4KKXtylJP8cmIGT21qm2Pb3XawQ310m2PEAGSL84CHu3g3dEB02NB73Fu6bEtV" +
+		"itBbpvowE4L0K5K4qJgX052NezQjEyV8QkZdsbbVdgr$TUwjlLTVmdXISKAlQjLPTwb6lqk" +
+		"hNeDPhM9iKqnvjonijpn#n2tbZXVfNQgcUKR4cDKwTL8rMwq7LcUa1OikOuH9LAw6InLYOQ" +
+		"xbMg5uxzQGcxifVg3sgBHhJTZsiH$IeVPDjt$VMkDqCLwHKknNFMfzeUx#UitzLeIhj2DU#" +
+		"I8$P5VlHfl6rQ4HjqA16xLC7hKvm6TQesxTIQAtwgDV100p11jW83y5cs0gFmovu6jnkbwk" +
+		"CqIljglrclsAjialsY$riFwc9qanvGa$PHSxBNljTpyezvPomCkfbdAWALJBp12VAPMjZBi" +
+		"cyqPfxHE9vOuNwMvb1BITzhGBgRjOunIhtCS8wOcw67SGwYIx6RkTQk0trhFMQk$8NQWViO" +
+		"eoxLinDAsNqRFl#jnIkI17$lZzhVQBjWFrOcTcNrd3jqzoDE6KGdpk5ZW5yoT1o6Mh3bjF6" +
+		"CFP$SRjTm$sAXoLg1PHLb9QCpvsNk5gCXrxIr8dCLU1kAQX6nxnz29juq4Px69rm$eLOK0K" +
+		"7uA3lkzlx3qNwl00lGXViWvVWPNW5NeMZq0t7VFyfgZSW1M$wlAUylaMSEUXjT1Hz1nXVxs" +
+		"ANeTDe0fr1a#WvO0nT0CRHzt0Shi3hYtFK76o4UHRZncr$BiZxF1JHAF7sKghbw17q93Hv$" +
+		"sim3iUzVJX7BZ7Uh5lNRBzcVNoxjzr$Tkkt9D8dwpSvSk$CuIlrceZuQhmclTPvRV3QuhN3" +
+		"QvVN7g#zNjDU#xqEUbr$nno6lMwwr$mZ$KTWqhV7O8zlRxcZN$HSxi#EQKh#iRyLFdQ3xyH" +
+		"2wphy0xTiNZaV#y4uEtOPleJpy0Ly3fmn#mm#XRDm1ax39p1ZNzjNwCUP71$PX$Q1lM$lsN" +
+		"UPNNU#RoDZN0E3F#1FcxE$S0xn7WdaxbuxRnrtPns3aERTbCwyQqgWcFTH30BkTZ74#3OuW" +
+		"inN8nSzv1kWpm3jBayhTZUae1VwyFNHhmbT85OWHHbjvhTHXlu3JR4jAG==");
 
 	static final Action RETURN2 = new Action() {
 		public Symbol reduce(Symbol[] _symbols, int offset) {
 			return _symbols[offset + 2];
 		}
 	};
+
+    private final Logger logger = LogManager.getLogger(Parser.class.getName());
+
+    public Module parseModule(beaver.Scanner source) throws IOException, Parser.Exception {
+        return (Module) super.parse(source);
+    }
+
+    public Object parse(Scanner source, short alt_goal_marker_id) throws IOException, Parser.Exception {
+        return (Module) super.parse(source, alt_goal_marker_id);
+    }
 
     @Override
     protected void recoverFromError(Symbol token, TokenStream in) throws java.io.IOException, Exception {
@@ -123,7 +136,9 @@ public class Parser extends beaver.Parser {
 					final Symbol _symbol_stmts = _symbols[offset + 6];
 					final SymbolList stmts = (SymbolList) _symbol_stmts.value;
 					 Function function = new Function((String) name.value);
+               logger.trace("Function " + name.value + " parameters size: " + list.size());
                for(int i=0; i<list.size(); i++) {
+                   logger.trace(list.get(i));
                    function.addParameter((VarName) list.get(i));
                }
                for(int i=0; i<stmts.size(); i++) {
@@ -138,13 +153,14 @@ public class Parser extends beaver.Parser {
 					final Symbol _symbol_stmts = _symbols[offset + 5];
 					final SymbolList stmts = (SymbolList) _symbol_stmts.value;
 					 Function function = new Function((String) name.value);
+               logger.trace("Function " + name.value + " parameters size: 0");
                for(int i=0; i<stmts.size(); i++) {
                    function.addStmt((IStmt)stmts.get(i));
                }
                return function;
 				}
 			},
-			new Action() {	// [10] parameters = parameters.list COMMA ID.varName COMMA
+			new Action() {	// [10] parameters = parameters.list COMMA ID.varName
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_list = _symbols[offset + 1];
 					final SymbolList list = (SymbolList) _symbol_list.value;

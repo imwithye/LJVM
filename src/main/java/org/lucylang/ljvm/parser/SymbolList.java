@@ -60,42 +60,42 @@ public class SymbolList extends beaver.Symbol implements List<beaver.Symbol> {
     }
 
     public void clear() {
-
+        list.clear();
     }
 
     public Symbol get(int index) {
-        return null;
+        return list.get(index);
     }
 
     public Symbol set(int index, Symbol element) {
-        return null;
+        return list.set(index, element);
     }
 
     public void add(int index, Symbol element) {
-
+        list.add(index, element);
     }
 
     public Symbol remove(int index) {
-        return null;
+        return list.remove(index);
     }
 
     public int indexOf(Object o) {
-        return 0;
+        return list.indexOf(o);
     }
 
     public int lastIndexOf(Object o) {
-        return 0;
+        return list.lastIndexOf(o);
     }
 
     public ListIterator<Symbol> listIterator() {
-        return null;
+        return list.listIterator();
     }
 
     public ListIterator<Symbol> listIterator(int index) {
-        return null;
+        return list.listIterator(index);
     }
 
     public List<Symbol> subList(int fromIndex, int toIndex) {
-        return null;
+        return list.subList(fromIndex, toIndex);
     }
 }

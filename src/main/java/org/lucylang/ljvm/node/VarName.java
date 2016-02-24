@@ -11,4 +11,9 @@ public class VarName extends Node implements IValue {
     public String getVarName() {
         return this.varName;
     }
+
+    @Override
+    public String toString() {
+        return "VarName<" + varName + ">";
+    }
 }

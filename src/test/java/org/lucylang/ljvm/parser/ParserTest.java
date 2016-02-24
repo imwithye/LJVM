@@ -3,6 +3,7 @@ package org.lucylang.ljvm.parser;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.lucylang.ljvm.node.Module;
 
 import java.io.StringReader;
 
@@ -36,6 +37,11 @@ public class ParserTest extends TestCase {
         runTest(src, true);
     }
 
+    private Module parse(String src) throws Exception {
+        Parser parser = new Parser();
+        return parser.parseModule(new Lexer(new StringReader(src)));
+    }
+
     public void testGrammar() {
         runTest("func main(){\n" +
                 "   a = 10\n" +
@@ -55,5 +61,17 @@ public class ParserTest extends TestCase {
         runTest("func main(){\n" +
                 "   var a = 10, b = 20, c = true, d = none\n" +
                 "}");
+    }
+
+    public void testParseModule() throws Exception {
+        Module m =
+                parse(
+                        "func sum(a, b) {\n" +
+                                "   return a+b\n" +
+                                "}\n" +
+                                "" +
+                                "func main() {" +
+                                "}"
+                );
     }
 }
