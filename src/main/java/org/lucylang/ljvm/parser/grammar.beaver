@@ -2,39 +2,65 @@
 
 %class "Parser";
 
-%terminals VAR, FUNC, RETURN, IF, ELSE, NONE, TRUE, FALSE, WHILE, LCURLY, RCURLY, LPAREN, RPAREN, SEMICOLON, COMMA,
-    ASSIGN, PLUS, MINUS, TIMES, DIV, GT, LT, GEQ, LEQ, EQUAL, NEQ, NOT, NEWLINE, NUMBER_LITERAL, ID, STRING_LITERAL, EOF;
+%embed {:
+    @Override
+    protected void recoverFromError(Symbol token, TokenStream in) throws java.io.IOException, Exception {
+        super.recoverFromError(new Symbol(0), in);
+    }
+:};
+
+%terminals VAR, FUNC, RETURN, IF, ELSE, WHILE, LCURLY, RCURLY, LPAREN, RPAREN, COMMA,
+    ASSIGN, PLUS, MINUS, TIMES, DIV, AND, OR, OR, GT, LT, GEQ, LEQ, EQUAL, NEQ, NOT;
+%terminals SEMICOLON, STMT_TAIL;
+%terminals BOOL_LITERAL, NONE_LITERAL, NUMBER_LITERAL, ID, STRING_LITERAL;
+
+%left PLUS, MINUS;
+%left TIMES, DIV;
+%left AND, OR;
+%left EQUAL, NEQ;
+%left GT, LT, GEQ, LEQ;
+%right NOT;
 
 %goal module;
 
-stmt_tail = NEWLINE
-    |   SEMICOLON
-    ;
-
-stmt_tails = stmt_tail
-    |   stmt_tails stmt_tail
-    ;
-
-module = functions EOF
-    ;
-
-functions = functions function
+maybe_tail = stmt_tails
     |
     ;
 
-function = FUNC ID LPAREN RPAREN block_statements
+stmt_tails = stmt_tails stmt_tail
     ;
 
-block_statements = LCURLY statements RCURLY
+stmt_tail = STMT_TAIL
+    | SEMICOLON
+    ;
+
+module = functions
+    ;
+
+functions = functions maybe_tail function
+    |   function
+    ;
+
+function = FUNC ID LPAREN parameters RPAREN block_statements
+    |   FUNC ID LPAREN RPAREN block_statements
+    ;
+
+parameters = parameters COMMA ID COMMA
+    |   ID
+    ;
+
+block_statements = LCURLY maybe_tail statements maybe_tail RCURLY
+    |   LCURLY maybe_tail RCURLY
     ;
 
 statements = statements stmt_tails statement
-    |
+    |   statement
     ;
 
 statement = var_statement
     |   assign_statement
     |   if_statement
+    |   if_else_statement
     |   while_statement
     |   return_statement
     ;
@@ -42,12 +68,12 @@ statement = var_statement
 var_statement = VAR var_declarations
     ;
 
-var_declarations = var_declarations var_declaration
-    |
+var_declarations = var_declarations COMMA var_declaration
+    |   var_declaration
     ;
 
-var_declaration = var_declaration COMMA ID
-    | var_declaration COMMA assign_statement
+var_declaration = ID
+    |   assign_statement
     ;
 
 assign_statement = ID ASSIGN expr
@@ -57,19 +83,36 @@ if_statement = IF assign_statement SEMICOLON expr block_statements
     |   IF expr block_statements
     ;
 
+if_else_statement = if_statement ELSE block_statements
+    ;
+
 while_statement = WHILE assign_statement SEMICOLON expr block_statements
     |   WHILE expr block_statements
     ;
 
 return_statement = RETURN
-    | RETURN expr
     ;
 
 expr = literal_expr
+    |   ID
+    |   expr PLUS expr
+    |   expr MINUS expr
+    |   expr TIMES expr
+    |   expr DIV expr
+    |   expr AND expr
+    |   expr OR expr
+    |   expr EQUAL expr
+    |   expr NEQ expr
+    |   expr GT expr
+    |   expr LT expr
+    |   expr GEQ expr
+    |   expr LEQ expr
+    |   NOT expr
+    |   LPAREN expr RPAREN
     ;
 
-literal_expr = TRUE
-    |   FALSE
+literal_expr = BOOL_LITERAL
     |   NUMBER_LITERAL
     |   STRING_LITERAL
+    |   NONE_LITERAL
     ;
