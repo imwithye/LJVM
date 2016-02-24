@@ -53,6 +53,7 @@ import static org.lucylang.ljvm.parser.Token.Type.*;
     "("         { return token(LPAREN); }
     ")"         { return token(RPAREN); }
     ";"         { return token(SEMICOLON); }
+    ","         { return token(COMMA); }
 
     "="         { return token(ASSIGN); }
     "+"         { return token(PLUS); }

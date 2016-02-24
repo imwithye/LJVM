@@ -3,7 +3,7 @@ package org.lucylang.ljvm.parser;
 public class Token {
     public enum Type {
         VAR, FUNC, RETURN, IF, ELSE, NONE, TRUE, FALSE, WHILE,
-        LCURLY, RCURLY, LPAREN, RPAREN, SEMICOLON,
+        LCURLY, RCURLY, LPAREN, RPAREN, SEMICOLON, COMMA,
         ASSIGN, PLUS, MINUS, TIMES, DIV, GT, LT, GEQ, LEQ, EQUAL, NEQ, NOT,
         NEWLINE, NUMBER_LITERAL, ID, STRING_LITERAL,
         EOF,

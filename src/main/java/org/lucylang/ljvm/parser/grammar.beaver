@@ -2,16 +2,74 @@
 
 %class "Parser";
 
-%terminals FUNC, ID, NUMBER;
+%terminals VAR, FUNC, RETURN, IF, ELSE, NONE, TRUE, FALSE, WHILE, LCURLY, RCURLY, LPAREN, RPAREN, SEMICOLON, COMMA,
+    ASSIGN, PLUS, MINUS, TIMES, DIV, GT, LT, GEQ, LEQ, EQUAL, NEQ, NOT, NEWLINE, NUMBER_LITERAL, ID, STRING_LITERAL, EOF;
 
 %goal module;
 
-module = functions
+stmt_tail = NEWLINE
+    |   SEMICOLON
     ;
 
-functions = function functions
+stmt_tails = stmt_tail
+    |   stmt_tails stmt_tail
+    ;
+
+module = functions EOF
+    ;
+
+functions = functions function
     |
     ;
 
-function = FUNC ID
+function = FUNC ID LPAREN RPAREN block_statements
+    ;
+
+block_statements = LCURLY statements RCURLY
+    ;
+
+statements = statements stmt_tails statement
+    |
+    ;
+
+statement = var_statement
+    |   assign_statement
+    |   if_statement
+    |   while_statement
+    |   return_statement
+    ;
+
+var_statement = VAR var_declarations
+    ;
+
+var_declarations = var_declarations var_declaration
+    |
+    ;
+
+var_declaration = var_declaration COMMA ID
+    | var_declaration COMMA assign_statement
+    ;
+
+assign_statement = ID ASSIGN expr
+    ;
+
+if_statement = IF assign_statement SEMICOLON expr block_statements
+    |   IF expr block_statements
+    ;
+
+while_statement = WHILE assign_statement SEMICOLON expr block_statements
+    |   WHILE expr block_statements
+    ;
+
+return_statement = RETURN
+    | RETURN expr
+    ;
+
+expr = literal_expr
+    ;
+
+literal_expr = TRUE
+    |   FALSE
+    |   NUMBER_LITERAL
+    |   STRING_LITERAL
     ;

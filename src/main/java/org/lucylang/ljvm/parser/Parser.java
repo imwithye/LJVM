@@ -11,17 +11,53 @@ import java.util.ArrayList;
 public class Parser extends beaver.Parser {
 	static public class Terminals {
 		static public final short EOF = 0;
-		static public final short FUNC = 1;
-		static public final short ID = 2;
+		static public final short TRUE = 1;
+		static public final short FALSE = 2;
+		static public final short NUMBER_LITERAL = 3;
+		static public final short STRING_LITERAL = 4;
+		static public final short ID = 5;
+		static public final short LCURLY = 6;
+		static public final short SEMICOLON = 7;
+		static public final short ASSIGN = 8;
+		static public final short NEWLINE = 9;
+		static public final short FUNC = 10;
+		static public final short LPAREN = 11;
+		static public final short RPAREN = 12;
+		static public final short RCURLY = 13;
+		static public final short COMMA = 14;
+		static public final short IF = 15;
+		static public final short WHILE = 16;
+		static public final short EOF = 17;
+		static public final short VAR = 18;
+		static public final short RETURN = 19;
 	}
 
 	static final ParsingTables PARSING_TABLES = new ParsingTables(
-		"U9nDZe4AW20GGwUPKa7Vx7#NhiqC6apSV787uCI2o8iDgwsKI7POsKaT48QT9BqJKPTI1wO" +
-		"Us6IJktouho$P9fE#RkQ2dtYRqF#WCuufsWhv0Mp$5$S=");
+		"U9oDa#TEMq4GHZzihZ4GIeYDZGt61KZ0b8GMH2X2W11AXFYPnycJXf8E2IKLSC9mrYn53XR" +
+		"UrRdVtF7CxEpUjQJNwjD3PZkpHnazq2Ergb$3QbD24tg2hqCnnTMfNcMLKvwC$wrgEaH#I0" +
+		"DwXWOQKRscxArQhAImnl1DGaGDQb9KZMfMKbrAgw1kfU0n$a4eQfJdKnYdIWEpaUcwQg7B9" +
+		"BssazL1xyvtkN91TQmSPiNW3gkQklnkQZfjGdketaSlueoSpn7GPuIJwgJN33iDY8joQb7w" +
+		"Yk1rt5ZIz1iU3aOHNdXx3fx33CnVnPZPcTVIbQyM60km0ikGkITs5MAm1dbOz$wNNhlW5Gp" +
+		"0XlTjUXsgg1M7L9LrnhoEGDRlwxZ6$Gmwl3rHQouZxMDBoAptpNdjlLLxqTjBNektQanJuT" +
+		"GPTYO$xCH#yVm3V#qtzS$jf$smxtPiH$RD3ks0Nxx2dhspNTknRTkoVLqF#mAVhzy#mKVxO" +
+		"E$j7wyvxbbTcLIP4BSkn4rqY5iOS9F2V9Lm#SkaYQaaIsoc3Biapf607BavD8$cKVU$A10N" +
+		"G#CLz5y0WIUGEG==");
 
 	static final Action RETURN2 = new Action() {
 		public Symbol reduce(Symbol[] _symbols, int offset) {
 			return _symbols[offset + 2];
+		}
+	};
+
+	static final Action RETURN5 = new Action() {
+		public Symbol reduce(Symbol[] _symbols, int offset) {
+			return _symbols[offset + 5];
+		}
+	};
+
+	static final Action RETURN3 = new Action() {
+		public Symbol reduce(Symbol[] _symbols, int offset) {
+			return _symbols[offset + 3];
 		}
 	};
 
@@ -30,10 +66,47 @@ public class Parser extends beaver.Parser {
 	public Parser() {
 		super(PARSING_TABLES);
 		actions = new Action[] {
-			Action.RETURN,	// [0] module = functions
-			RETURN2,	// [1] functions = function functions; returns 'functions' although none is marked
-			Action.NONE,  	// [2] functions = 
-			RETURN2	// [3] function = FUNC ID; returns 'ID' although none is marked
+			Action.RETURN,	// [0] stmt_tail = NEWLINE
+			Action.RETURN,	// [1] stmt_tail = SEMICOLON
+			new Action() {	// [2] stmt_tails = stmt_tail
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					ArrayList lst = new ArrayList(); lst.add(_symbols[offset + 1]); return new Symbol(lst);
+				}
+			},
+			new Action() {	// [3] stmt_tails = stmt_tails stmt_tail
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					((ArrayList) _symbols[offset + 1].value).add(_symbols[offset + 2]); return _symbols[offset + 1];
+				}
+			},
+			RETURN2,	// [4] module = functions EOF; returns 'EOF' although none is marked
+			RETURN2,	// [5] functions = functions function; returns 'function' although none is marked
+			Action.NONE,  	// [6] functions = 
+			RETURN5,	// [7] function = FUNC ID LPAREN RPAREN block_statements; returns 'block_statements' although none is marked
+			RETURN3,	// [8] block_statements = LCURLY statements RCURLY; returns 'RCURLY' although none is marked
+			RETURN3,	// [9] statements = statements stmt_tails statement; returns 'statement' although none is marked
+			Action.NONE,  	// [10] statements = 
+			Action.RETURN,	// [11] statement = var_statement
+			Action.RETURN,	// [12] statement = assign_statement
+			Action.RETURN,	// [13] statement = if_statement
+			Action.RETURN,	// [14] statement = while_statement
+			Action.RETURN,	// [15] statement = return_statement
+			RETURN2,	// [16] var_statement = VAR var_declarations; returns 'var_declarations' although none is marked
+			RETURN2,	// [17] var_declarations = var_declarations var_declaration; returns 'var_declaration' although none is marked
+			Action.NONE,  	// [18] var_declarations = 
+			RETURN3,	// [19] var_declaration = var_declaration COMMA ID; returns 'ID' although none is marked
+			RETURN3,	// [20] var_declaration = var_declaration COMMA assign_statement; returns 'assign_statement' although none is marked
+			RETURN3,	// [21] assign_statement = ID ASSIGN expr; returns 'expr' although none is marked
+			RETURN5,	// [22] if_statement = IF assign_statement SEMICOLON expr block_statements; returns 'block_statements' although none is marked
+			RETURN3,	// [23] if_statement = IF expr block_statements; returns 'block_statements' although none is marked
+			RETURN5,	// [24] while_statement = WHILE assign_statement SEMICOLON expr block_statements; returns 'block_statements' although none is marked
+			RETURN3,	// [25] while_statement = WHILE expr block_statements; returns 'block_statements' although none is marked
+			Action.RETURN,	// [26] return_statement = RETURN
+			RETURN2,	// [27] return_statement = RETURN expr; returns 'expr' although none is marked
+			Action.RETURN,	// [28] expr = literal_expr
+			Action.RETURN,	// [29] literal_expr = TRUE
+			Action.RETURN,	// [30] literal_expr = FALSE
+			Action.RETURN,	// [31] literal_expr = NUMBER_LITERAL
+			Action.RETURN	// [32] literal_expr = STRING_LITERAL
 		};
 	}
 
