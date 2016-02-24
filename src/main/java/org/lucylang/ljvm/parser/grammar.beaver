@@ -23,6 +23,10 @@
 %left GT, LT, GEQ, LEQ;
 %right NOT;
 
+%typeof module = "Module";
+%typeof functions = "SymbolList";
+%typeof function = "Function";
+%typeof parameters = "SymbolList";
 %typeof block_statements = "SymbolList";
 %typeof statements = "SymbolList";
 %typeof var_declarations = "SymbolList";
@@ -46,19 +50,54 @@ stmt_tail = STMT_TAIL
     | SEMICOLON
     ;
 
-module = functions
+module = functions.fs
+            {: Module module = new Module();
+               for(int i=0; i<fs.size(); i++) {
+                   module.addFunction((Function) fs.get(i));
+               }
+               return module;
+            :}
     ;
 
-functions = functions maybe_tail function
-    |   function
+functions = functions.fs maybe_tail function.f
+            {: fs.add(f);
+               return fs;
+            :}
+    |   function.f
+            {: SymbolList list = new SymbolList();
+               list.add(f);
+               return list;
+            :}
     ;
 
-function = FUNC ID LPAREN parameters RPAREN block_statements
-    |   FUNC ID LPAREN RPAREN block_statements
+function = FUNC ID.name LPAREN parameters.list RPAREN block_statements.stmts
+            {: Function function = new Function((String) name.value);
+               for(int i=0; i<list.size(); i++) {
+                   function.addParameter((VarName) list.get(i));
+               }
+               for(int i=0; i<stmts.size(); i++) {
+                   function.addStmt((IStmt)stmts.get(i));
+               }
+               return function;
+            :}
+    |   FUNC ID.name LPAREN RPAREN block_statements.stmts
+            {: Function function = new Function((String) name.value);
+               for(int i=0; i<stmts.size(); i++) {
+                   function.addStmt((IStmt)stmts.get(i));
+               }
+               return function;
+            :}
     ;
 
-parameters = parameters COMMA ID COMMA
-    |   ID
+parameters = parameters.list COMMA ID.varName COMMA
+            {: list.add(new VarName((String) varName.value));
+               return list;
+            :}
+    |   ID.varName
+            {: SymbolList list = new SymbolList();
+               list.add(new VarName((String) varName.value));
+               return list;
+            :}
     ;
 
 block_statements = LCURLY maybe_tail statements.stmts maybe_tail RCURLY

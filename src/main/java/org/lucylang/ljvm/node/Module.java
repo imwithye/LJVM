@@ -2,7 +2,7 @@ package org.lucylang.ljvm.node;
 
 import java.util.ArrayList;
 
-public class Module {
+public class Module extends Node {
     private ArrayList<Function> functions;
 
     public Module() {

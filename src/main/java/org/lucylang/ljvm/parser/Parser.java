@@ -70,24 +70,6 @@ public class Parser extends beaver.Parser {
 		}
 	};
 
-	static final Action RETURN6 = new Action() {
-		public Symbol reduce(Symbol[] _symbols, int offset) {
-			return _symbols[offset + 6];
-		}
-	};
-
-	static final Action RETURN5 = new Action() {
-		public Symbol reduce(Symbol[] _symbols, int offset) {
-			return _symbols[offset + 5];
-		}
-	};
-
-	static final Action RETURN4 = new Action() {
-		public Symbol reduce(Symbol[] _symbols, int offset) {
-			return _symbols[offset + 4];
-		}
-	};
-
     @Override
     protected void recoverFromError(Symbol token, TokenStream in) throws java.io.IOException, Exception {
         super.recoverFromError(new Symbol(0), in);
@@ -103,21 +85,82 @@ public class Parser extends beaver.Parser {
 			RETURN2,	// [2] stmt_tails = stmt_tails stmt_tail; returns 'stmt_tail' although none is marked
 			Action.RETURN,	// [3] stmt_tail = STMT_TAIL
 			Action.RETURN,	// [4] stmt_tail = SEMICOLON
-			Action.RETURN,	// [5] module = functions
-			new Action() {	// [6] functions = functions maybe_tail function
+			new Action() {	// [5] module = functions.fs
 				public Symbol reduce(Symbol[] _symbols, int offset) {
-					((ArrayList) _symbols[offset + 1].value).add(_symbols[offset + 3]); return _symbols[offset + 1];
+					final Symbol _symbol_fs = _symbols[offset + 1];
+					final SymbolList fs = (SymbolList) _symbol_fs.value;
+					 Module module = new Module();
+               for(int i=0; i<fs.size(); i++) {
+                   module.addFunction((Function) fs.get(i));
+               }
+               return module;
 				}
 			},
-			new Action() {	// [7] functions = function
+			new Action() {	// [6] functions = functions.fs maybe_tail function.f
 				public Symbol reduce(Symbol[] _symbols, int offset) {
-					ArrayList lst = new ArrayList(); lst.add(_symbols[offset + 1]); return new Symbol(lst);
+					final Symbol _symbol_fs = _symbols[offset + 1];
+					final SymbolList fs = (SymbolList) _symbol_fs.value;
+					final Symbol _symbol_f = _symbols[offset + 3];
+					final Function f = (Function) _symbol_f.value;
+					 fs.add(f);
+               return fs;
 				}
 			},
-			RETURN6,	// [8] function = FUNC ID LPAREN parameters RPAREN block_statements; returns 'block_statements' although none is marked
-			RETURN5,	// [9] function = FUNC ID LPAREN RPAREN block_statements; returns 'block_statements' although none is marked
-			RETURN4,	// [10] parameters = parameters COMMA ID COMMA; returns 'COMMA' although none is marked
-			Action.RETURN,	// [11] parameters = ID
+			new Action() {	// [7] functions = function.f
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					final Symbol _symbol_f = _symbols[offset + 1];
+					final Function f = (Function) _symbol_f.value;
+					 SymbolList list = new SymbolList();
+               list.add(f);
+               return list;
+				}
+			},
+			new Action() {	// [8] function = FUNC ID.name LPAREN parameters.list RPAREN block_statements.stmts
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					final Symbol name = _symbols[offset + 2];
+					final Symbol _symbol_list = _symbols[offset + 4];
+					final SymbolList list = (SymbolList) _symbol_list.value;
+					final Symbol _symbol_stmts = _symbols[offset + 6];
+					final SymbolList stmts = (SymbolList) _symbol_stmts.value;
+					 Function function = new Function((String) name.value);
+               for(int i=0; i<list.size(); i++) {
+                   function.addParameter((VarName) list.get(i));
+               }
+               for(int i=0; i<stmts.size(); i++) {
+                   function.addStmt((IStmt)stmts.get(i));
+               }
+               return function;
+				}
+			},
+			new Action() {	// [9] function = FUNC ID.name LPAREN RPAREN block_statements.stmts
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					final Symbol name = _symbols[offset + 2];
+					final Symbol _symbol_stmts = _symbols[offset + 5];
+					final SymbolList stmts = (SymbolList) _symbol_stmts.value;
+					 Function function = new Function((String) name.value);
+               for(int i=0; i<stmts.size(); i++) {
+                   function.addStmt((IStmt)stmts.get(i));
+               }
+               return function;
+				}
+			},
+			new Action() {	// [10] parameters = parameters.list COMMA ID.varName COMMA
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					final Symbol _symbol_list = _symbols[offset + 1];
+					final SymbolList list = (SymbolList) _symbol_list.value;
+					final Symbol varName = _symbols[offset + 3];
+					 list.add(new VarName((String) varName.value));
+               return list;
+				}
+			},
+			new Action() {	// [11] parameters = ID.varName
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					final Symbol varName = _symbols[offset + 1];
+					 SymbolList list = new SymbolList();
+               list.add(new VarName((String) varName.value));
+               return list;
+				}
+			},
 			new Action() {	// [12] block_statements = LCURLY maybe_tail statements.stmts maybe_tail RCURLY
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_stmts = _symbols[offset + 3];
