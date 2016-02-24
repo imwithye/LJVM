@@ -23,6 +23,8 @@
 %left GT, LT, GEQ, LEQ;
 %right NOT;
 
+%typeof expr = "IValue";
+
 %goal module;
 
 maybe_tail = stmt_tails
@@ -94,25 +96,59 @@ while_statement = WHILE assign_statement SEMICOLON expr block_statements
 
 return_statement = RETURN
             {: return new Return(); :}
-    |   RETURN expr
+    |   RETURN expr.value
+            {: return new Return(value); :}
     ;
 
-expr = literal_expr
-    |   ID
-    |   expr PLUS expr
-    |   expr MINUS expr
-    |   expr TIMES expr
-    |   expr DIV expr
-    |   expr AND expr
-    |   expr OR expr
-    |   expr EQUAL expr
-    |   expr NEQ expr
-    |   expr GT expr
-    |   expr LT expr
-    |   expr GEQ expr
-    |   expr LEQ expr
-    |   NOT expr
-    |   LPAREN expr RPAREN
+expr = literal_expr.literal
+            {: return literal;
+            :}
+    |   ID.id
+            {: String value = (String) id.value;
+               return new VarName(value);
+            :}
+    |   expr.left PLUS expr.right
+            {:  return new AddExpr(left, right);
+            :}
+    |   expr.left MINUS expr.right
+            {:  return new SubExpr(left, right);
+            :}
+    |   expr.left TIMES expr.right
+            {:  return new MulExpr(left, right);
+            :}
+    |   expr.left DIV expr.right
+            {:  return new DivExpr(left, right);
+            :}
+    |   expr.left AND expr.right
+            {:  return new AndExpr(left, right);
+            :}
+    |   expr.left OR expr.right
+            {:  return new OrExpr(left, right);
+            :}
+    |   expr.left EQUAL expr.right
+            {:  return new EquExpr(left, right);
+            :}
+    |   expr.left NEQ expr.right
+            {:  return new NotExpr(new EquExpr(left, right));
+            :}
+    |   expr.left GT expr.right
+            {:  return new GreExpr(left, right);
+            :}
+    |   expr.left LT expr.right
+            {:  return new LesExpr(left, right);
+            :}
+    |   expr.left GEQ expr.right
+            {:  return new GeqExpr(left, right);
+            :}
+    |   expr.left LEQ expr.right
+            {:  return new LeqExpr(left, right);
+            :}
+    |   NOT expr.left
+            {:  return new NotExpr(left);
+            :}
+    |   LPAREN expr.left RPAREN
+            {:  return (Node) left;
+            :}
     ;
 
 literal_expr = BOOL_LITERAL.bool

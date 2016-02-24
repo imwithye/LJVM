@@ -168,23 +168,148 @@ public class Parser extends beaver.Parser {
 					 return new Return();
 				}
 			},
-			RETURN2,	// [34] return_statement = RETURN expr; returns 'expr' although none is marked
-			Action.RETURN,	// [35] expr = literal_expr
-			Action.RETURN,	// [36] expr = ID
-			RETURN3,	// [37] expr = expr PLUS expr; returns 'expr' although none is marked
-			RETURN3,	// [38] expr = expr MINUS expr; returns 'expr' although none is marked
-			RETURN3,	// [39] expr = expr TIMES expr; returns 'expr' although none is marked
-			RETURN3,	// [40] expr = expr DIV expr; returns 'expr' although none is marked
-			RETURN3,	// [41] expr = expr AND expr; returns 'expr' although none is marked
-			RETURN3,	// [42] expr = expr OR expr; returns 'expr' although none is marked
-			RETURN3,	// [43] expr = expr EQUAL expr; returns 'expr' although none is marked
-			RETURN3,	// [44] expr = expr NEQ expr; returns 'expr' although none is marked
-			RETURN3,	// [45] expr = expr GT expr; returns 'expr' although none is marked
-			RETURN3,	// [46] expr = expr LT expr; returns 'expr' although none is marked
-			RETURN3,	// [47] expr = expr GEQ expr; returns 'expr' although none is marked
-			RETURN3,	// [48] expr = expr LEQ expr; returns 'expr' although none is marked
-			RETURN2,	// [49] expr = NOT expr; returns 'expr' although none is marked
-			RETURN3,	// [50] expr = LPAREN expr RPAREN; returns 'RPAREN' although none is marked
+			new Action() {	// [34] return_statement = RETURN expr.value
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					final Symbol _symbol_value = _symbols[offset + 2];
+					final IValue value = (IValue) _symbol_value.value;
+					 return new Return(value);
+				}
+			},
+			new Action() {	// [35] expr = literal_expr.literal
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					final Symbol literal = _symbols[offset + 1];
+					 return literal;
+				}
+			},
+			new Action() {	// [36] expr = ID.id
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					final Symbol id = _symbols[offset + 1];
+					 String value = (String) id.value;
+               return new VarName(value);
+				}
+			},
+			new Action() {	// [37] expr = expr.left PLUS expr.right
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					final Symbol _symbol_left = _symbols[offset + 1];
+					final IValue left = (IValue) _symbol_left.value;
+					final Symbol _symbol_right = _symbols[offset + 3];
+					final IValue right = (IValue) _symbol_right.value;
+					  return new AddExpr(left, right);
+				}
+			},
+			new Action() {	// [38] expr = expr.left MINUS expr.right
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					final Symbol _symbol_left = _symbols[offset + 1];
+					final IValue left = (IValue) _symbol_left.value;
+					final Symbol _symbol_right = _symbols[offset + 3];
+					final IValue right = (IValue) _symbol_right.value;
+					  return new SubExpr(left, right);
+				}
+			},
+			new Action() {	// [39] expr = expr.left TIMES expr.right
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					final Symbol _symbol_left = _symbols[offset + 1];
+					final IValue left = (IValue) _symbol_left.value;
+					final Symbol _symbol_right = _symbols[offset + 3];
+					final IValue right = (IValue) _symbol_right.value;
+					  return new MulExpr(left, right);
+				}
+			},
+			new Action() {	// [40] expr = expr.left DIV expr.right
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					final Symbol _symbol_left = _symbols[offset + 1];
+					final IValue left = (IValue) _symbol_left.value;
+					final Symbol _symbol_right = _symbols[offset + 3];
+					final IValue right = (IValue) _symbol_right.value;
+					  return new DivExpr(left, right);
+				}
+			},
+			new Action() {	// [41] expr = expr.left AND expr.right
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					final Symbol _symbol_left = _symbols[offset + 1];
+					final IValue left = (IValue) _symbol_left.value;
+					final Symbol _symbol_right = _symbols[offset + 3];
+					final IValue right = (IValue) _symbol_right.value;
+					  return new AndExpr(left, right);
+				}
+			},
+			new Action() {	// [42] expr = expr.left OR expr.right
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					final Symbol _symbol_left = _symbols[offset + 1];
+					final IValue left = (IValue) _symbol_left.value;
+					final Symbol _symbol_right = _symbols[offset + 3];
+					final IValue right = (IValue) _symbol_right.value;
+					  return new OrExpr(left, right);
+				}
+			},
+			new Action() {	// [43] expr = expr.left EQUAL expr.right
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					final Symbol _symbol_left = _symbols[offset + 1];
+					final IValue left = (IValue) _symbol_left.value;
+					final Symbol _symbol_right = _symbols[offset + 3];
+					final IValue right = (IValue) _symbol_right.value;
+					  return new EquExpr(left, right);
+				}
+			},
+			new Action() {	// [44] expr = expr.left NEQ expr.right
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					final Symbol _symbol_left = _symbols[offset + 1];
+					final IValue left = (IValue) _symbol_left.value;
+					final Symbol _symbol_right = _symbols[offset + 3];
+					final IValue right = (IValue) _symbol_right.value;
+					  return new NotExpr(new EquExpr(left, right));
+				}
+			},
+			new Action() {	// [45] expr = expr.left GT expr.right
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					final Symbol _symbol_left = _symbols[offset + 1];
+					final IValue left = (IValue) _symbol_left.value;
+					final Symbol _symbol_right = _symbols[offset + 3];
+					final IValue right = (IValue) _symbol_right.value;
+					  return new GreExpr(left, right);
+				}
+			},
+			new Action() {	// [46] expr = expr.left LT expr.right
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					final Symbol _symbol_left = _symbols[offset + 1];
+					final IValue left = (IValue) _symbol_left.value;
+					final Symbol _symbol_right = _symbols[offset + 3];
+					final IValue right = (IValue) _symbol_right.value;
+					  return new LesExpr(left, right);
+				}
+			},
+			new Action() {	// [47] expr = expr.left GEQ expr.right
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					final Symbol _symbol_left = _symbols[offset + 1];
+					final IValue left = (IValue) _symbol_left.value;
+					final Symbol _symbol_right = _symbols[offset + 3];
+					final IValue right = (IValue) _symbol_right.value;
+					  return new GeqExpr(left, right);
+				}
+			},
+			new Action() {	// [48] expr = expr.left LEQ expr.right
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					final Symbol _symbol_left = _symbols[offset + 1];
+					final IValue left = (IValue) _symbol_left.value;
+					final Symbol _symbol_right = _symbols[offset + 3];
+					final IValue right = (IValue) _symbol_right.value;
+					  return new LeqExpr(left, right);
+				}
+			},
+			new Action() {	// [49] expr = NOT expr.left
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					final Symbol _symbol_left = _symbols[offset + 2];
+					final IValue left = (IValue) _symbol_left.value;
+					  return new NotExpr(left);
+				}
+			},
+			new Action() {	// [50] expr = LPAREN expr.left RPAREN
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					final Symbol _symbol_left = _symbols[offset + 2];
+					final IValue left = (IValue) _symbol_left.value;
+					  return (Node) left;
+				}
+			},
 			new Action() {	// [51] literal_expr = BOOL_LITERAL.bool
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol bool = _symbols[offset + 1];

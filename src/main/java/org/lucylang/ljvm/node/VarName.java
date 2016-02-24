@@ -1,6 +1,6 @@
 package org.lucylang.ljvm.node;
 
-public class VarName implements IValue {
+public class VarName extends Node implements IValue {
     private String varName;
 
     public VarName(String varName) {

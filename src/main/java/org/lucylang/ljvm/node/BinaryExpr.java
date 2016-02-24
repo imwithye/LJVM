@@ -3,7 +3,7 @@ package org.lucylang.ljvm.node;
 import org.lucylang.ljvm.machine.instruction.Instruction;
 import org.lucylang.ljvm.machine.instruction.RefOperand;
 
-public abstract class BinaryExpr implements IValue {
+public abstract class BinaryExpr extends Node implements IValue {
     private IValue lhs;
     private IValue rhs;
 
