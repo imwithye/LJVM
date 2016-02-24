@@ -1,4 +1,4 @@
 package org.lucylang.ljvm.node;
 
-public class Node {
+public class Node extends beaver.Symbol {
 }

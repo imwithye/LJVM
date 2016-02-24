@@ -1,5 +1,6 @@
 package org.lucylang.ljvm.parser;
 
+import org.lucylang.ljvm.node.*;
 import beaver.*;
 import java.util.ArrayList;
 
@@ -27,11 +28,11 @@ public class Parser extends beaver.Parser {
 		static public final short OR = 14;
 		static public final short EQUAL = 15;
 		static public final short NEQ = 16;
-		static public final short LCURLY = 17;
-		static public final short GT = 18;
-		static public final short LT = 19;
-		static public final short GEQ = 20;
-		static public final short LEQ = 21;
+		static public final short GT = 17;
+		static public final short LT = 18;
+		static public final short GEQ = 19;
+		static public final short LEQ = 20;
+		static public final short LCURLY = 21;
 		static public final short SEMICOLON = 22;
 		static public final short FUNC = 23;
 		static public final short RPAREN = 24;
@@ -46,24 +47,24 @@ public class Parser extends beaver.Parser {
 	}
 
 	static final ParsingTables PARSING_TABLES = new ParsingTables(
-		"U9pbbKTmLMKKn$zVGdbWA341aWSHKYG9IHvf18I8WWe18o96Y805OPnnRAFEg5WemqR4WOK" +
-		"RDwxSkNFdpfqpAjWBs41i88fW8JPo$DsRayVDyo4JPzZWlVEx$$ETy$LsfV2yQZHJTPgbHc" +
-		"NKh5QDLBiwD4$pLQZrMloF#4NP#7cDs1zdBRCi6vci4MRqU9trwmvDqIIbDLNJD4hZD4Qtg" +
-		"3HRThbMgKGLkfaoHOphTbsiOerEbCbjPRZfotMb5kegNQrhjEI2IDtm7sFB4lEUqbhcFJbN" +
-		"2Tj#q4QDrqHsGRG#I#FrAR2Z6gikUqtNgvDrlHR$6dNg4jseCirGDVPqNSgt5keXgh71jGc" +
-		"T3ItG1dDWBbm62#0AM0JNmKqmmKxQZtQS7fJR5$Qz7RFlLCbRfMvOePLQhLxrs24xg2hxt4" +
-		"wmQsxLRUJVm0uRYnQnryPh0gEOmfugOUoJwDrC#feRByx6psz4Pus4RAI6sKlHupe8p5uZC" +
-		"vTXvW8pLwPoJibWsUXiL33xqoapCAuwPhqWKIQtbU6c0xKLQWJdU1Gdyl#TEZFlhQnFnP2v" +
-		"IjefrYzQZMA$kwBrQSPRpSbgZ$Tl2czDRBMXC$17Tddy7IIgCQd38ULlCMqEse4tpHZI#0R" +
-		"UoR4$7N$hYPR7#QLDs$YOsKca6vP7QPwxu0dO23rIQ8dy0x5G1qlX4S$Rw$v74tasmsFG0G" +
-		"$2ax05jW9PmbEm27Pw$WVul00Bu4MlzoNNbudteg#Wwz5NuKxOHxeAVH#jHpz1PwE7uN4u2" +
-		"ZlW1Eo2FdZsJ1$L3rsK6Sdu#mRz#I3FGr043qC9Zj5UHwd7QI#aWJaBbJWWH6rcq6TWj#VR" +
-		"0wNm76nttzDvsYkZJqSmvWtrwxJ7QptDsl3$LPYQoDDpZh5ioEEhT6rA#EQwpdVjT5tekjX" +
-		"rYMkNg##XqEswmdMbwohN8VqalTgrzz$wdyZVwBeMxdRxdaIynPKz4#vr#xuyzToVazuyDA" +
-		"rDyiT#L$QnFkjtwsSu3N$Pdyhxs17xXkzNm1wrZ#40x8UFu4Fu0DZ7zXwy2#$0s$QPVOg#5" +
-		"TVnfksplVQ6lMvVsxU9kh#4mr6#d3P$YivrRFqAf#mN#ur41xTL075d5SGtGKGxD7F$DQEr" +
-		"t82rt8Ejt8QjfAkngucrn0J#ElbffBusyhHXpt9gI3TGlW5jWWns1et#RvLP2eT9GQnLb4q" +
-		"ovsymdqY7");
+		"U9pbbLjiL5KKXl$JMZiYKB3jOAkLbXaixT3R39LRkLWeK0j2AGY820Xe32769nvCZ18ra80" +
+		"eKJ3HH4FWZVWYRxxv17ZZwbsy8gWeU4NmilpEwUxqJ3lLZE49pybt$hNsMhFsdhFNx96yLn" +
+		"JNpHgZMerLlHgLr3ZTeWcQf7ojq5Lg7J1#xUMDsCS3nd8TZ#eQtMrVwowrgq0ZLAfotQ0Rp" +
+		"JI4s62#Lu6kqt2Dx8sf95tjDYrKiIgqh5$zNFqfcgwfcg6PQjCiEvdfNn5Uvt#CjTkbzDkw" +
+		"MiiLoNXt8Tk#qrgjiRzK6EpBx61VyZHKmpJ73cY#MkYf3WtI4goRrANhjPgi6DvejV2vIbL" +
+		"Zru1VDU6q3cs09aX1Cuo7YJ0Pfi6jC0yMmvrGeYBxmSxPzynOfcBxpCxQj$QDghX7ST#k1J" +
+		"pdQf7ki4#rr3wny$JOIh9NwHuwSX3MO3fmg8fO$N0wi9YQerbDDQiUA5vwcIEH0MEvZiTPT" +
+		"HdrniZZTvHWj#hOkmP6ceZvtsi4iHfoUcFHT3N$DrV1ZetiLpzNtwCVyZcf2kYaGcRFzF$V" +
+		"dj9lo#FD93FUNTYEq8F#BkO5#n8FzgKnsCDQJbM$lqiPZGLM2gkIlOy7da#4h1xRhnhMN8b" +
+		"IhVikPRwAjETnbtF7kCl9YgAHW0Wzvf5TXYUjUqJ1jLJo9gDhkdrl6dJ20fo5Q8S$xc8JuL" +
+		"xOvZwxmOq$6ShP3a$1R7WCde5dOIViWXT9Mek#vF8tyzWFS#1LL$SrfmU9hqSFem#Wxy93S" +
+		"18$XPv29w5dqUdeJy2SkWHR6VFtrPy$WhuGMcCHZqLerCmkz8ndWvmjK05FGvo1GhUs4XVt" +
+		"vqd03aWoK8NkHklHFUW#Q76vU#5XU1cUSsFFPvcpXdMTzkapFgndZzmQkg0DlxatHrt$ydq" +
+		"sPXbBEcqBZRKxxN0wtscdqyLEbpbTxdI5qvLELpljwI$NTzvzVTPmlzFr$xJ#KFuKfnlWKM" +
+		"Tl2iLRdT8ttXFEtkpqmJwr7k$ZRy$qjKxkiejANtQ1VyrkYxwpF#4F#rrPBpjZN$7y4Zw0z" +
+		"#4ze9$j7JW1n#4O78KZGC$Rs$QHVOY#5THuqzwmr#sG7RHJTZfK#mlutC$hD#kFO87r2$ng" +
+		"FzjlEECvhpmGfrPUS2RuZ8D6piH6j9fJiPgpCSa9cSIFOSU8DGLumJzPDiPIBqLE2hlM4ST" +
+		"FyFa4MWVrsFLe0x46yglGRl9p92$GKNmsJFFVKenKBm==");
 
 	static final Action RETURN2 = new Action() {
 		public Symbol reduce(Symbol[] _symbols, int offset) {
@@ -162,27 +163,62 @@ public class Parser extends beaver.Parser {
 			RETURN3,	// [30] if_else_statement = if_statement ELSE block_statements; returns 'block_statements' although none is marked
 			RETURN5,	// [31] while_statement = WHILE assign_statement SEMICOLON expr block_statements; returns 'block_statements' although none is marked
 			RETURN3,	// [32] while_statement = WHILE expr block_statements; returns 'block_statements' although none is marked
-			Action.RETURN,	// [33] return_statement = RETURN
-			Action.RETURN,	// [34] expr = literal_expr
-			Action.RETURN,	// [35] expr = ID
-			RETURN3,	// [36] expr = expr PLUS expr; returns 'expr' although none is marked
-			RETURN3,	// [37] expr = expr MINUS expr; returns 'expr' although none is marked
-			RETURN3,	// [38] expr = expr TIMES expr; returns 'expr' although none is marked
-			RETURN3,	// [39] expr = expr DIV expr; returns 'expr' although none is marked
-			RETURN3,	// [40] expr = expr AND expr; returns 'expr' although none is marked
-			RETURN3,	// [41] expr = expr OR expr; returns 'expr' although none is marked
-			RETURN3,	// [42] expr = expr EQUAL expr; returns 'expr' although none is marked
-			RETURN3,	// [43] expr = expr NEQ expr; returns 'expr' although none is marked
-			RETURN3,	// [44] expr = expr GT expr; returns 'expr' although none is marked
-			RETURN3,	// [45] expr = expr LT expr; returns 'expr' although none is marked
-			RETURN3,	// [46] expr = expr GEQ expr; returns 'expr' although none is marked
-			RETURN3,	// [47] expr = expr LEQ expr; returns 'expr' although none is marked
-			RETURN2,	// [48] expr = NOT expr; returns 'expr' although none is marked
-			RETURN3,	// [49] expr = LPAREN expr RPAREN; returns 'RPAREN' although none is marked
-			Action.RETURN,	// [50] literal_expr = BOOL_LITERAL
-			Action.RETURN,	// [51] literal_expr = NUMBER_LITERAL
-			Action.RETURN,	// [52] literal_expr = STRING_LITERAL
-			Action.RETURN	// [53] literal_expr = NONE_LITERAL
+			new Action() {	// [33] return_statement = RETURN
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					 return new Return();
+				}
+			},
+			RETURN2,	// [34] return_statement = RETURN expr; returns 'expr' although none is marked
+			Action.RETURN,	// [35] expr = literal_expr
+			Action.RETURN,	// [36] expr = ID
+			RETURN3,	// [37] expr = expr PLUS expr; returns 'expr' although none is marked
+			RETURN3,	// [38] expr = expr MINUS expr; returns 'expr' although none is marked
+			RETURN3,	// [39] expr = expr TIMES expr; returns 'expr' although none is marked
+			RETURN3,	// [40] expr = expr DIV expr; returns 'expr' although none is marked
+			RETURN3,	// [41] expr = expr AND expr; returns 'expr' although none is marked
+			RETURN3,	// [42] expr = expr OR expr; returns 'expr' although none is marked
+			RETURN3,	// [43] expr = expr EQUAL expr; returns 'expr' although none is marked
+			RETURN3,	// [44] expr = expr NEQ expr; returns 'expr' although none is marked
+			RETURN3,	// [45] expr = expr GT expr; returns 'expr' although none is marked
+			RETURN3,	// [46] expr = expr LT expr; returns 'expr' although none is marked
+			RETURN3,	// [47] expr = expr GEQ expr; returns 'expr' although none is marked
+			RETURN3,	// [48] expr = expr LEQ expr; returns 'expr' although none is marked
+			RETURN2,	// [49] expr = NOT expr; returns 'expr' although none is marked
+			RETURN3,	// [50] expr = LPAREN expr RPAREN; returns 'RPAREN' although none is marked
+			new Action() {	// [51] literal_expr = BOOL_LITERAL.bool
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					final Symbol bool = _symbols[offset + 1];
+					 if(bool.value.equals("true")) {
+                   return new BooleanLiteral(true);
+               } else {
+                   return new BooleanLiteral(false);
+               }
+				}
+			},
+			new Action() {	// [52] literal_expr = NUMBER_LITERAL.number
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					final Symbol number = _symbols[offset + 1];
+					 String value = (String) number.value;
+               if(value.contains(".")) {
+                   return new NumberLiteral(Double.parseDouble(value));
+               } else {
+                   return new NumberLiteral(Integer.parseInt(value));
+               }
+				}
+			},
+			new Action() {	// [53] literal_expr = STRING_LITERAL.string
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					final Symbol string = _symbols[offset + 1];
+					 String value = (String) string.value;
+               return new StringLiteral(value);
+				}
+			},
+			new Action() {	// [54] literal_expr = NONE_LITERAL.none
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					final Symbol none = _symbols[offset + 1];
+					 return new NoneLiteral();
+				}
+			}
 		};
 	}
 

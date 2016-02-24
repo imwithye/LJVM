@@ -49,5 +49,11 @@ public class ParserTest extends TestCase {
         runTest("func main(){\n" +
                 "   var a = 10, b = 20, c = \"Hello World\"\n" +
                 "}");
+        runTest("func main(){\n" +
+                "   var a = 10, b = 20, c = true, d = false\n" +
+                "}");
+        runTest("func main(){\n" +
+                "   var a = 10, b = 20, c = true, d = none\n" +
+                "}");
     }
 }

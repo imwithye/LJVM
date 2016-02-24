@@ -1,5 +1,7 @@
 %package "org.lucylang.ljvm.parser";
 
+%import "org.lucylang.ljvm.node.*";
+
 %class "Parser";
 
 %embed {:
@@ -91,6 +93,8 @@ while_statement = WHILE assign_statement SEMICOLON expr block_statements
     ;
 
 return_statement = RETURN
+            {: return new Return(); :}
+    |   RETURN expr
     ;
 
 expr = literal_expr
@@ -111,8 +115,26 @@ expr = literal_expr
     |   LPAREN expr RPAREN
     ;
 
-literal_expr = BOOL_LITERAL
-    |   NUMBER_LITERAL
-    |   STRING_LITERAL
-    |   NONE_LITERAL
+literal_expr = BOOL_LITERAL.bool
+            {: if(bool.value.equals("true")) {
+                   return new BooleanLiteral(true);
+               } else {
+                   return new BooleanLiteral(false);
+               }
+            :}
+    |   NUMBER_LITERAL.number
+            {: String value = (String) number.value;
+               if(value.contains(".")) {
+                   return new NumberLiteral(Double.parseDouble(value));
+               } else {
+                   return new NumberLiteral(Integer.parseInt(value));
+               }
+            :}
+    |   STRING_LITERAL.string
+            {: String value = (String) string.value;
+               return new StringLiteral(value);
+            :}
+    |   NONE_LITERAL.none
+            {: return new NoneLiteral();
+            :}
     ;
