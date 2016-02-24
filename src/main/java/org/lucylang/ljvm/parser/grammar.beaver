@@ -23,6 +23,11 @@
 %left GT, LT, GEQ, LEQ;
 %right NOT;
 
+%typeof block_statements = "SymbolList";
+%typeof if_statement = "IfElse";
+%typeof if_else_statement = "IfElse";
+%typeof while_statement = "While";
+%typeof return_statement = "Return";
 %typeof expr = "IValue";
 
 %goal module;
@@ -83,15 +88,27 @@ var_declaration = ID
 assign_statement = ID ASSIGN expr
     ;
 
-if_statement = IF assign_statement SEMICOLON expr block_statements
-    |   IF expr block_statements
+if_statement = IF expr.value block_statements.statements
+            {: IfElse ifElse = new IfElse(value);
+               for(int i=0; i<statements.size(); i++)
+                   ifElse.addStmtIf((IStmt) statements.get(i));
+               return ifElse;
+            :}
     ;
 
-if_else_statement = if_statement ELSE block_statements
+if_else_statement = if_statement.ifElse ELSE block_statements.statements
+            {: for(int i=0; i<statements.size(); i++)
+                   ifElse.addStmtElse((IStmt) statements.get(i));
+               return ifElse;
+            :}
     ;
 
-while_statement = WHILE assign_statement SEMICOLON expr block_statements
-    |   WHILE expr block_statements
+while_statement = WHILE expr.value block_statements.statements
+            {: While whileStmt = new While(value);
+               for(int i=0; i<statements.size(); i++)
+                   whileStmt.addStmt((IStmt) statements.get(i));
+               return whileStmt;
+            :}
     ;
 
 return_statement = RETURN
