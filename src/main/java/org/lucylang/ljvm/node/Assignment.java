@@ -1,6 +1,6 @@
 package org.lucylang.ljvm.node;
 
-public class Assignment implements IStmt {
+public class Assignment extends Node implements IStmt {
     private VarName varName;
     private IValue expr;
 

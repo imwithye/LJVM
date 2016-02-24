@@ -24,6 +24,9 @@
 %right NOT;
 
 %typeof block_statements = "SymbolList";
+%typeof statements = "SymbolList";
+%typeof var_declarations = "SymbolList";
+%typeof assign_statement = "Assignment";
 %typeof if_statement = "IfElse";
 %typeof if_else_statement = "IfElse";
 %typeof while_statement = "While";
@@ -58,34 +61,74 @@ parameters = parameters COMMA ID COMMA
     |   ID
     ;
 
-block_statements = LCURLY maybe_tail statements maybe_tail RCURLY
+block_statements = LCURLY maybe_tail statements.stmts maybe_tail RCURLY
+            {: return stmts; :}
     |   LCURLY maybe_tail RCURLY
+            {: return new SymbolList(); :}
     ;
 
-statements = statements stmt_tails statement
-    |   statement
+statements = statements.stmts stmt_tails statement.stmt
+            {: if(stmt instanceof SymbolList) {
+                   SymbolList list = (SymbolList) stmt;
+                   for(int i=0; i<list.size(); i++) {
+                       stmts.add(list.get(i));
+                   }
+               } else {
+                   stmts.add(stmt);
+               }
+               return stmts;
+            :}
+    |   statement.stmt
+            {: if(stmt instanceof SymbolList) {
+                   return stmt;
+               } else {
+                   SymbolList list = new SymbolList();
+                   list.add(stmt);
+                   return list;
+               }
+            :}
     ;
 
-statement = var_statement
-    |   assign_statement
-    |   if_statement
-    |   if_else_statement
-    |   while_statement
-    |   return_statement
+statement = var_statement.var
+            {: return var; :}
+    |   assign_statement.assign
+            {: return assign; :}
+    |   if_statement.ifStmt
+            {: return ifStmt; :}
+    |   if_else_statement.ifStmt
+            {: return ifStmt; :}
+    |   while_statement.whileStmt
+            {: return whileStmt; :}
+    |   return_statement.returnStmt
+            {: return returnStmt; :}
     ;
 
-var_statement = VAR var_declarations
+var_statement = VAR var_declarations.declarations
+            {: return declarations; :}
     ;
 
-var_declarations = var_declarations COMMA var_declaration
-    |   var_declaration
+var_declarations = var_declarations.declarations COMMA var_declaration.var
+            {: declarations.add(var);
+               return declarations;
+            :}
+    |   var_declaration.var
+            {: SymbolList list = new SymbolList();
+               list.add(var);
+               return list;
+            :}
     ;
 
-var_declaration = ID
-    |   assign_statement
+var_declaration = ID.varName
+            {: return new Assignment(new VarName((String) varName.value), new NoneLiteral());
+            :}
+    |   assign_statement.assignment
+            {: return assignment;
+            :}
     ;
 
-assign_statement = ID ASSIGN expr
+assign_statement = ID.varName ASSIGN expr.value
+            {: return new Assignment(new VarName((String) varName.value), value);
+            :}
     ;
 
 if_statement = IF expr.value block_statements.statements

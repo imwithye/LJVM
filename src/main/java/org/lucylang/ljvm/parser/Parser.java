@@ -88,12 +88,6 @@ public class Parser extends beaver.Parser {
 		}
 	};
 
-	static final Action RETURN3 = new Action() {
-		public Symbol reduce(Symbol[] _symbols, int offset) {
-			return _symbols[offset + 3];
-		}
-	};
-
     @Override
     protected void recoverFromError(Symbol token, TokenStream in) throws java.io.IOException, Exception {
         super.recoverFromError(new Symbol(0), in);
@@ -124,38 +118,132 @@ public class Parser extends beaver.Parser {
 			RETURN5,	// [9] function = FUNC ID LPAREN RPAREN block_statements; returns 'block_statements' although none is marked
 			RETURN4,	// [10] parameters = parameters COMMA ID COMMA; returns 'COMMA' although none is marked
 			Action.RETURN,	// [11] parameters = ID
-			RETURN5,	// [12] block_statements = LCURLY maybe_tail statements maybe_tail RCURLY; returns 'RCURLY' although none is marked
-			RETURN3,	// [13] block_statements = LCURLY maybe_tail RCURLY; returns 'RCURLY' although none is marked
-			new Action() {	// [14] statements = statements stmt_tails statement
+			new Action() {	// [12] block_statements = LCURLY maybe_tail statements.stmts maybe_tail RCURLY
 				public Symbol reduce(Symbol[] _symbols, int offset) {
-					((ArrayList) _symbols[offset + 1].value).add(_symbols[offset + 3]); return _symbols[offset + 1];
+					final Symbol _symbol_stmts = _symbols[offset + 3];
+					final SymbolList stmts = (SymbolList) _symbol_stmts.value;
+					 return stmts;
 				}
 			},
-			new Action() {	// [15] statements = statement
+			new Action() {	// [13] block_statements = LCURLY maybe_tail RCURLY
 				public Symbol reduce(Symbol[] _symbols, int offset) {
-					ArrayList lst = new ArrayList(); lst.add(_symbols[offset + 1]); return new Symbol(lst);
+					 return new SymbolList();
 				}
 			},
-			Action.RETURN,	// [16] statement = var_statement
-			Action.RETURN,	// [17] statement = assign_statement
-			Action.RETURN,	// [18] statement = if_statement
-			Action.RETURN,	// [19] statement = if_else_statement
-			Action.RETURN,	// [20] statement = while_statement
-			Action.RETURN,	// [21] statement = return_statement
-			RETURN2,	// [22] var_statement = VAR var_declarations; returns 'var_declarations' although none is marked
-			new Action() {	// [23] var_declarations = var_declarations COMMA var_declaration
+			new Action() {	// [14] statements = statements.stmts stmt_tails statement.stmt
 				public Symbol reduce(Symbol[] _symbols, int offset) {
-					((ArrayList) _symbols[offset + 1].value).add(_symbols[offset + 3]); return _symbols[offset + 1];
+					final Symbol _symbol_stmts = _symbols[offset + 1];
+					final SymbolList stmts = (SymbolList) _symbol_stmts.value;
+					final Symbol stmt = _symbols[offset + 3];
+					 if(stmt instanceof SymbolList) {
+                   SymbolList list = (SymbolList) stmt;
+                   for(int i=0; i<list.size(); i++) {
+                       stmts.add(list.get(i));
+                   }
+               } else {
+                   stmts.add(stmt);
+               }
+               return stmts;
 				}
 			},
-			new Action() {	// [24] var_declarations = var_declaration
+			new Action() {	// [15] statements = statement.stmt
 				public Symbol reduce(Symbol[] _symbols, int offset) {
-					ArrayList lst = new ArrayList(); lst.add(_symbols[offset + 1]); return new Symbol(lst);
+					final Symbol stmt = _symbols[offset + 1];
+					 if(stmt instanceof SymbolList) {
+                   return stmt;
+               } else {
+                   SymbolList list = new SymbolList();
+                   list.add(stmt);
+                   return list;
+               }
 				}
 			},
-			Action.RETURN,	// [25] var_declaration = ID
-			Action.RETURN,	// [26] var_declaration = assign_statement
-			RETURN3,	// [27] assign_statement = ID ASSIGN expr; returns 'expr' although none is marked
+			new Action() {	// [16] statement = var_statement.var
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					final Symbol var = _symbols[offset + 1];
+					 return var;
+				}
+			},
+			new Action() {	// [17] statement = assign_statement.assign
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					final Symbol _symbol_assign = _symbols[offset + 1];
+					final Assignment assign = (Assignment) _symbol_assign.value;
+					 return assign;
+				}
+			},
+			new Action() {	// [18] statement = if_statement.ifStmt
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					final Symbol _symbol_ifStmt = _symbols[offset + 1];
+					final IfElse ifStmt = (IfElse) _symbol_ifStmt.value;
+					 return ifStmt;
+				}
+			},
+			new Action() {	// [19] statement = if_else_statement.ifStmt
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					final Symbol _symbol_ifStmt = _symbols[offset + 1];
+					final IfElse ifStmt = (IfElse) _symbol_ifStmt.value;
+					 return ifStmt;
+				}
+			},
+			new Action() {	// [20] statement = while_statement.whileStmt
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					final Symbol _symbol_whileStmt = _symbols[offset + 1];
+					final While whileStmt = (While) _symbol_whileStmt.value;
+					 return whileStmt;
+				}
+			},
+			new Action() {	// [21] statement = return_statement.returnStmt
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					final Symbol _symbol_returnStmt = _symbols[offset + 1];
+					final Return returnStmt = (Return) _symbol_returnStmt.value;
+					 return returnStmt;
+				}
+			},
+			new Action() {	// [22] var_statement = VAR var_declarations.declarations
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					final Symbol _symbol_declarations = _symbols[offset + 2];
+					final SymbolList declarations = (SymbolList) _symbol_declarations.value;
+					 return declarations;
+				}
+			},
+			new Action() {	// [23] var_declarations = var_declarations.declarations COMMA var_declaration.var
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					final Symbol _symbol_declarations = _symbols[offset + 1];
+					final SymbolList declarations = (SymbolList) _symbol_declarations.value;
+					final Symbol var = _symbols[offset + 3];
+					 declarations.add(var);
+               return declarations;
+				}
+			},
+			new Action() {	// [24] var_declarations = var_declaration.var
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					final Symbol var = _symbols[offset + 1];
+					 SymbolList list = new SymbolList();
+               list.add(var);
+               return list;
+				}
+			},
+			new Action() {	// [25] var_declaration = ID.varName
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					final Symbol varName = _symbols[offset + 1];
+					 return new Assignment(new VarName((String) varName.value), new NoneLiteral());
+				}
+			},
+			new Action() {	// [26] var_declaration = assign_statement.assignment
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					final Symbol _symbol_assignment = _symbols[offset + 1];
+					final Assignment assignment = (Assignment) _symbol_assignment.value;
+					 return assignment;
+				}
+			},
+			new Action() {	// [27] assign_statement = ID.varName ASSIGN expr.value
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					final Symbol varName = _symbols[offset + 1];
+					final Symbol _symbol_value = _symbols[offset + 3];
+					final IValue value = (IValue) _symbol_value.value;
+					 return new Assignment(new VarName((String) varName.value), value);
+				}
+			},
 			new Action() {	// [28] if_statement = IF expr.value block_statements.statements
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_value = _symbols[offset + 2];
