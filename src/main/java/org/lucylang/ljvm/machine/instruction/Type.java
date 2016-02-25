@@ -5,5 +5,5 @@ public enum Type {
     PUSH, POP, PEEK, CALL, RET,
     GOTO, BEQ, BNE,
     NUM, STR, BOOL,
-    PUT
+    PUT, GET
 }

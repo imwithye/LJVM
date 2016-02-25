@@ -12,6 +12,11 @@ public class Module implements Serializable {
 
     public Module() {
         this.routines = new Scope<String, Routine>("module");
+        Routine input = new Routine(new Instruction[]{
+                new GetInstruction(new RefOperand("value")),
+                new PushInstruction(new RefOperand("value")),
+                new RetInstruction()
+        });
         Routine print = new Routine(new Instruction[]{
                 new PopInstruction(new RefOperand("value")),
                 new PutInstruction(new RefOperand("value"))
@@ -34,6 +39,7 @@ public class Module implements Serializable {
                 new PushInstruction(new RefOperand("$1")),
                 new RetInstruction()
         });
+        this.routines.set("input", input);
         this.routines.set("print", print);
         this.routines.set("string", string);
         this.routines.set("number", number);

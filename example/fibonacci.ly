@@ -7,6 +7,9 @@ func fibonacci(n) {
 }
 
 func main() {
-    appender = "The fibonacci number is "
-    print(appender + string(fibonacci(10)))
+    text = "input a number: "
+    print(text)
+    n = number(input())
+    text = "The fibonacci number of " + string(n) + " is " + string(fibonacci(10))
+    print(text)
 }
