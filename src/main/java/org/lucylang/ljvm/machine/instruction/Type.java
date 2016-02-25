@@ -4,6 +4,6 @@ public enum Type {
     NULL, DEF, MOV, ADD, SUB, MUL, DIV, AND, OR, NOT, EQU, LES, GRE, LEQ, GEQ,
     PUSH, POP, PEEK, CALL, RET,
     GOTO, BEQ, BNE,
-    NUM, STR, BOOL,
+    NUM, STR, BOOL, INT,
     PUT, GET
 }

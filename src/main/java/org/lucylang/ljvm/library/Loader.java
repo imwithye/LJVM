@@ -16,6 +16,7 @@ public class Loader {
             loader = new Loader();
             systemModule = new Scope<String, Module>();
             systemModule.set("std", new Std());
+            systemModule.set("math", new Math());
         }
         return loader;
     }
