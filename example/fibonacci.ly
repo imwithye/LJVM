@@ -8,5 +8,5 @@ func fibonacci(n) {
 
 func main() {
     appender = "The fibonacci number is "
-    print(0)
+    print(appender + string(fibonacci(10)))
 }
