@@ -101,7 +101,7 @@ public class Machine {
             routineName = splits[1];
             routine = module.getRoutine(importModule, routineName);
         } else {
-            routine = module.getRoutine(routineName);
+            routine = module.getCorrespondingRoutine(routineName);
         }
         Scope<String, Register> currentScope = this.currentScope;
         int next = this.pc;

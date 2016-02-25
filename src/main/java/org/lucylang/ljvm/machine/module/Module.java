@@ -7,6 +7,7 @@ import org.lucylang.ljvm.scope.Scope;
 import org.lucylang.ljvm.scope.UndefinedException;
 
 import java.io.Serializable;
+import java.util.Set;
 
 public class Module implements Serializable {
     protected Scope<String, Routine> routines;
@@ -44,6 +45,33 @@ public class Module implements Serializable {
 
     public Routine getRoutine(String name) throws UndefinedException {
         return this.routines.safeGet(name);
+    }
+
+    public Routine getCorrespondingRoutine(String name) throws UndefinedException, OverdefinedException {
+        Routine routine, routineNext;
+        routine = this.routines.get(name);
+        if (routine != null) {
+            // Module overrides all imports
+            return routine;
+        }
+
+        // Routine is Null
+        Set<String> importModules = this.imports.keySet();
+        for (String importModule : importModules) {
+            Module m = this.imports.get(importModule);
+            routineNext = m.routines.get(name);
+            if (routine != null && routineNext != null) {
+                throw new OverdefinedException("Duplicate definition of " + name + "in imports");
+            }
+            if(routineNext != null) {
+                routine = routineNext;
+            }
+        }
+
+        if (routine == null) {
+            routine = this.getRoutine(name);
+        }
+        return routine;
     }
 
     @Override
