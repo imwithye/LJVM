@@ -4,7 +4,7 @@ public class Return extends Node implements IStmt {
     private IValue value;
 
     public Return() {
-        this.value = null;
+        this.value = new NoneLiteral();
     }
 
     public Return(IValue value) {

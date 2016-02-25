@@ -89,6 +89,7 @@ public class Driver {
             this.printHelp();
             System.exit(1);
         } catch (Exception e) {
+            e.printStackTrace();
             System.err.print(e.getMessage());
         }
     }
@@ -122,8 +123,6 @@ public class Driver {
         ModuleCodeGenerator codeGenerator = new ModuleCodeGenerator();
         Module m = codeGenerator.visitModule(module);
         Value result = this.initVM().execute(m);
-        // TODO: remove in the future
-        System.out.print(result.intValue());
         return result;
     }
 

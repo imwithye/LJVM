@@ -1,6 +1,6 @@
 package org.lucylang.ljvm.machine.module;
 
-import org.lucylang.ljvm.machine.instruction.Instruction;
+import org.lucylang.ljvm.machine.instruction.*;
 import org.lucylang.ljvm.scope.OverdefinedException;
 import org.lucylang.ljvm.scope.Scope;
 import org.lucylang.ljvm.scope.UndefinedException;
@@ -12,6 +12,32 @@ public class Module implements Serializable {
 
     public Module() {
         this.routines = new Scope<String, Routine>("module");
+        Routine print = new Routine(new Instruction[]{
+                new PopInstruction(new RefOperand("value")),
+                new PutInstruction(new RefOperand("value"))
+        });
+        Routine string = new Routine(new Instruction[]{
+                new PopInstruction(new RefOperand("value")),
+                new StrInstruction(new RefOperand("$1"), new RefOperand("value")),
+                new PushInstruction(new RefOperand("$1")),
+                new RetInstruction()
+        });
+        Routine number = new Routine(new Instruction[]{
+                new PopInstruction(new RefOperand("value")),
+                new NumInstruction(new RefOperand("$1"), new RefOperand("value")),
+                new PushInstruction(new RefOperand("$1")),
+                new RetInstruction()
+        });
+        Routine bool = new Routine(new Instruction[]{
+                new PopInstruction(new RefOperand("value")),
+                new BoolInstruction(new RefOperand("$1"), new RefOperand("value")),
+                new PushInstruction(new RefOperand("$1")),
+                new RetInstruction()
+        });
+        this.routines.set("print", print);
+        this.routines.set("string", string);
+        this.routines.set("number", number);
+        this.routines.set("boolean", bool);
     }
 
     public boolean isMain() {
