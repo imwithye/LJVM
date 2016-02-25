@@ -17,7 +17,7 @@ public class Driver {
     private Loader loader;
     private Generator generator;
     Options options;
-    private static final String version = "0.1.0";
+    private static final String version = "0.1.1";
 
     public Driver() {
         this.loader = new Loader();
@@ -33,7 +33,7 @@ public class Driver {
     private void initOptions() {
         this.addOption(new Option("h", "help", false, "print the help message and exit"));
         this.addOption(new Option("v", "version", false, "print the version information and exit"));
-        Option compile = new Option("c", "compile", true, "compile lucy source code to lucy bit code");
+        Option compile = new Option("c", "compile", true, "compile lucy source code to lucy X bit code");
         compile.setArgName("file");
         this.addOption(compile);
         Option output = new Option("o", "output", true, "output file path");
@@ -45,7 +45,7 @@ public class Driver {
         Option run = new Option("r", "run", true, "run lucy X bit code");
         run.setArgName("file");
         this.addOption(run);
-        Option dump = new Option("d", "dump", true, "dump module object to human readable form");
+        Option dump = new Option("d", "dump", true, "dump lucy X object to human readable form");
         dump.setArgName("file");
         this.addOption(dump);
     }
@@ -169,7 +169,7 @@ public class Driver {
 
     public void printHelp() {
         HelpFormatter formatter = new HelpFormatter();
-        formatter.printHelp("ljvm [options] target", this.options);
+        formatter.printHelp("lucy [options] target", this.options);
     }
 
     public static void main(String[] args) {

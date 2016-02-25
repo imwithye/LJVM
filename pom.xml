@@ -4,7 +4,7 @@
 
     <groupId>org.lucylang</groupId>
     <artifactId>ljvm</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.1</version>
     <packaging>jar</packaging>
 
     <name>ljvm</name>
@@ -56,6 +56,7 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
+                            <finalName>lucy-${project.version}</finalName>
                             <transformers>
                                 <transformer
                                         implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
