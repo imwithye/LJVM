@@ -1,6 +1,6 @@
 package org.lucylang.ljvm.node;
 
-public class NotExpr extends Node {
+public class NotExpr extends Node implements IValue {
     private IValue value;
 
     public NotExpr(IValue value) {

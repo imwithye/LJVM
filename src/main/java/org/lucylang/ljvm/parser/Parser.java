@@ -15,17 +15,17 @@ import java.util.ArrayList;
 public class Parser extends beaver.Parser {
 	static public class Terminals {
 		static public final short EOF = 0;
-		static public final short ID = 1;
-		static public final short LPAREN = 2;
-		static public final short STRING_LITERAL = 3;
-		static public final short NOT = 4;
-		static public final short BOOL_LITERAL = 5;
-		static public final short NUMBER_LITERAL = 6;
-		static public final short NONE_LITERAL = 7;
-		static public final short TIMES = 8;
-		static public final short DIV = 9;
-		static public final short PLUS = 10;
-		static public final short MINUS = 11;
+		static public final short MINUS = 1;
+		static public final short ID = 2;
+		static public final short LPAREN = 3;
+		static public final short STRING_LITERAL = 4;
+		static public final short NOT = 5;
+		static public final short BOOL_LITERAL = 6;
+		static public final short NUMBER_LITERAL = 7;
+		static public final short NONE_LITERAL = 8;
+		static public final short TIMES = 9;
+		static public final short DIV = 10;
+		static public final short PLUS = 11;
 		static public final short GT = 12;
 		static public final short LT = 13;
 		static public final short GEQ = 14;
@@ -52,28 +52,29 @@ public class Parser extends beaver.Parser {
 	}
 
 	static final ParsingTables PARSING_TABLES = new ParsingTables(
-		"U9pbbcbiL5KKny$hEAs0YAqZBQKiKfpI1KifjBHLAbKK415bKqjPAsfTga8YcgWa6X8CYOd" +
-		"4Q6AYCJ6fd$IJVjBY1kwxg2WgueAArXL5hHn$zxxJoNJcJHE$#8Lv#P$$FUT$xdttldVkVI" +
-		"CI798QELscI9NCacOvGsPBfnmdCwH1pfTfCZrB7IR7UxNRgwEoz4jbXDSdvz2Tx$JXaQCFg" +
-		"2T4gYSodbF7HgedcreMfUgVKkxLp5uJfCt7E#KAoTCZCaP6Ix5iO9sbSesKo3WPBnF9AfJJ" +
-		"92xj#ZIyXAmaroa#gokLvNfctbVzo0LoggoKrR8kw$vpPBvSAEV91R985cTuST$t9BbEBf9" +
-		"ykJRLzv8XUnrRNZjFPwdS81jbsQ3dlqfYl9rEIKWHjJeGTHcNoqAvMCxAUYDXz6mgs6MjbS" +
-		"k8L11ntd8zwdaIiKfY2wNQswdUrdfRvsszjpEzRVIsoTiMRy$qjjNRSxsTv#q2RpkyNUFjU" +
-		"gnx#pVAI2hq75b1DLmfLybSBZSJXr5ojLpFVip#BI4wZ3qsWfqqqk#R96ifOeyagDhHMMe9" +
-		"wtTgcLUBi$HgoVDwRGxT#KuF8aSVK6T5gfMCvzH9aMgfgPMHgh0JdPePBxVvkbLF8QkQNLJ" +
-		"8UoxXR0Wu7UhPypF9QiHBWcOmbgnnN65M8fNbUcRFAXnvF2V3H2efKm#uVunpDCw#BSZmaj" +
-		"QtYdlKK443VHD3zZhMl2hWdaxUeETVoKbTOi#lB1Lr6QMypScSpPbl98pMMGLKKi5Xn7brz" +
-		"7BSPB7$nuQpJx2o15UI2Wx063yJXs9c6PCgpVfHeIARjeGxVBEFIB01B0jZWQEDfZU39DXE" +
-		"$2curNBk1Al0pJWBBFTUnvdWrmWMvT1sW7Pmd$ctWxsW0km7jU0Wc0twBEUmSJzOpnnYS3S" +
-		"y77u8BeGVXqlWr#49O3LW7K4Nc0essphUnFJ2lURFm3J0BUQtyNYEHCqzRGrpoLi3rj7U1U" +
-		"#CoBcD#7oumCPTZ2cszWhCqi7vmSjWZxLtPuyNx3D#5RCrxJuTn1gOym7QFHQx2xylOpv5n" +
-		"ZN6ZuALz9sNbjCzn9fRe#D1XsFkrvyMwpAscWjkChx5#5RZBSPt66yrtcQytVXkutkC1zKT" +
-		"$lAqzlt63nW$c6jDETQpTWZjOLSVrdx4lNzhzqJaFfRMVcA8CNl0as5RDl4aZuPD$SUrz3T" +
-		"9$VINbDO7ljU$zI$zJh$LR$3swK7zMh$IBsb$0GxeVkodu2r0pUiRWBsXhm5gI5y1r9o#15" +
-		"u4ky4kVKVVzdVu67m0Nl3Uy$gSFglFw4xjrO$q$TICzkg7#fb#RjudtkxHz$HTxTSVz90xP" +
-		"$GdyBF#g7$ehxGE#rNzJc8RPrdWlx4Ld6WLzZqDlwbn46DNEWJ#BA#XNUDFztmGvnz130IS" +
-		"U75$wZLw17o3SsCwupIHrqIxrb2DFmtKWtA#8kMUyq6SKpu60hxbCRxc0SZZ70uCiV#8FEE" +
-		"0atmmMlu5z7ox7m==");
+		"U9pDbcbi5LKKny#yrrTQe1IbzRN5ol9efIssfL3iegYjA#82Y0g8A89Y4MLHIDGOez$468r" +
+		"H4urVr1XDY1BKn0H5KN31VSK5TxIALS5MtAhNtvmvVRo#wMjZqWzCyl#VS#T$vioSkVUU6P" +
+		"58eLHAZbmgbqj4UOXCacgPA0tI9CV8TDHXCbMcoUbIAtNkcP0wNDMXlYhv8JLVrH4Pr56gN" +
+		"gcP$moferNDrskl2AcvgXwkQbb8JQXQfcfvI6rHTQMSAslacZHrZ4HLzT$5I3bFYYLFvieo" +
+		"ifH8cnH9gHmXOuawH2wIc1mcSKMnSg4ib1BtRpBg33b1JfDPSegS9MVBxD1ueLmcbyWSyeo" +
+		"J2#LYMK9LosK#DQ$IV6dnpl5K1N9eCdgW$8CzhfIPSgGS3rV0AzBUN5$HLHfz5BnwWEY3VU" +
+		"pFnm9cAeUw9h1sSYLRhi9VPNLLCZTPIL$CcoddK7kglm1RWxr0Ml4cu$cPprSUpvaf#iRgb" +
+		"OzMRbHkLZvM#JZbavLFLPwXVARo8kN5oajXVoLVhS$WeqLEL3lF$I4dwLq3pdJCJNgvub5P" +
+		"EIjWed4k#tuO7I2F7PwF6cLjZcA55fAnAQGsg1fHDHvIuwfMP51BKgwLa3fUrRYg1I6rA2L" +
+		"p9AGMfsGkpL1H9VeaLd5lDK6NyDNWNKHPwmNqh6gor9ArZfcSoZmccCKAOaRICNnKALUJiP" +
+		"QgUg8ynb7MJunLDOGrbZwE45j1$dBwoXWwopYgYZ2Eqm7zVEdn9VPKFT43vH$ySO9TKcPS4" +
+		"Ngl$KLd3HXzS8#3MIvdrNZiz4fcobyx7ZCLrENft9XFJm#yeFPKlyfi3LqYyFpCavKRUxsn" +
+		"mU83kzf7rFPI0JkkME#gx38SCZhf5N75sXk3hd4xU0pSAUBT79ppDaAjfey5UM0wk1x4BUO" +
+		"9w25m6qXOx6RVfeF3xxSD6RH5O1PORkCvu7NjpoAxkCyUx6vi1xR3OhhCTeDbQ5dOTTZXWB" +
+		"VX9K0LQ0BtW1PmFvW17W2pmIDMHnUq0RlRnlEXPknY6xVvR#p0ytghmTuCjP1VhWFhmPF4j" +
+		"VSHivRprs97MBwRe5BpRu7czOxtVeQssxMRmlcy6hFxG7VFUHwPToT#dJU0bNRk2x0pzNh6" +
+		"xPOxn#nIi0HiJ7dcTNtLQrfzt#UzMyssfSHscjrlsb2pUMRlCdklsGVDFcpsKRCRp3vkTfF" +
+		"PfzAUONsA$xJPpMQtfCLkpLHZMjmT$MZRe3NclmpTRVwESApSb#9tzfDp1rXXSQmT$bxrSF" +
+		"$udkkIvE5#JMgi6TVX$dP$kJtk1$SzersktNtdldNi9FSD#Dfz2NyEtWPlWJV16u2zvru3t" +
+		"DUz2bu1rE9U0jlTk#uTlSEdO2VOfgCNtGlmLlUyUyvjSS#wJzo7oQVws7t4kllAHfyfV#3U" +
+		"T##vRlUJ#v5k96ulsET#SR#xJhpVjBBz1BRIxJmWzBq8y3jpW2QwUHCTS9h2et$xVm1HuFy" +
+		"3POCO$pDHuF5rYu4ettaV7j$spAWZJoDnZVfj2535k1PC0Gc#8mcrsI16juy2Zt#4gFubr7" +
+		"Fz16o0wFz4nAodVXas5St$0Jxku5G=");
 
     private final Logger logger = LogManager.getLogger(Parser.class.getName());
 
@@ -606,7 +607,14 @@ public class Parser extends beaver.Parser {
 					  return (Node) call;
 				}
 			},
-			new Action() {	// [62] literal_expr = BOOL_LITERAL.bool
+			new Action() {	// [62] expr = MINUS expr.right
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					final Symbol _symbol_right = _symbols[offset + 2];
+					final IValue right = (IValue) _symbol_right.value;
+					  return new SubExpr(new NumberLiteral(0), right);
+				}
+			},
+			new Action() {	// [63] literal_expr = BOOL_LITERAL.bool
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol bool = _symbols[offset + 1];
 					 if(bool.value.equals("true")) {
@@ -616,7 +624,7 @@ public class Parser extends beaver.Parser {
                }
 				}
 			},
-			new Action() {	// [63] literal_expr = NUMBER_LITERAL.number
+			new Action() {	// [64] literal_expr = NUMBER_LITERAL.number
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol number = _symbols[offset + 1];
 					 String value = (String) number.value;
@@ -627,14 +635,14 @@ public class Parser extends beaver.Parser {
                }
 				}
 			},
-			new Action() {	// [64] literal_expr = STRING_LITERAL.string
+			new Action() {	// [65] literal_expr = STRING_LITERAL.string
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol string = _symbols[offset + 1];
 					 String value = (String) string.value;
                return new StringLiteral(value);
 				}
 			},
-			new Action() {	// [65] literal_expr = NONE_LITERAL.none
+			new Action() {	// [66] literal_expr = NONE_LITERAL.none
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol none = _symbols[offset + 1];
 					 return new NoneLiteral();

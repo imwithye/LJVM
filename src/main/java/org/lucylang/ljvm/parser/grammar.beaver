@@ -330,6 +330,9 @@ expr = literal_expr.literal
     |   call_statement.call
             {:  return (Node) call;
             :}
+    |   MINUS expr.right
+            {:  return new SubExpr(new NumberLiteral(0), right);
+            :}
     ;
 
 literal_expr = BOOL_LITERAL.bool

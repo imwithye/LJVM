@@ -75,6 +75,18 @@ public class StmtCodeGenerator {
         return count + 1;
     }
 
+    private int acceptNot(IValue node, ArrayList<Instruction> instructions, RefOperand target) {
+        assert node != null;
+        assert instructions != null;
+        if (!(node instanceof NotExpr)) return 0;
+        int count = 0;
+        NotExpr not = (NotExpr) node;
+        RefOperand result = this.getNewRegister();
+        count += this.acceptValue(not.getValue(), instructions, result);
+        instructions.add(new NotInstruction(target, result));
+        return 1 + count;
+    }
+
     protected int acceptCall(IValue node, ArrayList<Instruction> instructions, RefOperand target) {
         assert node != null;
         assert instructions != null;
@@ -82,7 +94,7 @@ public class StmtCodeGenerator {
         if (!(node instanceof Call)) return 0;
         Call call = (Call) node;
         int count = 0;
-        for (int i = 0; i < call.getParameters().size(); i++) {
+        for (int i = call.getParameters().size() - 1; i >= 0; i--) {
             count += this.acceptParameter(call.getParameters().get(i), instructions);
         }
         instructions.add(new CallInstruction(new RefOperand(call.getFuncName().getVarName())));
@@ -93,7 +105,8 @@ public class StmtCodeGenerator {
     protected int acceptValue(IValue node, ArrayList<Instruction> instructions, RefOperand target) {
         if (node == null) return 0;
         return this.acceptLiteral(node, instructions, target) + this.acceptRef(node, instructions, target) +
-                this.acceptBinaryExpr(node, instructions, target) + this.acceptCall(node, instructions, target);
+                this.acceptBinaryExpr(node, instructions, target) + this.acceptNot(node, instructions, target) +
+                this.acceptCall(node, instructions, target);
     }
 
     protected ValueOperand visitBooleanLiteral(BooleanLiteral node) {
