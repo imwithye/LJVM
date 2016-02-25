@@ -83,5 +83,23 @@ public class ParserTest extends TestCase {
         Machine vm = new Machine();
         Value value = vm.execute(module);
         assertEquals(new NumberValue(21), value);
+
+        m = parse(
+                "func fibonacci(n) {\n" +
+                        "if n < 2 {\n" +
+                        "   return n\n" +
+                        "}\n" +
+                        "else {\n" +
+                        "   return fibonacci(n-1) + fibonacci(n-2)\n" +
+                        "}\n" +
+                        "}" +
+                        "\n" +
+                        "func main() {\n" +
+                        "   return fibonacci(5)" +
+                        "}\n");
+        module = moduleCodeGenerator.visitModule(m);
+        vm.reset();
+        value = vm.execute(module);
+        assertEquals(new NumberValue(5), value);
     }
 }

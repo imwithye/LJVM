@@ -73,7 +73,7 @@ import org.lucylang.ljvm.parser.Parser.Terminals;
     "none"      { return token(Terminals.NONE_LITERAL); }
     "true"      { return token(Terminals.BOOL_LITERAL, yytext()); }
     "false"     { return token(Terminals.BOOL_LITERAL, yytext()); }
-    [-+]?[0-9]*\.?[0-9]+    { return token(Terminals.NUMBER_LITERAL, yytext()); }
+    [0-9]*\.?[0-9]+         { return token(Terminals.NUMBER_LITERAL, yytext()); }
     [a-zA-Z][a-zA-Z0-9_]*   { return token(Terminals.ID, yytext()); }
 
     "\""        { stringBuffer.setLength(0); yybegin(STRING); }
