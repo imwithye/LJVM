@@ -2,16 +2,16 @@ package org.lucylang.ljvm.driver;
 
 import org.apache.commons.cli.*;
 import org.apache.commons.cli.Option;
-import org.lucylang.ljvm.exception.RuntimeException;
+import org.lucylang.ljvm.generator.ModuleCodeGenerator;
 import org.lucylang.ljvm.machine.Machine;
 import org.lucylang.ljvm.driver.generator.Generator;
 import org.lucylang.ljvm.driver.loader.Loader;
 import org.lucylang.ljvm.machine.module.Module;
+import org.lucylang.ljvm.parser.*;
+import org.lucylang.ljvm.parser.Parser;
+import org.lucylang.ljvm.value.Value;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 
 public class Driver {
     private Loader loader;
@@ -32,8 +32,19 @@ public class Driver {
 
     private void initOptions() {
         this.addOption(new Option("h", "help", false, "print the help message and exit"));
-        this.addOption(new Option("d", "dump", false, "dump module object to human readable form"));
         this.addOption(new Option("v", "version", false, "print the version information and exit"));
+        Option compile = new Option("c", "compile", true, "compile lucy source code to lucy bit code");
+        compile.setArgName("file");
+        this.addOption(compile);
+        Option output = new Option("o", "output", true, "output file path");
+        output.setArgName("output");
+        this.addOption(output);
+        Option run = new Option("r", "run", true, "run lucy X bit code");
+        run.setArgName("file");
+        this.addOption(run);
+        Option dump = new Option("d", "dump", false, "dump module object to human readable form");
+        dump.setArgName("file");
+        this.addOption(dump);
     }
 
     public void parse(String[] args) {
@@ -48,29 +59,65 @@ public class Driver {
                 System.out.println(Driver.version);
                 System.exit(0);
             }
+            if (com.hasOption("compile")) {
+                String in = com.getOptionValue("compile");
+                String out = com.getOptionValue("output");
+                if (out == null) {
+                    out = "a.lyx";
+                }
+                compile(in, out);
+                System.exit(0);
+            }
+            if (com.hasOption("run")) {
+                String in = com.getOptionValue("run");
+                runLyx(in);
+                System.exit(0);
+            }
+            if (com.hasOption("dump")) {
+                String in = com.getOptionValue("dump");
+                dumpLyx(in);
+                System.exit(0);
+            }
 
             final String[] remainingArguments = com.getArgs();
             if (remainingArguments.length != 1) {
                 this.printHelp();
                 System.exit(1);
             }
-            String file = remainingArguments[0];
-            Module module = this.loadModule(new FileInputStream(file));
-
-            if (com.hasOption("dump")) {
-                System.out.print(module);
-                System.exit(0);
-            } else {
-                this.initVM().execute(module);
-            }
+            runLy(remainingArguments[0]);
         } catch (ParseException e) {
             this.printHelp();
             System.exit(1);
-        } catch (FileNotFoundException e) {
-            System.err.print("Error: " + e.getMessage());
-        } catch (RuntimeException e) {
-            System.err.println("Runtime Error: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.print(e.getMessage());
         }
+    }
+
+    public void compile(String src, String output) throws Exception {
+        Reader r = new InputStreamReader(new FileInputStream(src), "UTF8");
+        org.lucylang.ljvm.parser.Parser parser = new Parser();
+        org.lucylang.ljvm.node.Module module = parser.parseModule(new Lexer(r));
+        ModuleCodeGenerator codeGenerator = new ModuleCodeGenerator();
+        this.generateModule(codeGenerator.visitModule(module), new FileOutputStream(output));
+    }
+
+    public void dumpLyx(String src) throws Exception {
+        Module module = this.loadModule(new FileInputStream(src));
+        System.out.println(module);
+    }
+
+    public Value runLyx(String src) throws Exception {
+        Module module = this.loadModule(new FileInputStream(src));
+        return this.initVM().execute(module);
+    }
+
+    public Value runLy(String src) throws Exception {
+        Reader r = new InputStreamReader(new FileInputStream(src), "UTF8");
+        org.lucylang.ljvm.parser.Parser parser = new Parser();
+        org.lucylang.ljvm.node.Module module = parser.parseModule(new Lexer(r));
+        ModuleCodeGenerator codeGenerator = new ModuleCodeGenerator();
+        Module m = codeGenerator.visitModule(module);
+        return this.initVM().execute(m);
     }
 
     public Module loadModule(FileInputStream fis) {

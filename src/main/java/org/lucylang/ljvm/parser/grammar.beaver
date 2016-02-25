@@ -59,10 +59,11 @@ maybe_tail = stmt_tails
     ;
 
 stmt_tails = stmt_tails stmt_tail
+    |   stmt_tail
     ;
 
 stmt_tail = STMT_TAIL
-    | SEMICOLON
+    |   SEMICOLON
     ;
 
 module = functions.fs

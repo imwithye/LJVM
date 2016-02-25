@@ -68,8 +68,9 @@ import org.lucylang.ljvm.parser.Parser.Terminals;
     "||"        { return token(Terminals.OR); }
 
     [\s\t]      { /* return */ }
-    [;]+        { return token(Terminals.SEMICOLON); }
-    [\n\r]+     { return token(Terminals.STMT_TAIL); }
+    ;+          { return token(Terminals.SEMICOLON); }
+    \\r+         { return token(Terminals.STMT_TAIL); }
+    \\n+         { return token(Terminals.STMT_TAIL); }
     "none"      { return token(Terminals.NONE_LITERAL); }
     "true"      { return token(Terminals.BOOL_LITERAL, yytext()); }
     "false"     { return token(Terminals.BOOL_LITERAL, yytext()); }

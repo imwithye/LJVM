@@ -1,10 +1,11 @@
 package org.lucylang.ljvm.scope;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Scope<K, V> {
+public class Scope<K, V> implements Serializable {
     private HashMap<K, V> scope;
     protected Scope<K, V> parent;
     protected NameGenerator nameGenerator = new NameGenerator(Scope.class);

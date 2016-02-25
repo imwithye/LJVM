@@ -85,7 +85,7 @@ public class ParserTest extends TestCase {
         assertEquals(new NumberValue(21), value);
 
         m = parse(
-                "func fibonacci(n) {\n" +
+                "func fibonacci(n) {\r\n" +
                         "if n < 2 {\n" +
                         "   return n\n" +
                         "}\n" +

@@ -1,6 +1,8 @@
 package org.lucylang.ljvm.scope;
 
-public class NameGenerator {
+import java.io.Serializable;
+
+public class NameGenerator implements Serializable {
     private int counter;
     private Class theClass;
 
