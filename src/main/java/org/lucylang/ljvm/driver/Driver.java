@@ -42,7 +42,7 @@ public class Driver {
         Option run = new Option("r", "run", true, "run lucy X bit code");
         run.setArgName("file");
         this.addOption(run);
-        Option dump = new Option("d", "dump", false, "dump module object to human readable form");
+        Option dump = new Option("d", "dump", true, "dump module object to human readable form");
         dump.setArgName("file");
         this.addOption(dump);
     }
@@ -63,7 +63,7 @@ public class Driver {
                 String in = com.getOptionValue("compile");
                 String out = com.getOptionValue("output");
                 if (out == null) {
-                    out = "a.lyx";
+                    out = "a.lyo";
                 }
                 compile(in, out);
                 System.exit(0);
@@ -75,7 +75,7 @@ public class Driver {
             }
             if (com.hasOption("dump")) {
                 String in = com.getOptionValue("dump");
-                dumpLyx(in);
+                dumpLy(in);
                 System.exit(0);
             }
 
@@ -101,9 +101,13 @@ public class Driver {
         this.generateModule(codeGenerator.visitModule(module), new FileOutputStream(output));
     }
 
-    public void dumpLyx(String src) throws Exception {
-        Module module = this.loadModule(new FileInputStream(src));
-        System.out.println(module);
+    public void dumpLy(String src) throws Exception {
+        Reader r = new InputStreamReader(new FileInputStream(src), "UTF8");
+        org.lucylang.ljvm.parser.Parser parser = new Parser();
+        org.lucylang.ljvm.node.Module module = parser.parseModule(new Lexer(r));
+        ModuleCodeGenerator codeGenerator = new ModuleCodeGenerator();
+        Module m = codeGenerator.visitModule(module);
+        System.out.println(m);
     }
 
     public Value runLyx(String src) throws Exception {
@@ -117,7 +121,10 @@ public class Driver {
         org.lucylang.ljvm.node.Module module = parser.parseModule(new Lexer(r));
         ModuleCodeGenerator codeGenerator = new ModuleCodeGenerator();
         Module m = codeGenerator.visitModule(module);
-        return this.initVM().execute(m);
+        Value result = this.initVM().execute(m);
+        // TODO: remove in the future
+        System.out.print(result.intValue());
+        return result;
     }
 
     public Module loadModule(FileInputStream fis) {

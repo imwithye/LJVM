@@ -7,5 +7,5 @@ func fibonacci(n) {
 }
 
 func main() {
-    return fibonacci(5)
+    return fibonacci(10)
 }
