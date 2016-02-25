@@ -29,12 +29,12 @@
 %terminals SEMICOLON, STMT_TAIL;
 %terminals BOOL_LITERAL, NONE_LITERAL, NUMBER_LITERAL, ID, STRING_LITERAL;
 
-%left PLUS, MINUS;
-%left TIMES, DIV;
-%left AND, OR;
-%left EQUAL, NEQ;
-%left GT, LT, GEQ, LEQ;
 %right NOT;
+%left TIMES, DIV;
+%left PLUS, MINUS;
+%left GT, LT, GEQ, LEQ;
+%left EQUAL, NEQ;
+%left AND, OR;
 
 %typeof module = "Module";
 %typeof functions = "SymbolList";

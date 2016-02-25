@@ -22,18 +22,18 @@ public class Parser extends beaver.Parser {
 		static public final short NUMBER_LITERAL = 5;
 		static public final short STRING_LITERAL = 6;
 		static public final short NONE_LITERAL = 7;
-		static public final short PLUS = 8;
-		static public final short MINUS = 9;
-		static public final short TIMES = 10;
-		static public final short DIV = 11;
-		static public final short AND = 12;
-		static public final short OR = 13;
-		static public final short EQUAL = 14;
-		static public final short NEQ = 15;
-		static public final short GT = 16;
-		static public final short LT = 17;
-		static public final short GEQ = 18;
-		static public final short LEQ = 19;
+		static public final short TIMES = 8;
+		static public final short DIV = 9;
+		static public final short PLUS = 10;
+		static public final short MINUS = 11;
+		static public final short GT = 12;
+		static public final short LT = 13;
+		static public final short GEQ = 14;
+		static public final short LEQ = 15;
+		static public final short EQUAL = 16;
+		static public final short NEQ = 17;
+		static public final short AND = 18;
+		static public final short OR = 19;
 		static public final short STMT_TAIL = 20;
 		static public final short SEMICOLON = 21;
 		static public final short RPAREN = 22;
@@ -50,25 +50,25 @@ public class Parser extends beaver.Parser {
 	}
 
 	static final ParsingTables PARSING_TABLES = new ParsingTables(
-		"U9pTbkblb5KKnfztXhQMHK2qCnIiZBHGsw52AGKHGHOLsoeAobBB8WAIc9YOa9WOJOWc$W5" +
-		"64usDI#87etnNumSJLt375LTmmnNt1K4z$juxP#hCs9baZ7nX9izvplREFVUUU#yxKhHRqz" +
-		"IgDcNLePdgL9UwDK$pjI3uBomRxL6B5cfqXVZqYl5ZxJ#rA99IhJQeHcarQ98cguduYLgba" +
-		"wZp4kfCgKuJL5yGppzzgKxMAJfTYyt8FOFSqtIPrgZ$NoDNQo$I1JfFlUhJHRguehMYYjpZ" +
-		"mLfLj5O3Ea49RHponVqOhQqQiByq0lzwZRAdb1pgou2sQ0p#E6zSo1ghyTx7bVImdHxsQ0P" +
-		"oeZPh2lgPmJChoDb1pWboRf1d1NbsaES4kIp8yuDS7kJbGQuDyWejjDyrCenthZQ5kfTurK" +
-		"lLgAbyCqIQjLhhs85NwYeYjSfzcfbjFK#FmZU6FJgMEOmdQqBmDvIDPjYZKzd7$pL#hFsPe" +
-		"aWhQz$6QShIXmxMVoRnJaNCFbTdAteRlVWddd#wDQnaEnrAU#vapd8JtIyTkLexOfSbsL4r" +
-		"zAAkejLGHUxnOHMkLJEnQTpkUL$SZnIzRAQdiJ$Dcw6RqvJlIpFFn$uuBusL3bQ#ZxaUvkG" +
-		"KLhQhoFD$IV7ByNW9pb$k7EMgRgJMY6yZaKdeBQ7Q5Y8JBNpmIjjsXgCPBKFqmvl0GpcVRa" +
-		"PV0RQ3Ey1IpxqJB0ThmMhFlJ7cuK3EUd1FcTWZu3xmgDlt8vu4qy4U$#szpll02B2Vl0VXW" +
-		"#0MS0Yx3$uPR057iPU01FhjS3qy28#37u1Jy2uVxp74u$2Wsqs8sN0Bl0ZEib27oytDw#ej" +
-		"cCykmFEgSti#8kNwOiIQaldV2vvm$U5XrYSBEi4yZBwISLTwpWBdk8SzS44zwgzSUtHR6N#" +
-		"lFtzrtiSw777VIESTdkjx85hdlD5vi$DMv#tErpXVwtoTyuwI#MqegETwvnkSRweqhp9psX" +
-		"dlNTVPDz5ThjywJExT1VfWILtRSiJRLtPOGn$xDVO4xKVmftrlH#s8VMk7x1li0$QrVMLVs" +
-		"XVeduE3zYdoO$0MU1Ey0Lu7hu6zu5Nm2dWPl0HU12$OFdixZC4fi0$0yy7QOxljENlMdh6d" +
-		"xKDxtpwnpxoMZu9ypzwrT#mF#y6#u#JBE2lsY$raln6C$sd6zrXywX8W2ZT5Z6vkoba14RT" +
-		"WBQZXT2H1V9FKW2JljcHulxLLm0n#jukyBlHsHojs5dI03ESw0yy9Y7Wh9dalHY317HSvab" +
-		"KYuHnnInPZxjygQNHR");
+		"U9pTbLbib5KKn$$V36rPn0feMueLHWOxTDfADn2aR2fYwq8BMeIYB4fYOZGn4anyCT746AD" +
+		"HeaOJ4nFZ8$YYJpwO65TSSSKLLzntNB0knzztUgSCmymaDVB2J7xdd7lENRvxxYP5Zwj9pJ" +
+		"f56StLQLgWXMfNfrern$tdb8psQ9OMwPWoySQoyIFfB#PhKAK6TPaIkbJZLQiANQ8DgbEDf" +
+		"kb4dKJyMAtIP7jIn#i4ufiqnVx9Y#VwlDpZLHeqqnZwIcgwLcj0QmyRjR2yM6VhBFNgN9sd" +
+		"yykMBXX5tQEXj6eaLuMwHolPHOCQgudacipR7rhFkiHhaClxEE9BLQr9wdD$Fwrcqwf7MT#" +
+		"1bPg1tUAUKrsskUnmsULodilvBaztsUtoJ9VBNQvmUQ7BDIxN8VlyMq$MCYtnqS$G14tLSO" +
+		"nRhvdyK$ZJkaWNQx8sujsiWxyqynh7Rfo0VoBxhvfsawWtnVqr9QCfnfl97lslyIFfB#PBa" +
+		"P6q8bQqaLbbM9qcijFCchIo8dE8jnDDSrBY36QeqqIBW$5SdxCz7jUiyxxQE9aDdCtfXurQ" +
+		"M8uuzqdEQmMxeQfigMOKTO#EKYvNXNfu5wMf7USwphp8UvrRkRnt4E$oUCRzsT0gjmEdSlF" +
+		"cU$vVcV5lpR9c2H#zdZTf1bzOYuxur#EVXZtBTnzU6$dXbxRSC7mEhuLrKhGS1eBlFkoLwA" +
+		"t0cOtM3FkZVbW2Is5xg7jJh8j1dLlWhXAn7N0tx0pbUn2FGICy0MDW5$vxqRl3M7k2tWi3i" +
+		"0ysmhTmF#o7Xs08RgLj10jWB2o2QbWMndiOyGZwjb2kGNIW6q8vJQ8Eb9fR#8x5UVDv4B8O" +
+		"LQ7SZgWDzdn4Ry7yxuH7W$r0aRxxu2hO1lq5RLk2lZ5NZkkWk$FQRoh$xT7D9VpTGM$B#SZ" +
+		"3KEXpV8Yj2BetwBwWLmSTzb6qDkZrGMy8UdFGOGz6LnIRNx2l3FhgeAyfDwyISzgQjyxNmU" +
+		"t1lhv8tJloxEs7nhHbMF46omvev6U$nHwtVeQ$xKVxquRiU$lEs9dsaNrZNzjNzYNs5$2vV" +
+		"ORy1Dw2D#4DU1rUWrTXDxm2ByDBy2AyO6$R7X$ZG$W0dlVIBdlEdhLdx6bxolRQ#$QfxGlV" +
+		"yh7Bz#nTUyV#if$i1qw#x1VurVRRxmGNSdl5BrDywX8G#LqHCvTRiis9U7ageOBJaOI86wK" +
+		"2ahnRIN#xcihGGh#TrEl4pWOob9kX5LASynIwoubuyPAyUH4akEMYG7AK98AEk2SFPTw$FD" +
+		"nqcm==");
 
     private final Logger logger = LogManager.getLogger(Parser.class.getName());
 
