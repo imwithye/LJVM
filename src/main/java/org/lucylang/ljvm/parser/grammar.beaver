@@ -46,8 +46,10 @@
 %typeof assign_statement = "Assignment";
 %typeof if_statement = "IfElse";
 %typeof if_else_statement = "IfElse";
+%typeof call_statement = "Call";
 %typeof while_statement = "While";
 %typeof return_statement = "Return";
+%typeof exprs = "SymbolList";
 %typeof expr = "IValue";
 
 %goal module;
@@ -154,6 +156,8 @@ statement = var_statement.var
             {: return ifStmt; :}
     |   while_statement.whileStmt
             {: return whileStmt; :}
+    |   call_statement.call
+            {: return call; :}
     |   return_statement.returnStmt
             {: return returnStmt; :}
     ;
@@ -198,6 +202,28 @@ if_else_statement = if_statement.ifElse ELSE block_statements.statements
             {: for(int i=0; i<statements.size(); i++)
                    ifElse.addStmtElse((IStmt) statements.get(i));
                return ifElse;
+            :}
+    ;
+
+call_statement = ID.name LPAREN exprs.list RPAREN
+            {: Call call = new Call(new VarName((String) name.value));
+               for(int i=0; i<list.size(); i++) {
+                   call.addParameter((IValue) list.get(i));
+               }
+               return call;
+            :}
+    |   ID.name LPAREN RPAREN
+            {:  return new Call(new VarName((String) name.value)); :}
+    ;
+
+exprs = exprs.list COMMA expr.value
+            {: list.add((Node) value);
+               return list;
+            :}
+    |   expr.value
+            {: SymbolList list = new SymbolList();
+               list.add((Node) value);
+               return list;
             :}
     ;
 
@@ -263,6 +289,9 @@ expr = literal_expr.literal
             :}
     |   LPAREN expr.left RPAREN
             {:  return (Node) left;
+            :}
+    |   call_statement.call
+            {:  return (Node) call;
             :}
     ;
 

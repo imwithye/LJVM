@@ -71,7 +71,9 @@ public class ParserTest extends TestCase {
                                 "}\n" +
                                 "" +
                                 "func main() {" +
+                                "   return sum(10, 11)" +
                                 "}"
                 );
+
     }
 }
