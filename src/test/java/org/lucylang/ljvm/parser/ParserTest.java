@@ -3,7 +3,11 @@ package org.lucylang.ljvm.parser;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.lucylang.ljvm.generator.ModuleCodeGenerator;
+import org.lucylang.ljvm.machine.Machine;
 import org.lucylang.ljvm.node.Module;
+import org.lucylang.ljvm.value.NumberValue;
+import org.lucylang.ljvm.value.Value;
 
 import java.io.StringReader;
 
@@ -74,6 +78,10 @@ public class ParserTest extends TestCase {
                                 "   return sum(10, 11)" +
                                 "}"
                 );
-
+        ModuleCodeGenerator moduleCodeGenerator = new ModuleCodeGenerator();
+        org.lucylang.ljvm.machine.module.Module module = moduleCodeGenerator.visitModule(m);
+        Machine vm = new Machine();
+        Value value = vm.execute(module);
+        assertEquals(new NumberValue(21), value);
     }
 }
