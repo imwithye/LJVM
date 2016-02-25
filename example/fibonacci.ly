@@ -1,3 +1,5 @@
+import "std"
+
 func fibonacci(n) {
     if n < 2 {
         return n
@@ -8,8 +10,8 @@ func fibonacci(n) {
 
 func main() {
     text = "input a number: "
-    print(text)
-    n = number(input())
-    text = "The fibonacci number of " + string(n) + " is " + string(fibonacci(10))
-    print(text)
+    std::print(text)
+    n = std::number(std::input())
+    text = "The fibonacci number of " + std::string(n) + " is " + std::string(fibonacci(10))
+    std::print(text)
 }

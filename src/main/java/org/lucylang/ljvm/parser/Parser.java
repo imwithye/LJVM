@@ -17,10 +17,10 @@ public class Parser extends beaver.Parser {
 		static public final short EOF = 0;
 		static public final short ID = 1;
 		static public final short LPAREN = 2;
-		static public final short NOT = 3;
-		static public final short BOOL_LITERAL = 4;
-		static public final short NUMBER_LITERAL = 5;
-		static public final short STRING_LITERAL = 6;
+		static public final short STRING_LITERAL = 3;
+		static public final short NOT = 4;
+		static public final short BOOL_LITERAL = 5;
+		static public final short NUMBER_LITERAL = 6;
 		static public final short NONE_LITERAL = 7;
 		static public final short TIMES = 8;
 		static public final short DIV = 9;
@@ -30,45 +30,50 @@ public class Parser extends beaver.Parser {
 		static public final short LT = 13;
 		static public final short GEQ = 14;
 		static public final short LEQ = 15;
-		static public final short EQUAL = 16;
-		static public final short NEQ = 17;
-		static public final short AND = 18;
-		static public final short OR = 19;
-		static public final short STMT_TAIL = 20;
-		static public final short SEMICOLON = 21;
-		static public final short RPAREN = 22;
+		static public final short STMT_TAIL = 16;
+		static public final short SEMICOLON = 17;
+		static public final short EQUAL = 18;
+		static public final short NEQ = 19;
+		static public final short RPAREN = 20;
+		static public final short AND = 21;
+		static public final short OR = 22;
 		static public final short LCURLY = 23;
-		static public final short RCURLY = 24;
-		static public final short FUNC = 25;
-		static public final short COMMA = 26;
-		static public final short ASSIGN = 27;
-		static public final short VAR = 28;
-		static public final short IF = 29;
-		static public final short WHILE = 30;
-		static public final short RETURN = 31;
-		static public final short ELSE = 32;
+		static public final short FUNC = 24;
+		static public final short COMMA = 25;
+		static public final short RCURLY = 26;
+		static public final short DOUBLE_COLON = 27;
+		static public final short IMPORT = 28;
+		static public final short ASSIGN = 29;
+		static public final short VAR = 30;
+		static public final short IF = 31;
+		static public final short WHILE = 32;
+		static public final short RETURN = 33;
+		static public final short ELSE = 34;
 	}
 
 	static final ParsingTables PARSING_TABLES = new ParsingTables(
-		"U9pTbLbib5KKn$$V36rPn0feMueLHWOxTDfADn2aR2fYwq8BMeIYB4fYOZGn4anyCT746AD" +
-		"HeaOJ4nFZ8$YYJpwO65TSSSKLLzntNB0knzztUgSCmymaDVB2J7xdd7lENRvxxYP5Zwj9pJ" +
-		"f56StLQLgWXMfNfrern$tdb8psQ9OMwPWoySQoyIFfB#PhKAK6TPaIkbJZLQiANQ8DgbEDf" +
-		"kb4dKJyMAtIP7jIn#i4ufiqnVx9Y#VwlDpZLHeqqnZwIcgwLcj0QmyRjR2yM6VhBFNgN9sd" +
-		"yykMBXX5tQEXj6eaLuMwHolPHOCQgudacipR7rhFkiHhaClxEE9BLQr9wdD$Fwrcqwf7MT#" +
-		"1bPg1tUAUKrsskUnmsULodilvBaztsUtoJ9VBNQvmUQ7BDIxN8VlyMq$MCYtnqS$G14tLSO" +
-		"nRhvdyK$ZJkaWNQx8sujsiWxyqynh7Rfo0VoBxhvfsawWtnVqr9QCfnfl97lslyIFfB#PBa" +
-		"P6q8bQqaLbbM9qcijFCchIo8dE8jnDDSrBY36QeqqIBW$5SdxCz7jUiyxxQE9aDdCtfXurQ" +
-		"M8uuzqdEQmMxeQfigMOKTO#EKYvNXNfu5wMf7USwphp8UvrRkRnt4E$oUCRzsT0gjmEdSlF" +
-		"cU$vVcV5lpR9c2H#zdZTf1bzOYuxur#EVXZtBTnzU6$dXbxRSC7mEhuLrKhGS1eBlFkoLwA" +
-		"t0cOtM3FkZVbW2Is5xg7jJh8j1dLlWhXAn7N0tx0pbUn2FGICy0MDW5$vxqRl3M7k2tWi3i" +
-		"0ysmhTmF#o7Xs08RgLj10jWB2o2QbWMndiOyGZwjb2kGNIW6q8vJQ8Eb9fR#8x5UVDv4B8O" +
-		"LQ7SZgWDzdn4Ry7yxuH7W$r0aRxxu2hO1lq5RLk2lZ5NZkkWk$FQRoh$xT7D9VpTGM$B#SZ" +
-		"3KEXpV8Yj2BetwBwWLmSTzb6qDkZrGMy8UdFGOGz6LnIRNx2l3FhgeAyfDwyISzgQjyxNmU" +
-		"t1lhv8tJloxEs7nhHbMF46omvev6U$nHwtVeQ$xKVxquRiU$lEs9dsaNrZNzjNzYNs5$2vV" +
-		"ORy1Dw2D#4DU1rUWrTXDxm2ByDBy2AyO6$R7X$ZG$W0dlVIBdlEdhLdx6bxolRQ#$QfxGlV" +
-		"yh7Bz#nTUyV#if$i1qw#x1VurVRRxmGNSdl5BrDywX8G#LqHCvTRiis9U7ageOBJaOI86wK" +
-		"2ahnRIN#xcihGGh#TrEl4pWOob9kX5LASynIwoubuyPAyUH4akEMYG7AK98AEk2SFPTw$FD" +
-		"nqcm==");
+		"U9pbbcbiL5KKny$hEAs0YAqZBQKiKfpI1KifjBHLAbKK415bKqjPAsfTga8YcgWa6X8CYOd" +
+		"4Q6AYCJ6fd$IJVjBY1kwxg2WgueAArXL5hHn$zxxJoNJcJHE$#8Lv#P$$FUT$xdttldVkVI" +
+		"CI798QELscI9NCacOvGsPBfnmdCwH1pfTfCZrB7IR7UxNRgwEoz4jbXDSdvz2Tx$JXaQCFg" +
+		"2T4gYSodbF7HgedcreMfUgVKkxLp5uJfCt7E#KAoTCZCaP6Ix5iO9sbSesKo3WPBnF9AfJJ" +
+		"92xj#ZIyXAmaroa#gokLvNfctbVzo0LoggoKrR8kw$vpPBvSAEV91R985cTuST$t9BbEBf9" +
+		"ykJRLzv8XUnrRNZjFPwdS81jbsQ3dlqfYl9rEIKWHjJeGTHcNoqAvMCxAUYDXz6mgs6MjbS" +
+		"k8L11ntd8zwdaIiKfY2wNQswdUrdfRvsszjpEzRVIsoTiMRy$qjjNRSxsTv#q2RpkyNUFjU" +
+		"gnx#pVAI2hq75b1DLmfLybSBZSJXr5ojLpFVip#BI4wZ3qsWfqqqk#R96ifOeyagDhHMMe9" +
+		"wtTgcLUBi$HgoVDwRGxT#KuF8aSVK6T5gfMCvzH9aMgfgPMHgh0JdPePBxVvkbLF8QkQNLJ" +
+		"8UoxXR0Wu7UhPypF9QiHBWcOmbgnnN65M8fNbUcRFAXnvF2V3H2efKm#uVunpDCw#BSZmaj" +
+		"QtYdlKK443VHD3zZhMl2hWdaxUeETVoKbTOi#lB1Lr6QMypScSpPbl98pMMGLKKi5Xn7brz" +
+		"7BSPB7$nuQpJx2o15UI2Wx063yJXs9c6PCgpVfHeIARjeGxVBEFIB01B0jZWQEDfZU39DXE" +
+		"$2curNBk1Al0pJWBBFTUnvdWrmWMvT1sW7Pmd$ctWxsW0km7jU0Wc0twBEUmSJzOpnnYS3S" +
+		"y77u8BeGVXqlWr#49O3LW7K4Nc0essphUnFJ2lURFm3J0BUQtyNYEHCqzRGrpoLi3rj7U1U" +
+		"#CoBcD#7oumCPTZ2cszWhCqi7vmSjWZxLtPuyNx3D#5RCrxJuTn1gOym7QFHQx2xylOpv5n" +
+		"ZN6ZuALz9sNbjCzn9fRe#D1XsFkrvyMwpAscWjkChx5#5RZBSPt66yrtcQytVXkutkC1zKT" +
+		"$lAqzlt63nW$c6jDETQpTWZjOLSVrdx4lNzhzqJaFfRMVcA8CNl0as5RDl4aZuPD$SUrz3T" +
+		"9$VINbDO7ljU$zI$zJh$LR$3swK7zMh$IBsb$0GxeVkodu2r0pUiRWBsXhm5gI5y1r9o#15" +
+		"u4ky4kVKVVzdVu67m0Nl3Uy$gSFglFw4xjrO$q$TICzkg7#fb#RjudtkxHz$HTxTSVz90xP" +
+		"$GdyBF#g7$ehxGE#rNzJc8RPrdWlx4Ld6WLzZqDlwbn46DNEWJ#BA#XNUDFztmGvnz130IS" +
+		"U75$wZLw17o3SsCwupIHrqIxrb2DFmtKWtA#8kMUyq6SKpu60hxbCRxc0SZZ70uCiV#8FEE" +
+		"0atmmMlu5z7ox7m==");
 
     private final Logger logger = LogManager.getLogger(Parser.class.getName());
 
@@ -104,7 +109,23 @@ public class Parser extends beaver.Parser {
 			},
 			Action.RETURN,	// [4] stmt_tail = STMT_TAIL
 			Action.RETURN,	// [5] stmt_tail = SEMICOLON
-			new Action() {	// [6] module = maybe_tail functions.fs maybe_tail
+			new Action() {	// [6] module = maybe_tail imports.importList stmt_tails functions.fs maybe_tail
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					final Symbol _symbol_importList = _symbols[offset + 2];
+					final SymbolList importList = (SymbolList) _symbol_importList.value;
+					final Symbol _symbol_fs = _symbols[offset + 4];
+					final SymbolList fs = (SymbolList) _symbol_fs.value;
+					 Module module = new Module();
+               for(int i=0; i<importList.size(); i++) {
+                   module.addImport(((Import) importList.get(i)).getModuleName());
+               }
+               for(int i=0; i<fs.size(); i++) {
+                   module.addFunction((Function) fs.get(i));
+               }
+               return module;
+				}
+			},
+			new Action() {	// [7] module = maybe_tail functions.fs maybe_tail
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_fs = _symbols[offset + 2];
 					final SymbolList fs = (SymbolList) _symbol_fs.value;
@@ -115,7 +136,30 @@ public class Parser extends beaver.Parser {
                return module;
 				}
 			},
-			new Action() {	// [7] functions = functions.fs maybe_tail function.f
+			new Action() {	// [8] imports = imports.importList stmt_tails import.i
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					final Symbol _symbol_importList = _symbols[offset + 1];
+					final SymbolList importList = (SymbolList) _symbol_importList.value;
+					final Symbol i = _symbols[offset + 3];
+					 importList.add(i);
+               return importList;
+				}
+			},
+			new Action() {	// [9] imports = import.i
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					final Symbol i = _symbols[offset + 1];
+					 SymbolList list = new SymbolList();
+               list.add(i);
+               return list;
+				}
+			},
+			new Action() {	// [10] import = IMPORT STRING_LITERAL.value
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					final Symbol value = _symbols[offset + 2];
+					 return new Import((String) value.value);
+				}
+			},
+			new Action() {	// [11] functions = functions.fs maybe_tail function.f
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_fs = _symbols[offset + 1];
 					final SymbolList fs = (SymbolList) _symbol_fs.value;
@@ -125,7 +169,7 @@ public class Parser extends beaver.Parser {
                return fs;
 				}
 			},
-			new Action() {	// [8] functions = function.f
+			new Action() {	// [12] functions = function.f
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_f = _symbols[offset + 1];
 					final Function f = (Function) _symbol_f.value;
@@ -134,7 +178,7 @@ public class Parser extends beaver.Parser {
                return list;
 				}
 			},
-			new Action() {	// [9] function = FUNC ID.name LPAREN parameters.list RPAREN block_statements.stmts
+			new Action() {	// [13] function = FUNC ID.name LPAREN parameters.list RPAREN block_statements.stmts
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol name = _symbols[offset + 2];
 					final Symbol _symbol_list = _symbols[offset + 4];
@@ -153,7 +197,7 @@ public class Parser extends beaver.Parser {
                return function;
 				}
 			},
-			new Action() {	// [10] function = FUNC ID.name LPAREN RPAREN block_statements.stmts
+			new Action() {	// [14] function = FUNC ID.name LPAREN RPAREN block_statements.stmts
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol name = _symbols[offset + 2];
 					final Symbol _symbol_stmts = _symbols[offset + 5];
@@ -166,7 +210,7 @@ public class Parser extends beaver.Parser {
                return function;
 				}
 			},
-			new Action() {	// [11] parameters = parameters.list COMMA ID.varName
+			new Action() {	// [15] parameters = parameters.list COMMA ID.varName
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_list = _symbols[offset + 1];
 					final SymbolList list = (SymbolList) _symbol_list.value;
@@ -175,7 +219,7 @@ public class Parser extends beaver.Parser {
                return list;
 				}
 			},
-			new Action() {	// [12] parameters = ID.varName
+			new Action() {	// [16] parameters = ID.varName
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol varName = _symbols[offset + 1];
 					 SymbolList list = new SymbolList();
@@ -183,19 +227,19 @@ public class Parser extends beaver.Parser {
                return list;
 				}
 			},
-			new Action() {	// [13] block_statements = LCURLY maybe_tail statements.stmts maybe_tail RCURLY
+			new Action() {	// [17] block_statements = LCURLY maybe_tail statements.stmts maybe_tail RCURLY
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_stmts = _symbols[offset + 3];
 					final SymbolList stmts = (SymbolList) _symbol_stmts.value;
 					 return stmts;
 				}
 			},
-			new Action() {	// [14] block_statements = LCURLY maybe_tail RCURLY
+			new Action() {	// [18] block_statements = LCURLY maybe_tail RCURLY
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					 return new SymbolList();
 				}
 			},
-			new Action() {	// [15] statements = statements.stmts stmt_tails statement.stmt
+			new Action() {	// [19] statements = statements.stmts stmt_tails statement.stmt
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_stmts = _symbols[offset + 1];
 					final SymbolList stmts = (SymbolList) _symbol_stmts.value;
@@ -211,7 +255,7 @@ public class Parser extends beaver.Parser {
                return stmts;
 				}
 			},
-			new Action() {	// [16] statements = statement.stmt
+			new Action() {	// [20] statements = statement.stmt
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol stmt = _symbols[offset + 1];
 					 if(stmt instanceof SymbolList) {
@@ -223,62 +267,62 @@ public class Parser extends beaver.Parser {
                }
 				}
 			},
-			new Action() {	// [17] statement = var_statement.var
+			new Action() {	// [21] statement = var_statement.var
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol var = _symbols[offset + 1];
 					 return var;
 				}
 			},
-			new Action() {	// [18] statement = assign_statement.assign
+			new Action() {	// [22] statement = assign_statement.assign
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_assign = _symbols[offset + 1];
 					final Assignment assign = (Assignment) _symbol_assign.value;
 					 return assign;
 				}
 			},
-			new Action() {	// [19] statement = if_statement.ifStmt
+			new Action() {	// [23] statement = if_statement.ifStmt
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_ifStmt = _symbols[offset + 1];
 					final IfElse ifStmt = (IfElse) _symbol_ifStmt.value;
 					 return ifStmt;
 				}
 			},
-			new Action() {	// [20] statement = if_else_statement.ifStmt
+			new Action() {	// [24] statement = if_else_statement.ifStmt
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_ifStmt = _symbols[offset + 1];
 					final IfElse ifStmt = (IfElse) _symbol_ifStmt.value;
 					 return ifStmt;
 				}
 			},
-			new Action() {	// [21] statement = while_statement.whileStmt
+			new Action() {	// [25] statement = while_statement.whileStmt
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_whileStmt = _symbols[offset + 1];
 					final While whileStmt = (While) _symbol_whileStmt.value;
 					 return whileStmt;
 				}
 			},
-			new Action() {	// [22] statement = call_statement.call
+			new Action() {	// [26] statement = call_statement.call
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_call = _symbols[offset + 1];
 					final Call call = (Call) _symbol_call.value;
 					 return call;
 				}
 			},
-			new Action() {	// [23] statement = return_statement.returnStmt
+			new Action() {	// [27] statement = return_statement.returnStmt
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_returnStmt = _symbols[offset + 1];
 					final Return returnStmt = (Return) _symbol_returnStmt.value;
 					 return returnStmt;
 				}
 			},
-			new Action() {	// [24] var_statement = VAR var_declarations.declarations
+			new Action() {	// [28] var_statement = VAR var_declarations.declarations
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_declarations = _symbols[offset + 2];
 					final SymbolList declarations = (SymbolList) _symbol_declarations.value;
 					 return declarations;
 				}
 			},
-			new Action() {	// [25] var_declarations = var_declarations.declarations COMMA var_declaration.var
+			new Action() {	// [29] var_declarations = var_declarations.declarations COMMA var_declaration.var
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_declarations = _symbols[offset + 1];
 					final SymbolList declarations = (SymbolList) _symbol_declarations.value;
@@ -287,7 +331,7 @@ public class Parser extends beaver.Parser {
                return declarations;
 				}
 			},
-			new Action() {	// [26] var_declarations = var_declaration.var
+			new Action() {	// [30] var_declarations = var_declaration.var
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol var = _symbols[offset + 1];
 					 SymbolList list = new SymbolList();
@@ -295,20 +339,20 @@ public class Parser extends beaver.Parser {
                return list;
 				}
 			},
-			new Action() {	// [27] var_declaration = ID.varName
+			new Action() {	// [31] var_declaration = ID.varName
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol varName = _symbols[offset + 1];
 					 return new Assignment(new VarName((String) varName.value), new NoneLiteral());
 				}
 			},
-			new Action() {	// [28] var_declaration = assign_statement.assignment
+			new Action() {	// [32] var_declaration = assign_statement.assignment
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_assignment = _symbols[offset + 1];
 					final Assignment assignment = (Assignment) _symbol_assignment.value;
 					 return assignment;
 				}
 			},
-			new Action() {	// [29] assign_statement = ID.varName ASSIGN expr.value
+			new Action() {	// [33] assign_statement = ID.varName ASSIGN expr.value
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol varName = _symbols[offset + 1];
 					final Symbol _symbol_value = _symbols[offset + 3];
@@ -316,7 +360,7 @@ public class Parser extends beaver.Parser {
 					 return new Assignment(new VarName((String) varName.value), value);
 				}
 			},
-			new Action() {	// [30] if_statement = IF expr.value block_statements.statements
+			new Action() {	// [34] if_statement = IF expr.value block_statements.statements
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_value = _symbols[offset + 2];
 					final IValue value = (IValue) _symbol_value.value;
@@ -328,7 +372,7 @@ public class Parser extends beaver.Parser {
                return ifElse;
 				}
 			},
-			new Action() {	// [31] if_else_statement = if_statement.ifElse ELSE block_statements.statements
+			new Action() {	// [35] if_else_statement = if_statement.ifElse ELSE block_statements.statements
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_ifElse = _symbols[offset + 1];
 					final IfElse ifElse = (IfElse) _symbol_ifElse.value;
@@ -339,7 +383,7 @@ public class Parser extends beaver.Parser {
                return ifElse;
 				}
 			},
-			new Action() {	// [32] call_statement = ID.name LPAREN exprs.list RPAREN
+			new Action() {	// [36] call_statement = ID.name LPAREN exprs.list RPAREN
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol name = _symbols[offset + 1];
 					final Symbol _symbol_list = _symbols[offset + 3];
@@ -351,13 +395,33 @@ public class Parser extends beaver.Parser {
                return call;
 				}
 			},
-			new Action() {	// [33] call_statement = ID.name LPAREN RPAREN
+			new Action() {	// [37] call_statement = ID.name LPAREN RPAREN
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol name = _symbols[offset + 1];
 					  return new Call(new VarName((String) name.value));
 				}
 			},
-			new Action() {	// [34] exprs = exprs.list COMMA expr.value
+			new Action() {	// [38] call_statement = ID.module DOUBLE_COLON ID.name LPAREN exprs.list RPAREN
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					final Symbol module = _symbols[offset + 1];
+					final Symbol name = _symbols[offset + 3];
+					final Symbol _symbol_list = _symbols[offset + 5];
+					final SymbolList list = (SymbolList) _symbol_list.value;
+					 Call call = new Call(new VarName((String) module.value + "::" + (String) name.value));
+               for(int i=0; i<list.size(); i++) {
+                   call.addParameter((IValue) list.get(i));
+               }
+               return call;
+				}
+			},
+			new Action() {	// [39] call_statement = ID.module DOUBLE_COLON ID.name LPAREN RPAREN
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					final Symbol module = _symbols[offset + 1];
+					final Symbol name = _symbols[offset + 3];
+					  return new Call(new VarName((String) module.value + "::" + (String) name.value));
+				}
+			},
+			new Action() {	// [40] exprs = exprs.list COMMA expr.value
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_list = _symbols[offset + 1];
 					final SymbolList list = (SymbolList) _symbol_list.value;
@@ -367,7 +431,7 @@ public class Parser extends beaver.Parser {
                return list;
 				}
 			},
-			new Action() {	// [35] exprs = expr.value
+			new Action() {	// [41] exprs = expr.value
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_value = _symbols[offset + 1];
 					final IValue value = (IValue) _symbol_value.value;
@@ -376,7 +440,7 @@ public class Parser extends beaver.Parser {
                return list;
 				}
 			},
-			new Action() {	// [36] while_statement = WHILE expr.value block_statements.statements
+			new Action() {	// [42] while_statement = WHILE expr.value block_statements.statements
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_value = _symbols[offset + 2];
 					final IValue value = (IValue) _symbol_value.value;
@@ -388,32 +452,32 @@ public class Parser extends beaver.Parser {
                return whileStmt;
 				}
 			},
-			new Action() {	// [37] return_statement = RETURN
+			new Action() {	// [43] return_statement = RETURN
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					 return new Return();
 				}
 			},
-			new Action() {	// [38] return_statement = RETURN expr.value
+			new Action() {	// [44] return_statement = RETURN expr.value
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_value = _symbols[offset + 2];
 					final IValue value = (IValue) _symbol_value.value;
 					 return new Return(value);
 				}
 			},
-			new Action() {	// [39] expr = literal_expr.literal
+			new Action() {	// [45] expr = literal_expr.literal
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol literal = _symbols[offset + 1];
 					 return literal;
 				}
 			},
-			new Action() {	// [40] expr = ID.id
+			new Action() {	// [46] expr = ID.id
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol id = _symbols[offset + 1];
 					 String value = (String) id.value;
                return new VarName(value);
 				}
 			},
-			new Action() {	// [41] expr = expr.left PLUS expr.right
+			new Action() {	// [47] expr = expr.left PLUS expr.right
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_left = _symbols[offset + 1];
 					final IValue left = (IValue) _symbol_left.value;
@@ -422,7 +486,7 @@ public class Parser extends beaver.Parser {
 					  return new AddExpr(left, right);
 				}
 			},
-			new Action() {	// [42] expr = expr.left MINUS expr.right
+			new Action() {	// [48] expr = expr.left MINUS expr.right
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_left = _symbols[offset + 1];
 					final IValue left = (IValue) _symbol_left.value;
@@ -431,7 +495,7 @@ public class Parser extends beaver.Parser {
 					  return new SubExpr(left, right);
 				}
 			},
-			new Action() {	// [43] expr = expr.left TIMES expr.right
+			new Action() {	// [49] expr = expr.left TIMES expr.right
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_left = _symbols[offset + 1];
 					final IValue left = (IValue) _symbol_left.value;
@@ -440,7 +504,7 @@ public class Parser extends beaver.Parser {
 					  return new MulExpr(left, right);
 				}
 			},
-			new Action() {	// [44] expr = expr.left DIV expr.right
+			new Action() {	// [50] expr = expr.left DIV expr.right
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_left = _symbols[offset + 1];
 					final IValue left = (IValue) _symbol_left.value;
@@ -449,7 +513,7 @@ public class Parser extends beaver.Parser {
 					  return new DivExpr(left, right);
 				}
 			},
-			new Action() {	// [45] expr = expr.left AND expr.right
+			new Action() {	// [51] expr = expr.left AND expr.right
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_left = _symbols[offset + 1];
 					final IValue left = (IValue) _symbol_left.value;
@@ -458,7 +522,7 @@ public class Parser extends beaver.Parser {
 					  return new AndExpr(left, right);
 				}
 			},
-			new Action() {	// [46] expr = expr.left OR expr.right
+			new Action() {	// [52] expr = expr.left OR expr.right
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_left = _symbols[offset + 1];
 					final IValue left = (IValue) _symbol_left.value;
@@ -467,7 +531,7 @@ public class Parser extends beaver.Parser {
 					  return new OrExpr(left, right);
 				}
 			},
-			new Action() {	// [47] expr = expr.left EQUAL expr.right
+			new Action() {	// [53] expr = expr.left EQUAL expr.right
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_left = _symbols[offset + 1];
 					final IValue left = (IValue) _symbol_left.value;
@@ -476,7 +540,7 @@ public class Parser extends beaver.Parser {
 					  return new EquExpr(left, right);
 				}
 			},
-			new Action() {	// [48] expr = expr.left NEQ expr.right
+			new Action() {	// [54] expr = expr.left NEQ expr.right
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_left = _symbols[offset + 1];
 					final IValue left = (IValue) _symbol_left.value;
@@ -485,7 +549,7 @@ public class Parser extends beaver.Parser {
 					  return new NotExpr(new EquExpr(left, right));
 				}
 			},
-			new Action() {	// [49] expr = expr.left GT expr.right
+			new Action() {	// [55] expr = expr.left GT expr.right
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_left = _symbols[offset + 1];
 					final IValue left = (IValue) _symbol_left.value;
@@ -494,7 +558,7 @@ public class Parser extends beaver.Parser {
 					  return new GreExpr(left, right);
 				}
 			},
-			new Action() {	// [50] expr = expr.left LT expr.right
+			new Action() {	// [56] expr = expr.left LT expr.right
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_left = _symbols[offset + 1];
 					final IValue left = (IValue) _symbol_left.value;
@@ -503,7 +567,7 @@ public class Parser extends beaver.Parser {
 					  return new LesExpr(left, right);
 				}
 			},
-			new Action() {	// [51] expr = expr.left GEQ expr.right
+			new Action() {	// [57] expr = expr.left GEQ expr.right
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_left = _symbols[offset + 1];
 					final IValue left = (IValue) _symbol_left.value;
@@ -512,7 +576,7 @@ public class Parser extends beaver.Parser {
 					  return new GeqExpr(left, right);
 				}
 			},
-			new Action() {	// [52] expr = expr.left LEQ expr.right
+			new Action() {	// [58] expr = expr.left LEQ expr.right
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_left = _symbols[offset + 1];
 					final IValue left = (IValue) _symbol_left.value;
@@ -521,28 +585,28 @@ public class Parser extends beaver.Parser {
 					  return new LeqExpr(left, right);
 				}
 			},
-			new Action() {	// [53] expr = NOT expr.left
+			new Action() {	// [59] expr = NOT expr.left
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_left = _symbols[offset + 2];
 					final IValue left = (IValue) _symbol_left.value;
 					  return new NotExpr(left);
 				}
 			},
-			new Action() {	// [54] expr = LPAREN expr.left RPAREN
+			new Action() {	// [60] expr = LPAREN expr.left RPAREN
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_left = _symbols[offset + 2];
 					final IValue left = (IValue) _symbol_left.value;
 					  return (Node) left;
 				}
 			},
-			new Action() {	// [55] expr = call_statement.call
+			new Action() {	// [61] expr = call_statement.call
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_call = _symbols[offset + 1];
 					final Call call = (Call) _symbol_call.value;
 					  return (Node) call;
 				}
 			},
-			new Action() {	// [56] literal_expr = BOOL_LITERAL.bool
+			new Action() {	// [62] literal_expr = BOOL_LITERAL.bool
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol bool = _symbols[offset + 1];
 					 if(bool.value.equals("true")) {
@@ -552,7 +616,7 @@ public class Parser extends beaver.Parser {
                }
 				}
 			},
-			new Action() {	// [57] literal_expr = NUMBER_LITERAL.number
+			new Action() {	// [63] literal_expr = NUMBER_LITERAL.number
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol number = _symbols[offset + 1];
 					 String value = (String) number.value;
@@ -563,14 +627,14 @@ public class Parser extends beaver.Parser {
                }
 				}
 			},
-			new Action() {	// [58] literal_expr = STRING_LITERAL.string
+			new Action() {	// [64] literal_expr = STRING_LITERAL.string
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol string = _symbols[offset + 1];
 					 String value = (String) string.value;
                return new StringLiteral(value);
 				}
 			},
-			new Action() {	// [59] literal_expr = NONE_LITERAL.none
+			new Action() {	// [65] literal_expr = NONE_LITERAL.none
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol none = _symbols[offset + 1];
 					 return new NoneLiteral();

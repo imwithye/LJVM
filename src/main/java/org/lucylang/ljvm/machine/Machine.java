@@ -17,6 +17,7 @@ import java.util.Stack;
 public class Machine {
     protected int pc;
     protected Scope<String, Register> currentScope;
+    protected Scope<String, Module> imports;
     protected Stack<Value> memoryStack;
 
     public Machine() {
@@ -26,6 +27,7 @@ public class Machine {
     public Machine reset() {
         this.pc = 0;
         this.currentScope = null;
+        this.imports = new Scope<String, Module>();
         this.memoryStack = new Stack<Value>();
         return this;
     }
@@ -92,7 +94,15 @@ public class Machine {
     public Machine call(Module module, String routineName) throws InvalidInstruction, TypeUnmatchedException, ValueUnavailableException, UndefinedException, OverdefinedException {
         assert module != null;
         assert routineName != null;
-        Routine routine = module.getRoutine(routineName);
+        Routine routine;
+        if (routineName.contains("::")) {
+            String[] splits = routineName.split("::");
+            String importModule = splits[0];
+            routineName = splits[1];
+            routine = module.getRoutine(importModule, routineName);
+        } else {
+            routine = module.getRoutine(routineName);
+        }
         Scope<String, Register> currentScope = this.currentScope;
         int next = this.pc;
         this.currentScope = new Scope<String, Register>(routineName);

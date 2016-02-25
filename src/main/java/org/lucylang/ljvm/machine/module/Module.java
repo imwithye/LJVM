@@ -1,5 +1,6 @@
 package org.lucylang.ljvm.machine.module;
 
+import org.lucylang.ljvm.library.Loader;
 import org.lucylang.ljvm.machine.instruction.*;
 import org.lucylang.ljvm.scope.OverdefinedException;
 import org.lucylang.ljvm.scope.Scope;
@@ -9,50 +10,36 @@ import java.io.Serializable;
 
 public class Module implements Serializable {
     protected Scope<String, Routine> routines;
+    protected Scope<String, Module> imports;
 
-    public Module() {
-        this.routines = new Scope<String, Routine>("module");
-        Routine input = new Routine(new Instruction[]{
-                new GetInstruction(new RefOperand("value")),
-                new PushInstruction(new RefOperand("value")),
-                new RetInstruction()
-        });
-        Routine print = new Routine(new Instruction[]{
-                new PopInstruction(new RefOperand("value")),
-                new PutInstruction(new RefOperand("value"))
-        });
-        Routine string = new Routine(new Instruction[]{
-                new PopInstruction(new RefOperand("value")),
-                new StrInstruction(new RefOperand("$1"), new RefOperand("value")),
-                new PushInstruction(new RefOperand("$1")),
-                new RetInstruction()
-        });
-        Routine number = new Routine(new Instruction[]{
-                new PopInstruction(new RefOperand("value")),
-                new NumInstruction(new RefOperand("$1"), new RefOperand("value")),
-                new PushInstruction(new RefOperand("$1")),
-                new RetInstruction()
-        });
-        Routine bool = new Routine(new Instruction[]{
-                new PopInstruction(new RefOperand("value")),
-                new BoolInstruction(new RefOperand("$1"), new RefOperand("value")),
-                new PushInstruction(new RefOperand("$1")),
-                new RetInstruction()
-        });
-        this.routines.set("input", input);
-        this.routines.set("print", print);
-        this.routines.set("string", string);
-        this.routines.set("number", number);
-        this.routines.set("boolean", bool);
+    public Module(String name) {
+        this.routines = new Scope<String, Routine>(name);
+        this.imports = new Scope<String, Module>(name + "#imports");
     }
 
     public boolean isMain() {
         return this.routines.get("main") != null;
     }
 
+    public Module imports(String moduleName) throws UndefinedException, OverdefinedException {
+        if (moduleName.startsWith("./")) {
+            //TODO: import from file
+            throw new UnsupportedOperationException();
+        } else {
+            Module m = Loader.getLoader().getModule(moduleName);
+            this.imports.safeSet(moduleName, m);
+        }
+        return this;
+    }
+
     public Module defineRoutine(String name, Routine routine) throws OverdefinedException {
         this.routines.safeSet(name, routine);
         return this;
+    }
+
+    public Routine getRoutine(String moduleName, String name) throws UndefinedException {
+        Module m = this.imports.safeGet(moduleName);
+        return m.getRoutine(name);
     }
 
     public Routine getRoutine(String name) throws UndefinedException {

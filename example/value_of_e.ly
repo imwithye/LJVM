@@ -1,3 +1,5 @@
+import "std"
+
 func factorial(n) {
     result = 1
     while n > 0 {
@@ -14,5 +16,5 @@ func main() {
         result = result + 1 / factorial(n)
         n = n - 1
     }
-    print("E is " + string(result))
+    std::print("E is " + std::string(result))
 }

@@ -18,7 +18,7 @@ public abstract class InstructionTest extends TestCase {
     }
 
     protected Value execMain(Instruction[] instructions) throws Exception {
-        Module module = new Module();
+        Module module = new Module("module");
         Routine main = new Routine(instructions);
         module.defineRoutine("main", main);
         Machine vm = new Machine();

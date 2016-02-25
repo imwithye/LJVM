@@ -24,8 +24,9 @@
     }
 :};
 
-%terminals VAR, FUNC, RETURN, IF, ELSE, WHILE, LCURLY, RCURLY, LPAREN, RPAREN, COMMA,
+%terminals IMPORT, VAR, FUNC, RETURN, IF, ELSE, WHILE, LCURLY, RCURLY, LPAREN, RPAREN, COMMA,
     ASSIGN, PLUS, MINUS, TIMES, DIV, AND, OR, OR, GT, LT, GEQ, LEQ, EQUAL, NEQ, NOT;
+%terminals DOUBLE_COLON;
 %terminals SEMICOLON, STMT_TAIL;
 %terminals BOOL_LITERAL, NONE_LITERAL, NUMBER_LITERAL, ID, STRING_LITERAL;
 
@@ -37,6 +38,7 @@
 %left AND, OR;
 
 %typeof module = "Module";
+%typeof imports = "SymbolList";
 %typeof functions = "SymbolList";
 %typeof function = "Function";
 %typeof parameters = "SymbolList";
@@ -66,13 +68,38 @@ stmt_tail = STMT_TAIL
     |   SEMICOLON
     ;
 
-module = maybe_tail functions.fs maybe_tail
+module = maybe_tail imports.importList stmt_tails functions.fs maybe_tail
+            {: Module module = new Module();
+               for(int i=0; i<importList.size(); i++) {
+                   module.addImport(((Import) importList.get(i)).getModuleName());
+               }
+               for(int i=0; i<fs.size(); i++) {
+                   module.addFunction((Function) fs.get(i));
+               }
+               return module;
+            :}
+    |   maybe_tail functions.fs maybe_tail
             {: Module module = new Module();
                for(int i=0; i<fs.size(); i++) {
                    module.addFunction((Function) fs.get(i));
                }
                return module;
             :}
+    ;
+
+imports = imports.importList stmt_tails import.i
+            {: importList.add(i);
+               return importList;
+            :}
+    |   import.i
+            {: SymbolList list = new SymbolList();
+               list.add(i);
+               return list;
+            :}
+    ;
+
+import = IMPORT STRING_LITERAL.value
+            {: return new Import((String) value.value); :}
     ;
 
 functions = functions.fs maybe_tail function.f
@@ -215,6 +242,15 @@ call_statement = ID.name LPAREN exprs.list RPAREN
             :}
     |   ID.name LPAREN RPAREN
             {:  return new Call(new VarName((String) name.value)); :}
+    |   ID.module DOUBLE_COLON ID.name LPAREN exprs.list RPAREN
+            {: Call call = new Call(new VarName((String) module.value + "::" + (String) name.value));
+               for(int i=0; i<list.size(); i++) {
+                   call.addParameter((IValue) list.get(i));
+               }
+               return call;
+            :}
+    |   ID.module DOUBLE_COLON ID.name LPAREN RPAREN
+            {:  return new Call(new VarName((String) module.value + "::" + (String) name.value)); :}
     ;
 
 exprs = exprs.list COMMA expr.value

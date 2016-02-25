@@ -16,10 +16,10 @@ public class ModuleTest extends TestCase {
     }
 
     public void testIsMain() throws Exception {
-        Module m1 = new Module();
+        Module m1 = new Module("module");
         m1.defineRoutine("main", new Routine());
         assertTrue(m1.isMain());
-        Module m2 = new Module();
+        Module m2 = new Module("module");
         m2.defineRoutine("sum", new Routine());
         assertTrue(!m2.isMain());
     }
@@ -38,7 +38,7 @@ public class ModuleTest extends TestCase {
     }
 
     public void testDefineRoutine() {
-        Module m = new Module();
+        Module m = new Module("module");
         defineRoutine(m, "main", new Routine(), false);
         defineRoutine(m, "main", new Routine(), true);
         defineRoutine(m, "sum", new Routine(), false);
@@ -58,7 +58,7 @@ public class ModuleTest extends TestCase {
     }
 
     public void testGetRoutine() {
-        Module m = new Module();
+        Module m = new Module("module");
         defineRoutine(m, "main", new Routine(), false);
         defineRoutine(m, "main", new Routine(), true);
         defineRoutine(m, "sum", new Routine(), false);

@@ -107,7 +107,7 @@ public class Driver {
         org.lucylang.ljvm.parser.Parser parser = new Parser();
         org.lucylang.ljvm.node.Module module = parser.parseModule(new Lexer(r));
         ModuleCodeGenerator codeGenerator = new ModuleCodeGenerator();
-        this.generateModule(codeGenerator.visitModule(module), new FileOutputStream(output));
+        this.generateModule(codeGenerator.visitModule(src, module), new FileOutputStream(output));
     }
 
     public void dumpToken(String src) throws Exception {
@@ -125,7 +125,7 @@ public class Driver {
         org.lucylang.ljvm.parser.Parser parser = new Parser();
         org.lucylang.ljvm.node.Module module = parser.parseModule(new Lexer(r));
         ModuleCodeGenerator codeGenerator = new ModuleCodeGenerator();
-        Module m = codeGenerator.visitModule(module);
+        Module m = codeGenerator.visitModule(src, module);
         System.out.println(m);
     }
 
@@ -139,7 +139,7 @@ public class Driver {
         org.lucylang.ljvm.parser.Parser parser = new Parser();
         org.lucylang.ljvm.node.Module module = parser.parseModule(new Lexer(r));
         ModuleCodeGenerator codeGenerator = new ModuleCodeGenerator();
-        Module m = codeGenerator.visitModule(module);
+        Module m = codeGenerator.visitModule(src, module);
         Value result = this.initVM().execute(m);
         return result;
     }

@@ -83,7 +83,7 @@ public class ParserTest extends TestCase {
                                 "}"
                 );
         ModuleCodeGenerator moduleCodeGenerator = new ModuleCodeGenerator();
-        org.lucylang.ljvm.machine.module.Module module = moduleCodeGenerator.visitModule(m);
+        org.lucylang.ljvm.machine.module.Module module = moduleCodeGenerator.visitModule("module", m);
         Machine vm = new Machine();
         Value value = vm.execute(module);
         assertEquals(new NumberValue(21), value);
@@ -101,7 +101,7 @@ public class ParserTest extends TestCase {
                         "func main() {\n" +
                         "   return fibonacci(5)" +
                         "}\n");
-        module = moduleCodeGenerator.visitModule(m);
+        module = moduleCodeGenerator.visitModule("module", m);
         vm.reset();
         value = vm.execute(module);
         assertEquals(new NumberValue(5), value);

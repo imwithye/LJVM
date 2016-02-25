@@ -17,7 +17,7 @@ public class GenLoad {
         try {
             String path = "D:/fibonacci.lyo";
             System.out.println("Bootstrap fibonacci module and write it to " + path);
-            Module module = new Module();
+            Module module = new Module("fibonacci");
             module.defineRoutine("fibonacci", new Routine(new Instruction[]{
                     new PopInstruction(new RefOperand("n")),
                     new LesInstruction(new RefOperand("cmp"), new RefOperand("n"), new ValueOperand(new NumberValue(3))),

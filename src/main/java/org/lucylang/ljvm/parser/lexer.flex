@@ -37,6 +37,7 @@ import org.lucylang.ljvm.parser.Parser.Terminals;
 <YYINITIAL> {
     [\r\n]+     { return token(Terminals.STMT_TAIL); }
 
+    "import"    { return token(Terminals.IMPORT); }
     "var"       { return token(Terminals.VAR); }
     "func"      { return token(Terminals.FUNC); }
     "return"    { return token(Terminals.RETURN); }
@@ -68,6 +69,7 @@ import org.lucylang.ljvm.parser.Parser.Terminals;
     "&&"        { return token(Terminals.AND); }
     "or"        { return token(Terminals.OR); }
     "||"        { return token(Terminals.OR); }
+    "::"        { return token(Terminals.DOUBLE_COLON); }
 
     [\s\t]      { /* return */ }
     ;+          { return token(Terminals.SEMICOLON); }
