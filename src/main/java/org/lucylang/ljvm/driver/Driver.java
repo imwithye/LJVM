@@ -39,6 +39,9 @@ public class Driver {
         Option output = new Option("o", "output", true, "output file path");
         output.setArgName("output");
         this.addOption(output);
+        Option token = new Option("t", "token", true, "dump lucy tokens");
+        token.setArgName("file");
+        this.addOption(token);
         Option run = new Option("r", "run", true, "run lucy X bit code");
         run.setArgName("file");
         this.addOption(run);
@@ -66,6 +69,11 @@ public class Driver {
                     out = "a.lyo";
                 }
                 compile(in, out);
+                System.exit(0);
+            }
+            if (com.hasOption("token")) {
+                String in = com.getOptionValue("token");
+                dumpToken(in);
                 System.exit(0);
             }
             if (com.hasOption("run")) {
@@ -100,6 +108,16 @@ public class Driver {
         org.lucylang.ljvm.node.Module module = parser.parseModule(new Lexer(r));
         ModuleCodeGenerator codeGenerator = new ModuleCodeGenerator();
         this.generateModule(codeGenerator.visitModule(module), new FileOutputStream(output));
+    }
+
+    public void dumpToken(String src) throws Exception {
+        Reader r = new InputStreamReader(new FileInputStream(src), "UTF8");
+        Lexer lexer = new Lexer(r);
+        beaver.Symbol s;
+        do {
+            s = lexer.nextToken();
+            System.out.println(s.value);
+        } while (s.getId() != Parser.Terminals.EOF);
     }
 
     public void dumpLy(String src) throws Exception {

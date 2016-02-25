@@ -35,11 +35,13 @@ import org.lucylang.ljvm.parser.Parser.Terminals;
 %%
 
 <YYINITIAL> {
+    [\r\n]+     { return token(Terminals.STMT_TAIL); }
+
     "var"       { return token(Terminals.VAR); }
     "func"      { return token(Terminals.FUNC); }
     "return"    { return token(Terminals.RETURN); }
     "if"        { return token(Terminals.IF); }
-    "else"      { return token(Terminals.ELSE); }
+    [\r\n]*"else"      { return token(Terminals.ELSE); }
     "while"     { return token(Terminals.WHILE); }
 
     "{"         { return token(Terminals.LCURLY); }
@@ -69,8 +71,6 @@ import org.lucylang.ljvm.parser.Parser.Terminals;
 
     [\s\t]      { /* return */ }
     ;+          { return token(Terminals.SEMICOLON); }
-    \\r+         { return token(Terminals.STMT_TAIL); }
-    \\n+         { return token(Terminals.STMT_TAIL); }
     "none"      { return token(Terminals.NONE_LITERAL); }
     "true"      { return token(Terminals.BOOL_LITERAL, yytext()); }
     "false"     { return token(Terminals.BOOL_LITERAL, yytext()); }

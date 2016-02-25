@@ -34,10 +34,10 @@ public class Parser extends beaver.Parser {
 		static public final short LT = 17;
 		static public final short GEQ = 18;
 		static public final short LEQ = 19;
-		static public final short RPAREN = 20;
-		static public final short LCURLY = 21;
-		static public final short STMT_TAIL = 22;
-		static public final short SEMICOLON = 23;
+		static public final short STMT_TAIL = 20;
+		static public final short SEMICOLON = 21;
+		static public final short RPAREN = 22;
+		static public final short LCURLY = 23;
 		static public final short RCURLY = 24;
 		static public final short FUNC = 25;
 		static public final short COMMA = 26;
@@ -50,24 +50,25 @@ public class Parser extends beaver.Parser {
 	}
 
 	static final ParsingTables PARSING_TABLES = new ParsingTables(
-		"U9pTbbbib5KKn$#tux1OeG9jAL2GGcU4wM8jBGYo2nHK511G54LGZ8a9YObHOsBI1v#93ou" +
-		"9RWyQuxk15pGnxhZlkEAA#uuBudBypPqpxNorCqc9l32J$$cVSy#PUy$zphtd6oayfenErK" +
-		"org4sdwNJDKhVcQAxErCgodhIgZyfthCSRxG#jqlbQe7gDKwtzeqjrWiQhJXCrIPFLg55Qf" +
-		"p4QXdznFa9ZYUdtBzGABTFPEaVdQdMSmPYlcVccw09jrAR$h3nKExb2qXhU5trUnRZZprgN" +
-		"U4uZ4bPHlpBMwn9ErsQbT9cgYZMn9nYz0fp4w6YTh3NKB4lDJjHQj1begvH3rcYhJa5lZIF" +
-		"jKNP4sHbbLvIpepmZodbHpe$oh2YNHzaJvVeeBupoOkH8BMBjVBvBj4LDKMlGqfXtjIPecg" +
-		"Q2wKHjq4MSmiiPdQvjx7SakLQJ$oZohs47OpGs$ggSPm8dzcXyntgyIGBvFMQvOUFPVOxQj" +
-		"LB7TYhPWQzJWViKy7V7Y1pvzli3LKrnOzFSqE4#Gs6#Hcxd5AetSEMXsiaLabPLNtHjnRZZ" +
-		"qIfzJhCILb6V6UlHpEbgu5pFe9iLQp8xLhGvZkQHzPfbkBK5hI0RUAvTYP7$LzQofspCjvP" +
-		"#tXArgMZriSDdo74Yc4HKXcy#vpgi36TsUw$wFbU1qMxV21wNmbPmArXQ60yBmMAK3V1cZx" +
-		"q#puE1c9tWdZA#Xy5TOBVRToDkYVT8UiJdtkVy2lxxuFtm0$01y2WuYDq3VmlFWm$1I#0Z8" +
-		"BzsWE#0Hy3tmZNmWxxU7iHk#7Qtwn5jy6HuBjniPeVBxStpMbwod$j12qhQxKx4EDUPJsi7" +
-		"x7yNsElwGuCydvpFiMB0U9rpZ$C2n39uKKbUwold7NQM6I$MkRTahXq#jj9vjVCQvutEcvp" +
-		"zN8GjpjkS$Qo5gvslSTwHpA5$l$YkTRxE#OPA#ogpfvl0RQxVN5Blta5YxopHTmt8QxlyOu" +
-		"VLzx7V#1zLq7u6VzkFzgSTiU$jE#DCsaVsZNrjNzcNw5#0p#qpv2VWBV0cU0Ey3bu3hm9Ek" +
-		"hqCNW8lWXV0y$QsxOzhV0W#0Cz5QvyzQy$Oq$QKFMa7x7txr0vwBXz7#PwzQ#$ON$QJ$S3$" +
-		"ETalu5SxPB$Zd4$72a3qhIeGl9S5kbgWnwL0eFSD0sawOme4UaOQf7YRfU8RBLS1RSpRHLm" +
-		"NUeiZYzqAsa4JNRW9xeu8l0TJyKtOmU#cmGMaXeWgvq1VJ6BEl#TCO$4=");
+		"U9pTbkblb5KKnfztXhQMHK2qCnIiZBHGsw52AGKHGHOLsoeAobBB8WAIc9YOa9WOJOWc$W5" +
+		"64usDI#87etnNumSJLt375LTmmnNt1K4z$juxP#hCs9baZ7nX9izvplREFVUUU#yxKhHRqz" +
+		"IgDcNLePdgL9UwDK$pjI3uBomRxL6B5cfqXVZqYl5ZxJ#rA99IhJQeHcarQ98cguduYLgba" +
+		"wZp4kfCgKuJL5yGppzzgKxMAJfTYyt8FOFSqtIPrgZ$NoDNQo$I1JfFlUhJHRguehMYYjpZ" +
+		"mLfLj5O3Ea49RHponVqOhQqQiByq0lzwZRAdb1pgou2sQ0p#E6zSo1ghyTx7bVImdHxsQ0P" +
+		"oeZPh2lgPmJChoDb1pWboRf1d1NbsaES4kIp8yuDS7kJbGQuDyWejjDyrCenthZQ5kfTurK" +
+		"lLgAbyCqIQjLhhs85NwYeYjSfzcfbjFK#FmZU6FJgMEOmdQqBmDvIDPjYZKzd7$pL#hFsPe" +
+		"aWhQz$6QShIXmxMVoRnJaNCFbTdAteRlVWddd#wDQnaEnrAU#vapd8JtIyTkLexOfSbsL4r" +
+		"zAAkejLGHUxnOHMkLJEnQTpkUL$SZnIzRAQdiJ$Dcw6RqvJlIpFFn$uuBusL3bQ#ZxaUvkG" +
+		"KLhQhoFD$IV7ByNW9pb$k7EMgRgJMY6yZaKdeBQ7Q5Y8JBNpmIjjsXgCPBKFqmvl0GpcVRa" +
+		"PV0RQ3Ey1IpxqJB0ThmMhFlJ7cuK3EUd1FcTWZu3xmgDlt8vu4qy4U$#szpll02B2Vl0VXW" +
+		"#0MS0Yx3$uPR057iPU01FhjS3qy28#37u1Jy2uVxp74u$2Wsqs8sN0Bl0ZEib27oytDw#ej" +
+		"cCykmFEgSti#8kNwOiIQaldV2vvm$U5XrYSBEi4yZBwISLTwpWBdk8SzS44zwgzSUtHR6N#" +
+		"lFtzrtiSw777VIESTdkjx85hdlD5vi$DMv#tErpXVwtoTyuwI#MqegETwvnkSRweqhp9psX" +
+		"dlNTVPDz5ThjywJExT1VfWILtRSiJRLtPOGn$xDVO4xKVmftrlH#s8VMk7x1li0$QrVMLVs" +
+		"XVeduE3zYdoO$0MU1Ey0Lu7hu6zu5Nm2dWPl0HU12$OFdixZC4fi0$0yy7QOxljENlMdh6d" +
+		"xKDxtpwnpxoMZu9ypzwrT#mF#y6#u#JBE2lsY$raln6C$sd6zrXywX8W2ZT5Z6vkoba14RT" +
+		"WBQZXT2H1V9FKW2JljcHulxLLm0n#jukyBlHsHojs5dI03ESw0yy9Y7Wh9dalHY317HSvab" +
+		"KYuHnnInPZxjygQNHR");
 
     private final Logger logger = LogManager.getLogger(Parser.class.getName());
 
@@ -103,9 +104,9 @@ public class Parser extends beaver.Parser {
 			},
 			Action.RETURN,	// [4] stmt_tail = STMT_TAIL
 			Action.RETURN,	// [5] stmt_tail = SEMICOLON
-			new Action() {	// [6] module = functions.fs
+			new Action() {	// [6] module = maybe_tail functions.fs maybe_tail
 				public Symbol reduce(Symbol[] _symbols, int offset) {
-					final Symbol _symbol_fs = _symbols[offset + 1];
+					final Symbol _symbol_fs = _symbols[offset + 2];
 					final SymbolList fs = (SymbolList) _symbol_fs.value;
 					 Module module = new Module();
                for(int i=0; i<fs.size(); i++) {

@@ -65,6 +65,10 @@ public class ParserTest extends TestCase {
         runTest("func main(){\n" +
                 "   var a = 10, b = 20, c = true, d = none\n" +
                 "}");
+        runTest("func main(){\n" +
+                "   print(b)\n" +
+                "   print(1)\n" +
+                "}");
     }
 
     public void testParseModule() throws Exception {
@@ -88,7 +92,7 @@ public class ParserTest extends TestCase {
                 "func fibonacci(n) {\r\n" +
                         "if n < 2 {\n" +
                         "   return n\n" +
-                        "}\n" +
+                        "}" +
                         "else {\n" +
                         "   return fibonacci(n-1) + fibonacci(n-2)\n" +
                         "}\n" +
