@@ -1,5 +1,6 @@
 Lucy X Assembly Language and It’s Virtual Machine
 ===
+[![Build Status](https://travis-ci.org/lucy-lang/LJVM.svg?branch=master)](https://travis-ci.org/lucy-lang/LJVM)
 
 Lucy Programming Language(or Lucy) is a dynamic language which runs the code over Lucy Virtual Machine. The goal of the Lucy Virtual Machine is to provide a generic platform so that the source codes of Lucy can be interpreted over it. Lucy Virtual Machine is a single thread virtual machine and driven by a small set of instructions. Moreover, the Lucy Virtual Machine provides unlimited registers, routine scope isolation and dynamic type checking. The Lucy X IR is to create a minimum instructions for a generic language, so that it will be more friendly for those beginners and learners who are interested in compiler techniques and design.
 
