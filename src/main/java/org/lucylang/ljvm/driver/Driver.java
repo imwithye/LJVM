@@ -2,6 +2,7 @@ package org.lucylang.ljvm.driver;
 
 import org.apache.commons.cli.*;
 import org.apache.commons.cli.Option;
+import org.apache.logging.log4j.core.appender.SyslogAppender;
 import org.lucylang.ljvm.generator.ModuleCodeGenerator;
 import org.lucylang.ljvm.machine.Machine;
 import org.lucylang.ljvm.driver.generator.Generator;
@@ -43,15 +44,18 @@ public class Driver {
         this.addOption(new Option("v", "version", false, "print the version information and exit"));
         Option compile = new Option("c", "compile", true, "compile lucy source code to lucy X bit code");
         compile.setArgName("file");
+        compile.setArgs(Option.UNLIMITED_VALUES);
         this.addOption(compile);
         Option output = new Option("o", "output", true, "output file path");
         output.setArgName("output");
         this.addOption(output);
         Option run = new Option("r", "run", true, "run lucy X bit code");
         run.setArgName("file");
+        run.setArgs(Option.UNLIMITED_VALUES);
         this.addOption(run);
         Option dump = new Option("d", "dump", true, "dump lucy X object to human readable form");
         dump.setArgName("file");
+        dump.setArgs(Option.UNLIMITED_VALUES);
         this.addOption(dump);
     }
 
@@ -111,6 +115,7 @@ public class Driver {
     public void dumpLy(String[] src) throws Exception {
         ArrayList<Module> modules = new ArrayList<Module>();
         for (int i = 0; i < src.length; i++) {
+            System.out.println(src[i]);
             Reader r = new InputStreamReader(new FileInputStream(src[i]), "UTF8");
             modules.add(codeGenerator.visitModule(this.parser.parseModule(new Lexer(r))));
         }

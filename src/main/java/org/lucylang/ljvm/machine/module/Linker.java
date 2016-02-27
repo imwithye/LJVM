@@ -27,7 +27,7 @@ public class Linker {
             packageName.add(module.getName());
             imports.addAll(module.getImports());
             for (String routineName : module.routines.keySet()) {
-                isExecutable = isExecutable || routineName.equals("main");
+                isExecutable = isExecutable || module.isMain();
                 m.defineRoutine(routineName, module.getRoutine(routineName));
             }
         }
@@ -41,7 +41,7 @@ public class Linker {
                 continue;
             }
             for (String routineName : importModule.routines.keySet()) {
-                isExecutable = isExecutable || routineName.equals("main");
+                isExecutable = isExecutable || importModule.isMain();
                 m.defineRoutine(routineName, importModule.getRoutine(routineName));
             }
         }
