@@ -81,7 +81,7 @@ public class MachineTest extends TestCase {
 
     public void routineFibonacci(int n) throws Exception {
         Machine vm = new Machine();
-        Module module = new Module("fibonacci");
+        Module module = new Module("main");
         module.defineRoutine("fibonacci", new Routine(new Instruction[]{
                 new MovInstruction(new RefOperand("n"), new ValueOperand(new NumberValue(0))),
                 new PopInstruction(new RefOperand("n")),

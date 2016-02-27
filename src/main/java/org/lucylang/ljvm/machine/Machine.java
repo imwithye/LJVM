@@ -3,6 +3,7 @@ package org.lucylang.ljvm.machine;
 import org.lucylang.ljvm.machine.instruction.Instruction;
 import org.lucylang.ljvm.machine.instruction.InvalidInstruction;
 import org.lucylang.ljvm.machine.module.Module;
+import org.lucylang.ljvm.machine.module.NotExecutableException;
 import org.lucylang.ljvm.machine.module.Routine;
 import org.lucylang.ljvm.scope.OverdefinedException;
 import org.lucylang.ljvm.scope.Scope;
@@ -104,8 +105,11 @@ public class Machine {
         return this;
     }
 
-    public Value execute(Module module) throws InvalidInstruction, TypeUnmatchedException, ValueUnavailableException, UndefinedException, OverdefinedException {
+    public Value execute(Module module) throws InvalidInstruction, TypeUnmatchedException, ValueUnavailableException, UndefinedException, OverdefinedException, NotExecutableException {
         assert module != null;
+        if(!module.isMain()) {
+            throw new NotExecutableException(module);
+        }
         this.call(module, "main");
         return this.popValue();
     }

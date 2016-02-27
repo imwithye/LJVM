@@ -37,6 +37,7 @@ import org.lucylang.ljvm.parser.Parser.Terminals;
 <YYINITIAL> {
     [\r\n]+     { return token(Terminals.STMT_TAIL); }
 
+    "package"   { return token(Terminals.PACKAGE); }
     "import"    { return token(Terminals.IMPORT); }
     "var"       { return token(Terminals.VAR); }
     "func"      { return token(Terminals.FUNC); }

@@ -47,25 +47,32 @@ public class ParserTest extends TestCase {
     }
 
     public void testGrammar() {
-        runTest("func main(){\n" +
+        runTest("package \"main\"\n" +
+                "func main(){\n" +
                 "   a = 10\n" +
                 "}");
-        runTest("func main(){\n" +
+        runTest("package \"main\"\n" +
+                "func main(){\n" +
                 "   var a\n" +
                 "}");
-        runTest("func main(){\n" +
+        runTest("package \"main\"\n" +
+                "func main(){\n" +
                 "   var a = 10\n" +
                 "}");
-        runTest("func main(){\n" +
+        runTest("package \"main\"\n" +
+                "func main(){\n" +
                 "   var a = 10, b = 20, c = \"Hello World\"\n" +
                 "}");
-        runTest("func main(){\n" +
+        runTest("package \"main\"\n" +
+                "func main(){\n" +
                 "   var a = 10, b = 20, c = true, d = false\n" +
                 "}");
-        runTest("func main(){\n" +
+        runTest("package \"main\"\n" +
+                "func main(){\n" +
                 "   var a = 10, b = 20, c = true, d = none\n" +
                 "}");
-        runTest("func main(){\n" +
+        runTest("package \"main\"\n" +
+                "func main(){\n" +
                 "   print(b)\n" +
                 "   print(1)\n" +
                 "}");
@@ -74,7 +81,8 @@ public class ParserTest extends TestCase {
     public void testParseModule() throws Exception {
         Module m =
                 parse(
-                        "func sum(a, b) {\n" +
+                        "package \"main\"\n" +
+                                "func sum(a, b) {\n" +
                                 "   return a+b\n" +
                                 "}\n" +
                                 "" +
@@ -83,13 +91,14 @@ public class ParserTest extends TestCase {
                                 "}"
                 );
         ModuleCodeGenerator moduleCodeGenerator = new ModuleCodeGenerator();
-        org.lucylang.ljvm.machine.module.Module module = moduleCodeGenerator.visitModule("module", m);
+        org.lucylang.ljvm.machine.module.Module module = moduleCodeGenerator.visitModule(m);
         Machine vm = new Machine();
         Value value = vm.execute(module);
         assertEquals(new NumberValue(21), value);
 
         m = parse(
-                "func fibonacci(n) {\r\n" +
+                "package \"main\"\n" +
+                        "func fibonacci(n) {\r\n" +
                         "if n < 2 {\n" +
                         "   return n\n" +
                         "}" +
@@ -101,7 +110,7 @@ public class ParserTest extends TestCase {
                         "func main() {\n" +
                         "   return fibonacci(5)" +
                         "}\n");
-        module = moduleCodeGenerator.visitModule("module", m);
+        module = moduleCodeGenerator.visitModule(m);
         vm.reset();
         value = vm.execute(module);
         assertEquals(new NumberValue(5), value);

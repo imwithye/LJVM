@@ -2,12 +2,13 @@ package org.lucylang.ljvm.library;
 
 import org.lucylang.ljvm.machine.instruction.*;
 import org.lucylang.ljvm.machine.module.Module;
+import org.lucylang.ljvm.machine.module.NotExecutableException;
 import org.lucylang.ljvm.machine.module.Routine;
 import org.lucylang.ljvm.scope.OverdefinedException;
 import org.lucylang.ljvm.value.NumberValue;
 
 public class Math extends Module {
-    public Math() throws OverdefinedException, InvalidInstruction {
+    public Math() throws OverdefinedException, InvalidInstruction, NotExecutableException {
         super("math");
         this.defineRoutine("floor", new Routine(new Instruction[]{
                 new PopInstruction(new RefOperand("n")),

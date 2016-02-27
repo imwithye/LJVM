@@ -1,3 +1,5 @@
+package "main"
+
 import "std"
 
 func power(n, exp) {
@@ -46,13 +48,13 @@ func cos(x) {
 }
 
 func main() {
-    print("input n: ")
-    n = input()
+    std::print("input n: ")
+    n = std::input()
     while n != "end" {
-        n = number(n)
-        print("sin(" + string(n) + ") = " + string(sin(n)) + "\n")
-        print("cos(" + string(n) + ") = " + string(cos(n)) + "\n")
-        print("input n: ")
-        n = input()
+        n = std::number(n)
+        std::print("sin(" + std::string(n) + ") = " + std::string(sin(n)) + "\n")
+        std::print("cos(" + std::string(n) + ") = " + std::string(cos(n)) + "\n")
+        std::print("input n: ")
+        n = std::input()
     }
 }

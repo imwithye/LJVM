@@ -1,3 +1,5 @@
+package "main"
+
 import "std"
 
 func power(n, exp) {
@@ -20,7 +22,7 @@ func ln(x) {
 }
 
 func main() {
-	print("input n: ")
-	n = number(input())
-	print("ln(n) = " + string(ln(n)))
+	std::print("input n: ")
+	n = std::number(std::input())
+	std::print("ln(n) = " + std::string(ln(n)))
 }

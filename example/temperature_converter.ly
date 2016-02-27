@@ -1,3 +1,5 @@
+package "main"
+
 import "std"
 
 func convert(temp) {
@@ -8,7 +10,7 @@ func main() {
     std::print("Please give in a lower limit, limit >= 0: ")
     lower = std::number(std::input())
     if lower < 0 {
-        print("lower limit must be greater than 0\n")
+        std::print("lower limit must be greater than 0\n")
         return
     }
     std::print("Please give in a higher limit, 10 > limit <= 50000: ")

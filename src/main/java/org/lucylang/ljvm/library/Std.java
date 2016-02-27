@@ -2,11 +2,12 @@ package org.lucylang.ljvm.library;
 
 import org.lucylang.ljvm.machine.instruction.*;
 import org.lucylang.ljvm.machine.module.Module;
+import org.lucylang.ljvm.machine.module.NotExecutableException;
 import org.lucylang.ljvm.machine.module.Routine;
 import org.lucylang.ljvm.scope.OverdefinedException;
 
 public class Std extends Module {
-    public Std() throws OverdefinedException, InvalidInstruction {
+    public Std() throws OverdefinedException, InvalidInstruction, NotExecutableException {
         super("std");
         this.defineRoutine("input", new Routine(new Instruction[]{
                 new GetInstruction(new RefOperand("value")),

@@ -1,3 +1,5 @@
+package "main"
+
 import "std"
 
 func test(str) {
@@ -7,5 +9,5 @@ func test(str) {
 func main() {
     text = "world"
     test(text)
-    print(text)
+    std::print(text)
 }

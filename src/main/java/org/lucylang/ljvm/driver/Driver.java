@@ -88,11 +88,7 @@ public class Driver {
             }
 
             final String[] remainingArguments = com.getArgs();
-            if (remainingArguments.length != 1) {
-                this.printHelp();
-                System.exit(1);
-            }
-            runLy(remainingArguments[0]);
+            runLy(remainingArguments);
         } catch (ParseException e) {
             this.printHelp();
             System.exit(1);
@@ -104,21 +100,21 @@ public class Driver {
 
     public void compile(String[] src, String output) throws Exception {
         ArrayList<Module> modules = new ArrayList<Module>();
-        for(int i=0; i<src.length; i++) {
+        for (int i = 0; i < src.length; i++) {
             Reader r = new InputStreamReader(new FileInputStream(src[i]), "UTF8");
-            modules.add(codeGenerator.visitModule(src[i], this.parser.parseModule(new Lexer(r))));
+            modules.add(codeGenerator.visitModule(this.parser.parseModule(new Lexer(r))));
         }
-        Module m = this.linker.linkModules(output, modules);
+        Module m = this.linker.linkModules(modules);
         this.generateModule(m, new FileOutputStream(output));
     }
 
     public void dumpLy(String[] src) throws Exception {
         ArrayList<Module> modules = new ArrayList<Module>();
-        for(int i=0; i<src.length; i++) {
+        for (int i = 0; i < src.length; i++) {
             Reader r = new InputStreamReader(new FileInputStream(src[i]), "UTF8");
-            modules.add(codeGenerator.visitModule(src[i], this.parser.parseModule(new Lexer(r))));
+            modules.add(codeGenerator.visitModule(this.parser.parseModule(new Lexer(r))));
         }
-        Module m = this.linker.linkModules("dump", modules);
+        Module m = this.linker.linkModules(modules);
         System.out.println(m);
     }
 
@@ -127,12 +123,13 @@ public class Driver {
         return this.initVM().execute(module);
     }
 
-    public Value runLy(String src) throws Exception {
-        Reader r = new InputStreamReader(new FileInputStream(src), "UTF8");
-        org.lucylang.ljvm.parser.Parser parser = new Parser();
-        org.lucylang.ljvm.node.Module module = parser.parseModule(new Lexer(r));
-        ModuleCodeGenerator codeGenerator = new ModuleCodeGenerator();
-        Module m = codeGenerator.visitModule(src, module);
+    public Value runLy(String[] src) throws Exception {
+        ArrayList<Module> modules = new ArrayList<Module>();
+        for (int i = 0; i < src.length; i++) {
+            Reader r = new InputStreamReader(new FileInputStream(src[i]), "UTF8");
+            modules.add(codeGenerator.visitModule(this.parser.parseModule(new Lexer(r))));
+        }
+        Module m = this.linker.linkModules(modules);
         Value result = this.initVM().execute(m);
         return result;
     }

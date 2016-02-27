@@ -24,7 +24,7 @@
     }
 :};
 
-%terminals IMPORT, VAR, FUNC, RETURN, IF, ELSE, WHILE, LCURLY, RCURLY, LPAREN, RPAREN, COMMA,
+%terminals PACKAGE, IMPORT, VAR, FUNC, RETURN, IF, ELSE, WHILE, LCURLY, RCURLY, LPAREN, RPAREN, COMMA,
     ASSIGN, PLUS, MINUS, TIMES, DIV, AND, OR, OR, GT, LT, GEQ, LEQ, EQUAL, NEQ, NOT;
 %terminals DOUBLE_COLON;
 %terminals SEMICOLON, STMT_TAIL;
@@ -38,6 +38,7 @@
 %left AND, OR;
 
 %typeof module = "Module";
+%typeof package = "org.lucylang.ljvm.node.Package";
 %typeof imports = "SymbolList";
 %typeof functions = "SymbolList";
 %typeof function = "Function";
@@ -68,8 +69,8 @@ stmt_tail = STMT_TAIL
     |   SEMICOLON
     ;
 
-module = maybe_tail imports.importList stmt_tails functions.fs maybe_tail
-            {: Module module = new Module();
+module = maybe_tail package.p stmt_tails imports.importList stmt_tails functions.fs maybe_tail
+            {: Module module = new Module(p.getPackageName());
                for(int i=0; i<importList.size(); i++) {
                    module.addImport(((Import) importList.get(i)).getModuleName());
                }
@@ -78,13 +79,17 @@ module = maybe_tail imports.importList stmt_tails functions.fs maybe_tail
                }
                return module;
             :}
-    |   maybe_tail functions.fs maybe_tail
-            {: Module module = new Module();
+    |   maybe_tail package.p stmt_tails functions.fs maybe_tail
+            {: Module module = new Module(p.getPackageName());
                for(int i=0; i<fs.size(); i++) {
                    module.addFunction((Function) fs.get(i));
                }
                return module;
             :}
+    ;
+
+package = PACKAGE STRING_LITERAL.value
+            {: return new org.lucylang.ljvm.node.Package((String) value.value); :}
     ;
 
 imports = imports.importList stmt_tails import.i

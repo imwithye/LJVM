@@ -1,3 +1,5 @@
+package "main"
+
 import "std"
 
 func fibonacci(n) {

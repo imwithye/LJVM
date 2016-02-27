@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Module implements Serializable {
-    protected final String name;
+    protected String name;
     protected Scope<String, Routine> routines;
     protected Set<String> imports;
 
@@ -21,7 +21,7 @@ public class Module implements Serializable {
     }
 
     public boolean isMain() {
-        return this.routines.get("main") != null;
+        return this.routines.get("main") != null && this.name.equals("main");
     }
 
     public String getName() {
@@ -33,7 +33,10 @@ public class Module implements Serializable {
         return this;
     }
 
-    public Module defineRoutine(String name, Routine routine) throws OverdefinedException, InvalidInstruction {
+    public Module defineRoutine(String name, Routine routine) throws OverdefinedException, InvalidInstruction, NotExecutableException {
+        if (name.equals("main") && !this.name.equals("main")) {
+            throw new NotExecutableException();
+        }
         if (!name.contains("::") && !name.equals("main")) {
             name = this.getName() + "::" + name;
         }
