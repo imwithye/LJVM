@@ -15,8 +15,14 @@ public class Loader {
         if (loader == null) {
             loader = new Loader();
             systemModule = new Scope<String, Module>();
-            systemModule.set("std", new Std());
-            systemModule.set("math", new Math());
+            try {
+                systemModule.set("std", new Std());
+                systemModule.set("math", new Math());
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.exit(1);
+            }
+
         }
         return loader;
     }

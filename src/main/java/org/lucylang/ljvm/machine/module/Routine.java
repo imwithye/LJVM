@@ -43,7 +43,7 @@ public class Routine implements Serializable {
             Instruction ins = instructions.get(i);
             if (ins instanceof CallInstruction) {
                 CallInstruction call = (CallInstruction) ins;
-                if(!call.getRef(0).contains("::")) {
+                if(!call.getRef(0).contains("::") && !call.getRef(0).equals("main")) {
                     instructions.remove(i);
                     instructions.add(i, new CallInstruction(new RefOperand(moduleName + "::" + call.getRef(0))));
                 }

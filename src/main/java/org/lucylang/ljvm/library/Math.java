@@ -3,18 +3,19 @@ package org.lucylang.ljvm.library;
 import org.lucylang.ljvm.machine.instruction.*;
 import org.lucylang.ljvm.machine.module.Module;
 import org.lucylang.ljvm.machine.module.Routine;
+import org.lucylang.ljvm.scope.OverdefinedException;
 import org.lucylang.ljvm.value.NumberValue;
 
 public class Math extends Module {
-    public Math() {
+    public Math() throws OverdefinedException, InvalidInstruction {
         super("math");
-        this.routines.set("floor", new Routine(new Instruction[]{
+        this.defineRoutine("floor", new Routine(new Instruction[]{
                 new PopInstruction(new RefOperand("n")),
                 new IntInstruction(new RefOperand("n"), new RefOperand("n")),
                 new PushInstruction(new RefOperand("n")),
                 new RetInstruction()
         }));
-        this.routines.set("ceil", new Routine(new Instruction[]{
+        this.defineRoutine("ceil", new Routine(new Instruction[]{
                 new PopInstruction(new RefOperand("n")),
                 new IntInstruction(new RefOperand("$1"), new RefOperand("n")),
                 new LesInstruction(new RefOperand("$2"), new RefOperand("$1"), new RefOperand("n")),

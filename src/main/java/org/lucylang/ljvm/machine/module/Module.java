@@ -21,7 +21,7 @@ public class Module implements Serializable {
     }
 
     public boolean isMain() {
-        return this.routines.get(this.getName() + "::main") != null;
+        return this.routines.get("main") != null;
     }
 
     public String getName() {
@@ -34,7 +34,7 @@ public class Module implements Serializable {
     }
 
     public Module defineRoutine(String name, Routine routine) throws OverdefinedException, InvalidInstruction {
-        if (!name.contains("::")) {
+        if (!name.contains("::") && !name.equals("main")) {
             name = this.getName() + "::" + name;
         }
         this.routines.safeSet(name, routine.adjustCalls(this));
@@ -42,7 +42,7 @@ public class Module implements Serializable {
     }
 
     public Routine getRoutine(String name) throws UndefinedException {
-        if (!name.contains("::")) {
+        if (!name.contains("::") && !name.equals("main")) {
             name = this.getName() + "::" + name;
         }
         return this.routines.safeGet(name);

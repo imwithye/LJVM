@@ -6,22 +6,30 @@ import org.lucylang.ljvm.generator.ModuleCodeGenerator;
 import org.lucylang.ljvm.machine.Machine;
 import org.lucylang.ljvm.driver.generator.Generator;
 import org.lucylang.ljvm.driver.loader.Loader;
+import org.lucylang.ljvm.machine.module.Linker;
 import org.lucylang.ljvm.machine.module.Module;
 import org.lucylang.ljvm.parser.*;
 import org.lucylang.ljvm.parser.Parser;
 import org.lucylang.ljvm.value.Value;
 
 import java.io.*;
+import java.util.ArrayList;
 
 public class Driver {
     private Loader loader;
     private Generator generator;
+    private Parser parser;
+    private ModuleCodeGenerator codeGenerator;
+    private Linker linker;
     Options options;
     private static final String version = "0.1.1";
 
     public Driver() {
         this.loader = new Loader();
         this.generator = new Generator();
+        this.parser = new Parser();
+        this.codeGenerator = new ModuleCodeGenerator();
+        this.linker = new Linker();
         this.options = new Options();
         this.initOptions();
     }
@@ -39,9 +47,6 @@ public class Driver {
         Option output = new Option("o", "output", true, "output file path");
         output.setArgName("output");
         this.addOption(output);
-        Option token = new Option("t", "token", true, "dump lucy tokens");
-        token.setArgName("file");
-        this.addOption(token);
         Option run = new Option("r", "run", true, "run lucy X bit code");
         run.setArgName("file");
         this.addOption(run);
@@ -63,17 +68,12 @@ public class Driver {
                 System.exit(0);
             }
             if (com.hasOption("compile")) {
-                String in = com.getOptionValue("compile");
+                String[] in = com.getOptionValues("compile");
                 String out = com.getOptionValue("output");
                 if (out == null) {
                     out = "a.lyo";
                 }
                 compile(in, out);
-                System.exit(0);
-            }
-            if (com.hasOption("token")) {
-                String in = com.getOptionValue("token");
-                dumpToken(in);
                 System.exit(0);
             }
             if (com.hasOption("run")) {
@@ -82,7 +82,7 @@ public class Driver {
                 System.exit(0);
             }
             if (com.hasOption("dump")) {
-                String in = com.getOptionValue("dump");
+                String[] in = com.getOptionValues("dump");
                 dumpLy(in);
                 System.exit(0);
             }
@@ -102,30 +102,23 @@ public class Driver {
         }
     }
 
-    public void compile(String src, String output) throws Exception {
-        Reader r = new InputStreamReader(new FileInputStream(src), "UTF8");
-        org.lucylang.ljvm.parser.Parser parser = new Parser();
-        org.lucylang.ljvm.node.Module module = parser.parseModule(new Lexer(r));
-        ModuleCodeGenerator codeGenerator = new ModuleCodeGenerator();
-        this.generateModule(codeGenerator.visitModule(src, module), new FileOutputStream(output));
+    public void compile(String[] src, String output) throws Exception {
+        ArrayList<Module> modules = new ArrayList<Module>();
+        for(int i=0; i<src.length; i++) {
+            Reader r = new InputStreamReader(new FileInputStream(src[i]), "UTF8");
+            modules.add(codeGenerator.visitModule(src[i], this.parser.parseModule(new Lexer(r))));
+        }
+        Module m = this.linker.linkModules(output, modules);
+        this.generateModule(m, new FileOutputStream(output));
     }
 
-    public void dumpToken(String src) throws Exception {
-        Reader r = new InputStreamReader(new FileInputStream(src), "UTF8");
-        Lexer lexer = new Lexer(r);
-        beaver.Symbol s;
-        do {
-            s = lexer.nextToken();
-            System.out.println(s.value);
-        } while (s.getId() != Parser.Terminals.EOF);
-    }
-
-    public void dumpLy(String src) throws Exception {
-        Reader r = new InputStreamReader(new FileInputStream(src), "UTF8");
-        org.lucylang.ljvm.parser.Parser parser = new Parser();
-        org.lucylang.ljvm.node.Module module = parser.parseModule(new Lexer(r));
-        ModuleCodeGenerator codeGenerator = new ModuleCodeGenerator();
-        Module m = codeGenerator.visitModule(src, module);
+    public void dumpLy(String[] src) throws Exception {
+        ArrayList<Module> modules = new ArrayList<Module>();
+        for(int i=0; i<src.length; i++) {
+            Reader r = new InputStreamReader(new FileInputStream(src[i]), "UTF8");
+            modules.add(codeGenerator.visitModule(src[i], this.parser.parseModule(new Lexer(r))));
+        }
+        Module m = this.linker.linkModules("dump", modules);
         System.out.println(m);
     }
 
