@@ -30,9 +30,9 @@ public class ModuleTest extends TestCase {
             if (willThrow) {
                 fail();
             }
-        } catch (OverdefinedException oe) {
+        } catch (Exception e) {
             if (!willThrow) {
-                fail();
+                fail(e.getMessage());
             }
         }
     }

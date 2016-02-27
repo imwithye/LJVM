@@ -94,15 +94,7 @@ public class Machine {
     public Machine call(Module module, String routineName) throws InvalidInstruction, TypeUnmatchedException, ValueUnavailableException, UndefinedException, OverdefinedException {
         assert module != null;
         assert routineName != null;
-        Routine routine;
-        if (routineName.contains("::")) {
-            String[] splits = routineName.split("::");
-            String importModule = splits[0];
-            routineName = splits[1];
-            routine = module.getRoutine(importModule, routineName);
-        } else {
-            routine = module.getCorrespondingRoutine(routineName);
-        }
+        Routine routine = module.getRoutine(routineName);
         Scope<String, Register> currentScope = this.currentScope;
         int next = this.pc;
         this.currentScope = new Scope<String, Register>(routineName);
