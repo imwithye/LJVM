@@ -15,6 +15,9 @@ public class ArrayValue extends Value {
         this.arrayType = new ArrayType();
         if (size < 0) size = 0;
         this.values = new Value[size];
+        for(int i=0; i<size; i++) {
+            this.values[i] = new NoneValue();
+        }
     }
 
     @Override
@@ -148,5 +151,17 @@ public class ArrayValue extends Value {
     @Override
     public NumberValue length() throws ValueUnavailableException {
         return new NumberValue(this.values.length);
+    }
+
+    @Override
+    public Value copy() {
+        ArrayValue arrayValue = new ArrayValue(this.values.length);
+        for (int i = 0; i < values.length; i++) {
+            if(this.values[i] == null) {
+                System.out.println(i);
+            }
+            arrayValue.values[i] = this.values[i].copy();
+        }
+        return arrayValue;
     }
 }

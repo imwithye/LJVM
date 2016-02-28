@@ -28,6 +28,7 @@ public class StmtCodeGenerator {
         } else if (node instanceof StringLiteral) {
             vo = this.visitStringLiteral((StringLiteral) node);
         } else if (node instanceof ArrayLiteral) {
+
             return this.visitArrayLiteral((ArrayLiteral) node, instructions, target);
         }
         if (vo != null) {
@@ -146,9 +147,8 @@ public class StmtCodeGenerator {
         assert node != null;
         assert instructions != null;
         assert target != null;
-        ArrayValue arrayValue = new ArrayValue(node.getValues().length);
         int count = 0;
-        instructions.add(new MovInstruction(target, new ValueOperand(arrayValue)));
+        instructions.add(new MovInstruction(target, new ValueOperand(new ArrayValue(node.getValues().length))));
         count += 1;
         for (int i = 0; i < node.getValues().length; i++) {
             RefOperand value = this.getNewRegister();
@@ -167,9 +167,17 @@ public class StmtCodeGenerator {
     protected int visitAssignment(Assignment assignment, ArrayList<Instruction> instructions) {
         RefOperand ref = this.getNewRegister();
         int count = this.acceptValue(assignment.getExpr(), instructions, ref);
-        RefOperand target = this.visitVarName(assignment.getVarName());
-        instructions.add(new MovInstruction(target, ref));
-        return count + 1;
+        if(assignment.simpleAssign()) {
+            RefOperand target = this.visitVarName(assignment.getVarName());
+            instructions.add(new MovInstruction(target, ref));
+            return count + 1;
+        } else {
+            ValueAt valueAt = assignment.getValueAt();
+            RefOperand index = this.getNewRegister();
+            count += this.acceptValue(valueAt.getIndex(), instructions, index);
+            instructions.add(new SetInstruction(new RefOperand(valueAt.getVarName().getVarName()), index, ref));
+            return count + 1;
+        }
     }
 
     protected int visitIfElse(IfElse ifElse, ArrayList<Instruction> instructions) {

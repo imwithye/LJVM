@@ -151,4 +151,9 @@ public class StringValue extends Value {
     public NumberValue length() {
         return new NumberValue(this.value.length());
     }
+
+    @Override
+    public Value copy() {
+        return new StringValue(this.value);
+    }
 }

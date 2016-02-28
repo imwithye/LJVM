@@ -57,7 +57,7 @@ public class Machine {
 
     public Machine pushValue(Value value) {
         assert value != null;
-        this.memoryStack.push(value);
+        this.memoryStack.push(value.copy());
         return this;
     }
 

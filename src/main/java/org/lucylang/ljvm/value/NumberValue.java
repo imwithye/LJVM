@@ -160,4 +160,9 @@ public class NumberValue extends Value {
     public NumberValue length() throws ValueUnavailableException {
         throw new ValueUnavailableException("length", this);
     }
+
+    @Override
+    public Value copy() {
+        return new NumberValue(this.value);
+    }
 }

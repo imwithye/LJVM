@@ -28,8 +28,8 @@ public class NoneValue extends Value {
     }
 
     @Override
-    public String stringValue() throws ValueUnavailableException {
-        throw new ValueUnavailableException("string", this);
+    public String stringValue() {
+        return "none";
     }
 
     @Override
@@ -116,5 +116,10 @@ public class NoneValue extends Value {
     @Override
     public NumberValue length() throws ValueUnavailableException {
         throw new ValueUnavailableException("length", this);
+    }
+
+    @Override
+    public Value copy() {
+        return new NoneValue();
     }
 }

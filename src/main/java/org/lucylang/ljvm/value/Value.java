@@ -50,6 +50,8 @@ public abstract class Value implements Serializable {
 
     public abstract NumberValue length() throws ValueUnavailableException;
 
+    public abstract Value copy();
+
     public NumberValue toNumberValue() throws ValueUnavailableException {
         return new NumberValue(this.floatValue());
     }

@@ -222,6 +222,9 @@ var_declaration = ID.varName
 assign_statement = ID.varName ASSIGN expr.value
             {: return new Assignment(new VarName((String) varName.value), value);
             :}
+    |   array_value_at.va ASSIGN expr.value
+            {: return new Assignment(va, value);
+            :}
     ;
 
 if_statement = IF expr.value block_statements.statements

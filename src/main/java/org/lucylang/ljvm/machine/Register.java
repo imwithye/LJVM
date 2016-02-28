@@ -20,7 +20,7 @@ public class Register {
 
     public Register assignValue(Value value) {
         assert value != null;
-        this.value = value;
+        this.value = value.copy();
         return this;
     }
 }

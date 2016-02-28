@@ -142,4 +142,9 @@ public class BooleanValue extends Value {
     public NumberValue length() throws ValueUnavailableException {
         throw new ValueUnavailableException("length", this);
     }
+
+    @Override
+    public Value copy() {
+        return new BooleanValue(this.booleanValue());
+    }
 }

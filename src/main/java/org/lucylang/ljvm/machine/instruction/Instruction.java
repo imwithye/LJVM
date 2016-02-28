@@ -94,8 +94,8 @@ public abstract class Instruction implements Serializable {
     }
 
     public String toString() {
+        String string = new String();
         try {
-            String string = new String();
             string += this.type;
             for (int i = 0; i < this.size(); i++) {
                 Operand op = this.getOperand(i);
@@ -115,7 +115,8 @@ public abstract class Instruction implements Serializable {
             }
             return string;
         } catch (Exception e) {
-            return new String();
+            e.printStackTrace();
+            return string;
         }
     }
 

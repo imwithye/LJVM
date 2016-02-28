@@ -59,6 +59,7 @@ public class Module implements Serializable {
     public String toString() {
         try {
             String string = new String();
+            string += "package \"" + this.getName() + "\"\n";
             for (String key : this.routines.keySet()) {
                 Routine routine = this.routines.get(key);
                 String instruction = new String();
