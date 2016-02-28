@@ -144,7 +144,7 @@ public class NumberValue extends Value {
     }
 
     @Override
-    public Value indexAt(Value value) throws ValueUnavailableException, TypeUnmatchedException {
+    public Value valueAt(Value value) throws ValueUnavailableException, TypeUnmatchedException {
         if (value instanceof NumberValue) {
             throw new ValueUnavailableException("unable to perform [] over " + this + " value");
         }

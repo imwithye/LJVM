@@ -112,7 +112,7 @@ public class ArrayValue extends Value {
     }
 
     @Override
-    public Value indexAt(Value value) throws TypeUnmatchedException {
+    public Value valueAt(Value value) throws TypeUnmatchedException {
         if (value instanceof NumberValue) {
             return this.values[((NumberValue) value).intValue()];
         }
