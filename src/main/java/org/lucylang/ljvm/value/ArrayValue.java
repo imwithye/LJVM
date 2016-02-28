@@ -6,6 +6,7 @@ import org.lucylang.ljvm.type.Type;
 import org.lucylang.ljvm.type.TypeUnmatchedException;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class ArrayValue extends Value {
     private ArrayType arrayType;
@@ -45,7 +46,15 @@ public class ArrayValue extends Value {
                 v.add(values[i].stringValue());
             }
         }
-        return "[" + String.join(", ", v) + "]";
+        Iterator<String> iter = v.iterator();
+        StringBuilder sb = new StringBuilder();
+        if (iter.hasNext()) {
+            sb.append(iter.next());
+            while (iter.hasNext()) {
+                sb.append(", ").append(iter.next());
+            }
+        }
+        return "[" + sb.toString() + "]";
     }
 
     @Override
