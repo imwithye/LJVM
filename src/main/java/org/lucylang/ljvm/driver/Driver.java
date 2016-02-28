@@ -14,17 +14,21 @@ import org.lucylang.ljvm.value.Value;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Properties;
 
 public class Driver {
+    private final Properties properties = new Properties();
     private Loader loader;
     private Generator generator;
     private Parser parser;
     private ModuleCodeGenerator codeGenerator;
     private Linker linker;
     Options options;
-    private static final String version = "0.1.1";
+    private String version;
 
-    public Driver() {
+    public Driver() throws IOException {
+        this.properties.load(Driver.class.getResourceAsStream("/project.properties"));
+        this.version = this.properties.getProperty("version");
         this.loader = new Loader();
         this.generator = new Generator();
         this.parser = new Parser();
@@ -66,7 +70,7 @@ public class Driver {
                 System.exit(0);
             }
             if (com.hasOption("version")) {
-                System.out.println(Driver.version);
+                System.out.println(this.version);
                 System.exit(0);
             }
             if (com.hasOption("compile")) {
@@ -170,7 +174,7 @@ public class Driver {
         formatter.printHelp("lucy [options] target", this.options);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         Driver driver = new Driver();
         driver.parse(args);
     }
