@@ -134,6 +134,11 @@ public class BooleanValue extends Value {
     }
 
     @Override
+    public void set(Value index, Value value) throws ValueUnavailableException {
+        throw new ValueUnavailableException("unable to perform set[] over " + this + " value");
+    }
+
+    @Override
     public NumberValue length() throws ValueUnavailableException {
         throw new ValueUnavailableException("length", this);
     }

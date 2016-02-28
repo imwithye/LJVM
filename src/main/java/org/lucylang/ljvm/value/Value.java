@@ -46,6 +46,8 @@ public abstract class Value implements Serializable {
 
     public abstract Value valueAt(Value value) throws ValueUnavailableException, TypeUnmatchedException;
 
+    public abstract void set(Value index, Value value) throws ValueUnavailableException, TypeUnmatchedException;
+
     public abstract NumberValue length() throws ValueUnavailableException;
 
     public NumberValue toNumberValue() throws ValueUnavailableException {

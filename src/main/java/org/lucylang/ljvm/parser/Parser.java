@@ -19,64 +19,67 @@ public class Parser extends beaver.Parser {
 		static public final short ID = 2;
 		static public final short LPAREN = 3;
 		static public final short STRING_LITERAL = 4;
-		static public final short NOT = 5;
-		static public final short BOOL_LITERAL = 6;
-		static public final short NUMBER_LITERAL = 7;
-		static public final short NONE_LITERAL = 8;
-		static public final short TIMES = 9;
-		static public final short DIV = 10;
-		static public final short PLUS = 11;
-		static public final short STMT_TAIL = 12;
-		static public final short SEMICOLON = 13;
-		static public final short GT = 14;
-		static public final short LT = 15;
-		static public final short GEQ = 16;
-		static public final short LEQ = 17;
-		static public final short EQUAL = 18;
-		static public final short NEQ = 19;
-		static public final short RPAREN = 20;
+		static public final short LSBRACKET = 5;
+		static public final short NOT = 6;
+		static public final short BOOL_LITERAL = 7;
+		static public final short NUMBER_LITERAL = 8;
+		static public final short NONE_LITERAL = 9;
+		static public final short TIMES = 10;
+		static public final short DIV = 11;
+		static public final short PLUS = 12;
+		static public final short GT = 13;
+		static public final short LT = 14;
+		static public final short GEQ = 15;
+		static public final short LEQ = 16;
+		static public final short STMT_TAIL = 17;
+		static public final short SEMICOLON = 18;
+		static public final short EQUAL = 19;
+		static public final short NEQ = 20;
 		static public final short AND = 21;
 		static public final short OR = 22;
-		static public final short LCURLY = 23;
-		static public final short FUNC = 24;
-		static public final short COMMA = 25;
-		static public final short RCURLY = 26;
-		static public final short DOUBLE_COLON = 27;
-		static public final short PACKAGE = 28;
-		static public final short IMPORT = 29;
-		static public final short ASSIGN = 30;
-		static public final short VAR = 31;
-		static public final short IF = 32;
-		static public final short WHILE = 33;
-		static public final short RETURN = 34;
-		static public final short ELSE = 35;
+		static public final short RPAREN = 23;
+		static public final short COMMA = 24;
+		static public final short LCURLY = 25;
+		static public final short FUNC = 26;
+		static public final short RCURLY = 27;
+		static public final short RSBRACKET = 28;
+		static public final short DOUBLE_COLON = 29;
+		static public final short PACKAGE = 30;
+		static public final short IMPORT = 31;
+		static public final short ASSIGN = 32;
+		static public final short VAR = 33;
+		static public final short IF = 34;
+		static public final short WHILE = 35;
+		static public final short RETURN = 36;
+		static public final short ELSE = 37;
 	}
 
 	static final ParsingTables PARSING_TABLES = new ParsingTables(
-		"U9pDbbbib5KKnyytqyNQMYYMbhPOH5gwJJTRIjifehMAwxY1u8A26oWgLL6mJyGN2Oc9ygA" +
-		"9clXa#g0#66DCgbMaA8eYAcYrYbJ11LSGKL6u$hxxdHbc#OPg9COl#P$j$kzoxd9cH09b4f" +
-		"9LibIMIS3A76cG9gd5pf1EwPBJv7HfatQvK4wLLWcP0SkQW2oImXWtEu4Rijm2YKYDT9lVb" +
-		"HMKNb$M92cny5YtIsugonnch3hfbeNAkaQEznch0bOzh77AofDRVLWHQOHpP4PN#h6Q4rWX" +
-		"wKbWUT6fSa92jCpsk4NoPRBCbrAP8YVBAR36oucIQRDeOLIFLIpNmYg8iIwIC#LykKpEbKl" +
-		"aKfcRuY#Kc#anJwRBsJ9D5idrSfFCaQljMCdSYPBfhj0OkLDEakFaZbYFiMOvrdw8d6UGSq" +
-		"Hc8WjyzjolHuVj4KPUfJtAoJLTZ$#xdsdFg8gpg9IxPQNr8ZABx7B9rlMov2wiN3XUjguNl" +
-		"NSHkHocvrMhzc8zSXRMRBjNPrXv3l9Az7dMky3AYwrSZ9nlvwh6ky76bY3TrtoF#KqMo7Lo" +
-		"erp1Mc$Zb9RB2bxOlPBkonM7krl5M3KgS#3dMZkVzpUUCIPmvmkvYKLmk$u6rx7SObvn9NT" +
-		"Sb3MJkkJ7okFbkV1OXMIMofgiOuMKrKGDIMM5bLMeh01xbChoE4TcTENOB8Ug5y$oeXL9qP" +
-		"3jqSZzRgOsj51zPb1DAZZd3dQfD9Q5nmh0Aewn7FmWjJgJEvJDIq$sG$GFa5iJSElCL2fD2" +
-		"ROxLZAtbDdS5PQoJzEef0sn7cFDSknzBsTF5lli#T5xHC#oDkui$$iS$frVPSyem5cKsBDm" +
-		"FI#xIN1ThvtQxk05D5lNYzuxZ#bvvR5xvyQ2$Bx5xvKd$MAUBBDpbIV4l7Sip5nhVzchi8g" +
-		"nCbXjXadpiLAHljLU1MaZi1lTAk8ygR7bs4#ZxmDD6bi67WCjO1xer$WpO00y2hPgR9khay" +
-		"7tDkDEyMzpdWMFWo7rNq2CWZ0u05Q2m#0BshAKaw#w274$kXoz3atLSXh0R307B023O17O0" +
-		"9Q2Dq4lsA9hUmZG9Xjrp5M827gr#clSdOjRxuEWEKsUYpaG1mInDyCB##JxCNW4OwBwJo2g" +
-		"rUv7h4ZYFyTuqRptfOuNoDQsFTW1ZUL4srdw23W4Ti5Pgx63g27q3j5pZikXL$KQvUv5zQ7" +
-		"tnt4UyCjVrr6JPczgLVV7nN9KDwhkLZrNzHBLwtJiFDNZL5UgZkxVmwe7L0ychUsfE7kzwk" +
-		"YvRqhYRawNOnBl#QEqRN7FM#tjO4JjOH$kJZ$RXpSCHXDZqYUnpnooaXTZVewBxdKZrleUV" +
-		"6l#C0VDD#PhynNUYFdIx3Qx32$CV0v6pMV8Jy4xW1mCxzUy1RZJXlTZtW2RmElWDR0H39bt" +
-		"pLOx0pVSV00sMEzLinxvYddP39gNp8lc8xCzjgfXyw7PONQgzucLsypxvZtpf$dExA5YYVa" +
-		"H$6H#C0VCFgpzDhDVmA#GUwY1Zgs3rTI$QkmgHHSLl8jAxlvxQQS#jXDhmAx7hiUkeyRNqT" +
-		"w9tubVY#tMqGuBXr$vz6XXd32yC7QJ8eJV35f11LMumkeia4bbTok#mx#5eFs$q4R$IhI7u" +
-		"3z4GBLZxUdeUCpw2tS0xuC=");
+		"U9pjLrjm5KKGFRit2OGO8mIuUO31c900kIH1224X2K8GHBWgYaz4G6CK5L50nHUOqW#r$5E" +
+		"$rF97gz0FrB8K10LHV84Y8gA2uWFnXMzyHcdFpErTzkvTo$Z17pTrvlHqz$JqxFRCR02t4p" +
+		"L8OXWcubGimcBaeXCZKOVXQC9uj682xIlGW4QCmcZCG16AG$QOY6#lmV6u59TZ8IwsqVfbn" +
+		"EhZ#vf8VJFi#Rvz4R8Yx1s#VMX4BZLoC31#8FfdZ3ywO5#CMpBiVNrxk$o1#HdsOwmzYH7s" +
+		"YHqLiiz6dhMVXaau1MVYB9oCcJW3io8qIIHiZFCZREqupgxkN7gTPxpaTvGourwOXsim6OD" +
+		"GWZ8CGJdz1g0GsVoRpTnlG3NzUcCP1YFEN0xvzIIZ8vh3eQd1iTnJLRRUNFOgGpMJtgj2jZ" +
+		"p3jtWrtwMfW9kntDzJMWl8yQKBSBRrChYGsbghpSCSeW1BS2CM44dKMtqI9oYFKHwhF4wvs" +
+		"R8v4LfKCf6lr1nhM6KfAOasQ$Tw9$hZfcgaQMdswQezNVaYvSkKhr2#ohAPimFNsz5zSOdb" +
+		"ap05KxYxZNmEAZ2NVM$brs8fhkF9SXDkXSDpeOhFRnZd7S6CNEhpk4$pkVCBk7iTler2dWi" +
+		"3U3h46RrVoDx4$UFP7UwkSZxz2kwZLBHmh96#hubKd66F#NOpFjDUwzj7H#JY17A9dh$bF#" +
+		"p5lZq6yEs5xGbhzvvO#5aDvkbXx0ujCPx6sQoyNZnTSYCqNenuX2r6grdT8DyBNBd9ECwAh" +
+		"6CrDh0I6rc5GxdYyRGCvzpcR1z2ltgUnfNqAmduzIIZ8vh3eqbGvsgzETn$wJMJtZD#RNoB" +
+		"fNoNfWBCk$Jsb5SBpO7wgxDU1dM#jeGPbB1IYdYJ9GXFtrDs0fA9dD0S7UQMaZnxUi$9Y9H" +
+		"kxocREMjrRnLpdnisgodYITJ7tj6jjk#jF4xV19zN5l#0hXKmFxTHH7wcC09mjgPqM4jv6x" +
+		"6Eyjsgkvzef$yqwdTGNfZIEmU9nobC9pQfRuxXCFXxcTWIRNEU81uYD8RpA9kVYCb4D#UTH" +
+		"1tpTgUGyzLde78Pczl9rUHxoVN4AgA9U9hWMBStcJcw#UHPvFxaEUGApUqEOYNxupLc9nlw" +
+		"EOkqlupFIK8vTz5$HiGwdwI#9T3lKF$Tn1SKDj3U7eXp5vk2K8nNgB#7NAa#3x0Pe$8ZR9Q" +
+		"c#xjcRNDLRiZCoPsdd6IpNUNvWHpkvFBsKIYd$A3cy1YnclfTvDnGVatA2vHTuc5YOi1dJJ" +
+		"YFm7otHUlTGJgssjEP#LMtHFa#ZR5UUREorg#ZwtDsAkjuPu$oNkK3ojsXjQqCvEDnbd9UH" +
+		"Cu5OPt6NHMb3zYV2iKfZFPpu$JTg7BfeVpTieYO#mFZCkeWiCQPOJj$NV1$yhTjkRljwU1f" +
+		"VpGQAtrBV2FTygTy9LyAgrfsoJxvNFRAPvG$9JwHFMm$9BOIRn9l45k8pSJhn6l4gmHhNNW" +
+		"so2RY9TacRzaPFY3U9LwqlOtoWcmWhvVdvJbP9skjzbbP8plaVJ#$zsIdvTNoaNoikjssVK" +
+		"Usozlob#oNh$b$9UHxuWVvJduLdZ9omAxq5#8tEa#rDr0DpAde4kP4Jw6DjrKRRwqcwfjvV" +
+		"pHJDufoFULw#zsMGsJp#ob6c3ijcuZnsyF0uTV6lwE1SLhfrqfvjAAM$J74MFkjaqKOpY6o" +
+		"UPF528VVBJ7xvJAEuwl8ASJ#9rnbRxpBEyO98KQul7coCE4VJRlyAG==");
 
     private final Logger logger = LogManager.getLogger(Parser.class.getName());
 
@@ -619,14 +622,21 @@ public class Parser extends beaver.Parser {
 					  return (Node) call;
 				}
 			},
-			new Action() {	// [63] expr = MINUS expr.right
+			new Action() {	// [63] expr = array_value_at.valueAt
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					final Symbol _symbol_valueAt = _symbols[offset + 1];
+					final ValueAt valueAt = (ValueAt) _symbol_valueAt.value;
+					  return (Node) valueAt;
+				}
+			},
+			new Action() {	// [64] expr = MINUS expr.right
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_right = _symbols[offset + 2];
 					final IValue right = (IValue) _symbol_right.value;
 					  return new SubExpr(new NumberLiteral(0), right);
 				}
 			},
-			new Action() {	// [64] literal_expr = BOOL_LITERAL.bool
+			new Action() {	// [65] literal_expr = BOOL_LITERAL.bool
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol bool = _symbols[offset + 1];
 					 if(bool.value.equals("true")) {
@@ -636,7 +646,7 @@ public class Parser extends beaver.Parser {
                }
 				}
 			},
-			new Action() {	// [65] literal_expr = NUMBER_LITERAL.number
+			new Action() {	// [66] literal_expr = NUMBER_LITERAL.number
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol number = _symbols[offset + 1];
 					 String value = (String) number.value;
@@ -647,17 +657,41 @@ public class Parser extends beaver.Parser {
                }
 				}
 			},
-			new Action() {	// [66] literal_expr = STRING_LITERAL.string
+			new Action() {	// [67] literal_expr = STRING_LITERAL.string
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol string = _symbols[offset + 1];
 					 String value = (String) string.value;
                return new StringLiteral(value);
 				}
 			},
-			new Action() {	// [67] literal_expr = NONE_LITERAL.none
+			new Action() {	// [68] literal_expr = NONE_LITERAL.none
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol none = _symbols[offset + 1];
 					 return new NoneLiteral();
+				}
+			},
+			new Action() {	// [69] literal_expr = LSBRACKET exprs.es RSBRACKET
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					final Symbol _symbol_es = _symbols[offset + 2];
+					final SymbolList es = (SymbolList) _symbol_es.value;
+					 ArrayLiteral array = new ArrayLiteral(es.size());
+               for(int i=0; i<es.size(); i++) {
+                   array.setValue(i, (IValue) es.get(i));
+               }
+               return array;
+				}
+			},
+			new Action() {	// [70] literal_expr = LSBRACKET RSBRACKET
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					 return new ArrayLiteral(0);
+				}
+			},
+			new Action() {	// [71] array_value_at = ID.name LSBRACKET expr.e RSBRACKET
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					final Symbol name = _symbols[offset + 1];
+					final Symbol _symbol_e = _symbols[offset + 3];
+					final IValue e = (IValue) _symbol_e.value;
+					  return new ValueAt(new VarName((String) name.value), e);
 				}
 			}
 		};

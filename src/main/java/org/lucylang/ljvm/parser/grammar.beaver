@@ -24,8 +24,8 @@
     }
 :};
 
-%terminals PACKAGE, IMPORT, VAR, FUNC, RETURN, IF, ELSE, WHILE, LCURLY, RCURLY, LPAREN, RPAREN, COMMA,
-    ASSIGN, PLUS, MINUS, TIMES, DIV, AND, OR, OR, GT, LT, GEQ, LEQ, EQUAL, NEQ, NOT;
+%terminals PACKAGE, IMPORT, VAR, FUNC, RETURN, IF, ELSE, WHILE, LCURLY, RCURLY, LPAREN, RPAREN, LSBRACKET, RSBRACKET,
+    COMMA, ASSIGN, PLUS, MINUS, TIMES, DIV, AND, OR, OR, GT, LT, GEQ, LEQ, EQUAL, NEQ, NOT;
 %terminals DOUBLE_COLON;
 %terminals SEMICOLON, STMT_TAIL;
 %terminals BOOL_LITERAL, NONE_LITERAL, NUMBER_LITERAL, ID, STRING_LITERAL;
@@ -54,6 +54,7 @@
 %typeof return_statement = "Return";
 %typeof exprs = "SymbolList";
 %typeof expr = "IValue";
+%typeof array_value_at = "ValueAt";
 
 %goal module;
 
@@ -335,6 +336,9 @@ expr = literal_expr.literal
     |   call_statement.call
             {:  return (Node) call;
             :}
+    |   array_value_at.valueAt
+            {:  return (Node) valueAt;
+            :}
     |   MINUS expr.right
             {:  return new SubExpr(new NumberLiteral(0), right);
             :}
@@ -361,5 +365,20 @@ literal_expr = BOOL_LITERAL.bool
             :}
     |   NONE_LITERAL.none
             {: return new NoneLiteral();
+            :}
+    |   LSBRACKET exprs.es RSBRACKET
+            {: ArrayLiteral array = new ArrayLiteral(es.size());
+               for(int i=0; i<es.size(); i++) {
+                   array.setValue(i, (IValue) es.get(i));
+               }
+               return array;
+            :}
+    |   LSBRACKET RSBRACKET
+            {: return new ArrayLiteral(0);
+            :}
+    ;
+
+array_value_at = ID.name LSBRACKET expr.e RSBRACKET
+            {:  return new ValueAt(new VarName((String) name.value), e);
             :}
     ;

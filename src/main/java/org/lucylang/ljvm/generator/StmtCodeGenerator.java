@@ -2,6 +2,8 @@ package org.lucylang.ljvm.generator;
 
 import org.lucylang.ljvm.machine.instruction.*;
 import org.lucylang.ljvm.node.*;
+import org.lucylang.ljvm.value.ArrayValue;
+import org.lucylang.ljvm.value.NumberValue;
 
 import java.util.ArrayList;
 
@@ -25,6 +27,8 @@ public class StmtCodeGenerator {
             vo = this.visitNumberLiteral((NumberLiteral) node);
         } else if (node instanceof StringLiteral) {
             vo = this.visitStringLiteral((StringLiteral) node);
+        } else if (node instanceof ArrayLiteral) {
+            return this.visitArrayLiteral((ArrayLiteral) node, instructions, target);
         }
         if (vo != null) {
             instructions.add(new MovInstruction(target, vo));
@@ -102,11 +106,25 @@ public class StmtCodeGenerator {
         return count + 2;
     }
 
+    protected int acceptValueAt(IValue node, ArrayList<Instruction> instructions, RefOperand target) {
+        assert node != null;
+        assert instructions != null;
+        assert target != null;
+        if (!(node instanceof ValueAt)) return 0;
+        ValueAt valueAt = (ValueAt) node;
+        int count = 0;
+        RefOperand index = this.getNewRegister();
+        count += this.acceptValue(valueAt.getIndex(), instructions, index);
+        String varName = valueAt.getVarName().getVarName();
+        instructions.add(new ValueAtInstruction(target, new RefOperand(varName), index));
+        return 1 + count;
+    }
+
     protected int acceptValue(IValue node, ArrayList<Instruction> instructions, RefOperand target) {
         if (node == null) return 0;
         return this.acceptLiteral(node, instructions, target) + this.acceptRef(node, instructions, target) +
                 this.acceptBinaryExpr(node, instructions, target) + this.acceptNot(node, instructions, target) +
-                this.acceptCall(node, instructions, target);
+                this.acceptCall(node, instructions, target) + this.acceptValueAt(node, instructions, target);
     }
 
     protected ValueOperand visitBooleanLiteral(BooleanLiteral node) {
@@ -122,6 +140,23 @@ public class StmtCodeGenerator {
     protected ValueOperand visitStringLiteral(StringLiteral node) {
         assert node != null;
         return new ValueOperand(node.getValue());
+    }
+
+    protected int visitArrayLiteral(ArrayLiteral node, ArrayList<Instruction> instructions, RefOperand target) {
+        assert node != null;
+        assert instructions != null;
+        assert target != null;
+        ArrayValue arrayValue = new ArrayValue(node.getValues().length);
+        int count = 0;
+        instructions.add(new MovInstruction(target, new ValueOperand(arrayValue)));
+        count += 1;
+        for (int i = 0; i < node.getValues().length; i++) {
+            RefOperand value = this.getNewRegister();
+            count += this.acceptValue(node.getValues()[i], instructions, value);
+            instructions.add(new SetInstruction(target, new ValueOperand(i), value));
+            count += 1;
+        }
+        return count;
     }
 
     protected RefOperand visitVarName(VarName node) {

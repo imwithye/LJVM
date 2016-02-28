@@ -125,7 +125,7 @@ public class Driver {
         for (int i = 0; i < src.length; i++) {
             try {
                 modules.add(this.loader.load(new FileInputStream(src[i])));
-            } catch (ClassNotFoundException e) {
+            } catch (Exception e) {
                 Reader r = new InputStreamReader(new FileInputStream(src[i]), "UTF8");
                 modules.add(codeGenerator.visitModule(this.parser.parseModule(new Lexer(r))));
             }

@@ -50,6 +50,8 @@ import org.lucylang.ljvm.parser.Parser.Terminals;
     "}"         { return token(Terminals.RCURLY); }
     "("         { return token(Terminals.LPAREN); }
     ")"         { return token(Terminals.RPAREN); }
+    "["         { return token(Terminals.LSBRACKET); }
+    "]"         { return token(Terminals.RSBRACKET); }
     ";"         { return token(Terminals.SEMICOLON); }
     ","         { return token(Terminals.COMMA); }
 

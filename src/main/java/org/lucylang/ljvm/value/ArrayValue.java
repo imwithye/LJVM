@@ -5,6 +5,8 @@ import org.lucylang.ljvm.type.NumberType;
 import org.lucylang.ljvm.type.Type;
 import org.lucylang.ljvm.type.TypeUnmatchedException;
 
+import java.util.ArrayList;
+
 public class ArrayValue extends Value {
     private ArrayType arrayType;
     private Value[] values;
@@ -32,7 +34,11 @@ public class ArrayValue extends Value {
 
     @Override
     public String stringValue() throws ValueUnavailableException {
-        throw new ValueUnavailableException("string", this);
+        ArrayList<String> v = new ArrayList<String>();
+        for(int i=0; i<values.length; i++) {
+            v.add(values[i].stringValue());
+        }
+        return "[" + String.join(", ", v) + "]";
     }
 
     @Override
@@ -88,7 +94,19 @@ public class ArrayValue extends Value {
 
     @Override
     public BooleanValue equ(Value value) {
-        return null;
+        if (value instanceof ArrayValue) {
+            ArrayValue arrayValue = (ArrayValue) value;
+            if (values.length != arrayValue.values.length) {
+                return new BooleanValue(false);
+            }
+            for (int i = 0; i < values.length; i++) {
+                if (!(values[i].equ(arrayValue.values[i])).booleanValue()) {
+                    return new BooleanValue(false);
+                }
+            }
+            return new BooleanValue(true);
+        }
+        return new BooleanValue(false);
     }
 
     @Override
@@ -117,6 +135,14 @@ public class ArrayValue extends Value {
             return this.values[((NumberValue) value).intValue()];
         }
         throw new TypeUnmatchedException(new NumberType(), value.getType());
+    }
+
+    @Override
+    public void set(Value index, Value value) throws TypeUnmatchedException {
+        if (!(index instanceof NumberValue)) {
+            throw new TypeUnmatchedException(new NumberType(), index.getType());
+        }
+        this.values[((NumberValue) index).intValue()] = value;
     }
 
     @Override
