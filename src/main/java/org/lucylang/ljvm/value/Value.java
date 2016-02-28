@@ -44,6 +44,10 @@ public abstract class Value implements Serializable {
 
     public abstract BooleanValue geq(Value value) throws ValueUnavailableException, TypeUnmatchedException;
 
+    public abstract Value indexAt(Value value) throws ValueUnavailableException, TypeUnmatchedException;
+
+    public abstract NumberValue length() throws ValueUnavailableException;
+
     public NumberValue toNumberValue() throws ValueUnavailableException {
         return new NumberValue(this.floatValue());
     }

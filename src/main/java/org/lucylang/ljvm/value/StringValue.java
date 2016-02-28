@@ -1,5 +1,6 @@
 package org.lucylang.ljvm.value;
 
+import org.lucylang.ljvm.type.NumberType;
 import org.lucylang.ljvm.type.StringType;
 import org.lucylang.ljvm.type.Type;
 import org.lucylang.ljvm.type.TypeUnmatchedException;
@@ -131,5 +132,18 @@ public class StringValue extends Value {
         }
         StringValue stringValue = (StringValue) value;
         return new BooleanValue(this.stringValue().compareTo(stringValue.stringValue()) >= 0);
+    }
+
+    @Override
+    public Value indexAt(Value value) throws ValueUnavailableException, TypeUnmatchedException {
+        if (value instanceof NumberValue) {
+            return new StringValue("" + this.value.charAt(((NumberValue) value).intValue()));
+        }
+        throw new TypeUnmatchedException(new NumberType(), value.getType());
+    }
+
+    @Override
+    public NumberValue length() {
+        return new NumberValue(this.value.length());
     }
 }

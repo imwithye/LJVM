@@ -142,4 +142,17 @@ public class NumberValue extends Value {
         NumberValue numberValue = (NumberValue) value;
         return new BooleanValue(this.intValue().compareTo(numberValue.intValue()) >= 0 || this.floatValue().compareTo(numberValue.floatValue()) >= 0);
     }
+
+    @Override
+    public Value indexAt(Value value) throws ValueUnavailableException, TypeUnmatchedException {
+        if (value instanceof NumberValue) {
+            throw new ValueUnavailableException("unable to perform [] over " + this + " value");
+        }
+        throw new TypeUnmatchedException(new NumberType(), value.getType());
+    }
+
+    @Override
+    public NumberValue length() throws ValueUnavailableException {
+        throw new ValueUnavailableException("length", this);
+    }
 }

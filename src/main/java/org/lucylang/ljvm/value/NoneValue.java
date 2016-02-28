@@ -1,7 +1,9 @@
 package org.lucylang.ljvm.value;
 
 import org.lucylang.ljvm.type.NoneType;
+import org.lucylang.ljvm.type.NumberType;
 import org.lucylang.ljvm.type.Type;
+import org.lucylang.ljvm.type.TypeUnmatchedException;
 
 public class NoneValue extends Value {
     private NoneType noneType;
@@ -96,5 +98,18 @@ public class NoneValue extends Value {
     @Override
     public BooleanValue geq(Value value) throws ValueUnavailableException {
         throw new ValueUnavailableException("unable to perform >= over " + this + " value");
+    }
+
+    @Override
+    public Value indexAt(Value value) throws ValueUnavailableException, TypeUnmatchedException {
+        if (value instanceof NumberValue) {
+            throw new ValueUnavailableException("unable to perform [] over " + this + " value");
+        }
+        throw new TypeUnmatchedException(new NumberType(), value.getType());
+    }
+
+    @Override
+    public NumberValue length() throws ValueUnavailableException {
+        throw new ValueUnavailableException("length", this);
     }
 }
