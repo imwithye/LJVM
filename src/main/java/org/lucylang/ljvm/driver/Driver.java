@@ -1,9 +1,7 @@
 package org.lucylang.ljvm.driver;
 
-import javafx.scene.shape.Path;
 import org.apache.commons.cli.*;
 import org.apache.commons.cli.Option;
-import org.apache.logging.log4j.core.appender.SyslogAppender;
 import org.lucylang.ljvm.generator.ModuleCodeGenerator;
 import org.lucylang.ljvm.machine.Machine;
 import org.lucylang.ljvm.driver.generator.Generator;
@@ -15,12 +13,7 @@ import org.lucylang.ljvm.parser.Parser;
 import org.lucylang.ljvm.value.Value;
 
 import java.io.*;
-import java.nio.file.DirectoryStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.stream.Collectors;
 
 public class Driver {
     private Loader loader;
