@@ -8,7 +8,7 @@ func modify(array) {
 }
 
 func main() {
-    array = [1]
+    array = [1, "test"]
 
     modify(array)
     std::print(array)

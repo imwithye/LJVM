@@ -39,7 +39,11 @@ public class ArrayValue extends Value {
     public String stringValue() throws ValueUnavailableException {
         ArrayList<String> v = new ArrayList<String>();
         for(int i=0; i<values.length; i++) {
-            v.add(values[i].stringValue());
+            if(values[i] instanceof StringValue) {
+                v.add("\"" + values[i].stringValue() + "\"");
+            } else {
+                v.add(values[i].stringValue());
+            }
         }
         return "[" + String.join(", ", v) + "]";
     }

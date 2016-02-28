@@ -45,9 +45,8 @@ public class NoneValueTest extends ValueTest {
         NoneValue value = new NoneValue();
         try {
             value.stringValue();
+        } catch (Exception e) {
             fail();
-        } catch (ValueUnavailableException e) {
-            assertTrue(true);
         }
     }
 
