@@ -4,6 +4,8 @@ import org.lucylang.ljvm.machine.module.Module;
 import org.lucylang.ljvm.scope.Scope;
 import org.lucylang.ljvm.scope.UndefinedException;
 
+import java.util.ArrayList;
+
 public class Loader {
     private static Loader loader;
     private static Scope<String, Module> systemModule;
@@ -27,7 +29,12 @@ public class Loader {
         return loader;
     }
 
-    public Module getModule(String moduleName) throws UndefinedException {
+    public Module getModule(String moduleName, ArrayList<Module> modules) throws UndefinedException {
+        for (int i = 0; i < modules.size(); i++) {
+            if (moduleName.equals(modules.get(i).getName())) {
+                return modules.get(i);
+            }
+        }
         return systemModule.safeGet(moduleName);
     }
 }

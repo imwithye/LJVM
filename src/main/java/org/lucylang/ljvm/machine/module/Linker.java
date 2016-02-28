@@ -28,21 +28,29 @@ public class Linker {
             imports.addAll(module.getImports());
             for (String routineName : module.routines.keySet()) {
                 isExecutable = isExecutable || module.isMain();
-                m.defineRoutine(routineName, module.getRoutine(routineName));
+                try {
+                    m.defineRoutine(routineName, module.getRoutine(routineName));
+                } catch (Exception e) {
+                    continue;
+                }
             }
         }
         Loader loader = Loader.getLoader();
         for (String importName : imports) {
             Module importModule;
             try {
-                importModule = loader.getModule(importName);
+                importModule = loader.getModule(importName, modules);
             } catch (UndefinedException e) {
                 m.imports(importName);
                 continue;
             }
             for (String routineName : importModule.routines.keySet()) {
                 isExecutable = isExecutable || importModule.isMain();
-                m.defineRoutine(routineName, importModule.getRoutine(routineName));
+                try {
+                    m.defineRoutine(routineName, importModule.getRoutine(routineName));
+                } catch (Exception e) {
+                    continue;
+                }
             }
         }
 

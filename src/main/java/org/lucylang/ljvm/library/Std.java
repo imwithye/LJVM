@@ -42,5 +42,11 @@ public class Std extends Module {
                 new PushInstruction(new RefOperand("$1")),
                 new RetInstruction()
         }));
+        this.defineRoutine("len", new Routine(new Instruction[]{
+                new PopInstruction(new RefOperand("value")),
+                new LenInstruction(new RefOperand("$1"), new RefOperand("value")),
+                new PushInstruction(new RefOperand("$1")),
+                new RetInstruction()
+        }));
     }
 }

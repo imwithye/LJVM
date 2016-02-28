@@ -64,7 +64,7 @@ public class ArrayValue extends Value {
             newArrayValue.values[i] = this.values[i];
         }
         for (int i = 0; i < arrayValue.values.length; i++) {
-            newArrayValue.values[i + this.values.length] = this.values[i];
+            newArrayValue.values[i + this.values.length] = arrayValue.values[i];
         }
         return newArrayValue;
     }

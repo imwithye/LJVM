@@ -27,5 +27,10 @@ public class Math extends Module {
                 new PushInstruction(new RefOperand("$1")),
                 new RetInstruction()
         }));
+        this.defineRoutine("random", new Routine(new Instruction[]{
+                new RemInstruction(new RefOperand("$1")),
+                new PushInstruction(new RefOperand("$1")),
+                new RetInstruction()
+        }));
     }
 }
