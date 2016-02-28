@@ -12,3 +12,8 @@
 * Add package keyword. Modules are formed by packages.
 * main function should be put under main package.
 * import from user defined module is possible now.
+
+## Version 0.2.1 - Pre-Release of Lucy Lang
+* Fix linker error
+* Add array type (experimental)
+* Add example code, minesweeper game

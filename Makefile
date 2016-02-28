@@ -1,6 +1,6 @@
 .PHONY: build test clean package
 
-VERSION = 0.2.0
+VERSION = 0.2.1
 
 build:
 	mvn package -DskipTests
